@@ -15,59 +15,83 @@
  * - squadMax: Maximum number of enemies in a wave
  */
 
+/* LEVELS 1-10 */
+
 const ENEMIES = [
     {
-        name: "Lurker",
-        attack: 1,
-        defence: 0,
-        hp: 6,
-        xp: 1,
-        appearanceRate: 50,
-        minLevel: 1,
-        squadMin: 1,
-        squadMax: 5
-    },
-    {
-        name: "Heavy Lurker",
+        name: "T1 Scout",
         attack: 2,
-        defence: 1,
-        hp: 10,
-        xp: 1,
+        defence: 0,
+        hp: 1,
+        xp: 2,
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 1,
         squadMax: 4
     },
     {
-        name: "Droid Enforcer",
-        attack: 3,
-        defence: 3,
-        hp: 5,
-        xp: 8,
-        appearanceRate: 15,
-        minLevel: 10,
-        squadMin: 1,
-        squadMax: 3
-    },
-    {
-        name: "Droid Sentinel",
-        attack: 5,
-        defence: 5,
+        name: "T1 Heavy Tank",
+        attack: 1,
+        defence: 4,
         hp: 10,
-        xp: 20,
-        appearanceRate: 8,
-        minLevel: 10,
+        xp: 10,
+        appearanceRate: 30,
+        minLevel: 1,
         squadMin: 1,
         squadMax: 2
     },
     {
-        name: "Droid Destroyer",
-        attack: 8,
-        defence: 8,
-        hp: 20,
-        xp: 50,
+        name: "T1 Enforcer",
+        attack: 5,
+        defence: 2,
+        hp: 5,
+        xp: 5,
+        appearanceRate: 30,
+        minLevel: 1,
+        squadMin: 1,
+        squadMax: 3
+    },
+    {
+        name: "T1 Sentinel",
+        attack: 5,
+        defence: 5,
+        hp: 25,
+        xp: 25,
+        appearanceRate: 8,
+        minLevel: 1,
+        squadMin: 1,
+        squadMax: 4
+    },
+    {
+        name: "T1 Destroyer",
+        attack: 10,
+        defence: 10,
+        hp: 100,
+        xp: 100,
         appearanceRate: 3,
-        minLevel: 10,
+        minLevel: 1,
+        squadMin: 1,
+        squadMax: 1
+    },
+        {
+        name: "T1 Nano Swarm",
+        attack: 1,
+        defence: 0,
+        hp: 1,
+        xp: 1,
+        appearanceRate: 3,
+        minLevel: 1,
+        squadMin: 5,
+        squadMax: 10
+    },
+          {
+        name: "T1 Assassin",
+        attack: 30,
+        defence: 0,
+        hp: 10,
+        xp: 30,
+        appearanceRate: 3,
+        minLevel: 1,
         squadMin: 1,
         squadMax: 1
     }
