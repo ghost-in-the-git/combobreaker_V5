@@ -435,7 +435,7 @@
         </div>
 
         <div class="timer-display" id="timer-display">
-            Next encounter in: --:--
+            Next  in: --:--
         </div>
         <div class="save-indicator" id="save-indicator">
             [SAVED]
@@ -526,12 +526,12 @@
             waveTimer: null,
             nextWaveTime: 0,
             waveExpireTimer: null,
-            WAVE_INTERVAL: 10000, // 1 minute
+            WAVE_INTERVAL: 5000, // 5 seconds wait
             WAVE_EXPIRE: 30000, // 30 seconds to engage
             countdownInterval: null,
             countdownMsg: null,
-            REGEN_RATE: 30000, // 1 hp per 10 seconds
-            ENCOUNTER_CHANCE: 25 // % chance for encounter instead of enemy wave
+            REGEN_RATE: 30000, // 1 hp per 30 seconds
+            ENCOUNTER_CHANCE: 10 // % chance for encounter instead of enemy wave
         };
 
         // Current encounter state
