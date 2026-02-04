@@ -1,23 +1,6 @@
-/**
- * ENCOUNTERS CONFIGURATION
- *
- * Edit this file to add, remove, or modify story encounters.
- *
- * Each encounter has the following properties:
- * - name: Display name for the encounter
- * - type: Encounter type ("shop", etc.)
- * - description: Message shown when encounter spawns
- * - engageText: Message shown when player engages
- * - appearanceRate: Relative chance to appear (higher = more common)
- * - minLevel: Minimum player level for this encounter to appear
- * - itemSlot1: Array of item names for slot 1 (picks randomly from array, empty = random from all items)
- * - itemSlot2: Array of item names for slot 2 (picks randomly from array, empty = random from all items)
- * - itemSlot3: Array of item names for slot 3 (picks randomly from array, empty = random from all items)
- */
 
 const ENCOUNTERS = [
-    const SHOP_ENCOUNTERS = [
-  {
+    {
     name: "[COMMON] Mech Junker",
     type: "shop",
     description: "A wandering Junker's vessel has appeared on radar. They're broadcasting a trade signal.",
