@@ -711,6 +711,13 @@
                         <option value="scrapyard">Scrap Yard</option>
                         <option value="oldbattlefield">Old Battlefield</option>
                         <option value="downtown">Downtown</option>
+                        <option value="orbitalstation">Orbital Station</option>
+                        <option value="wasteland">Wasteland</option>
+                        <option value="undercity">Undercity</option>
+                        <option value="industrialzone">Industrial Zone</option>
+                        <option value="frozenreach">Frozen Reach</option>
+                        <option value="neonstrip">Neon Strip</option>
+                        <option value="deadzone">Dead Zone</option>
                     </select>
                 </div>
                 <div class="location-desc" id="location-desc">
@@ -788,10 +795,24 @@
     <script src="enemies_scrapyard.js"></script>
     <script src="enemies_oldbattlefield.js"></script>
     <script src="enemies_downtown.js"></script>
+    <script src="enemies_orbitalstation.js"></script>
+    <script src="enemies_wasteland.js"></script>
+    <script src="enemies_undercity.js"></script>
+    <script src="enemies_industrialzone.js"></script>
+    <script src="enemies_frozenreach.js"></script>
+    <script src="enemies_neonstrip.js"></script>
+    <script src="enemies_deadzone.js"></script>
     <script src="items.js"></script>
     <script src="encounters_scrapyard.js"></script>
     <script src="encounters_oldbattlefield.js"></script>
     <script src="encounters_downtown.js"></script>
+    <script src="encounters_orbitalstation.js"></script>
+    <script src="encounters_wasteland.js"></script>
+    <script src="encounters_undercity.js"></script>
+    <script src="encounters_industrialzone.js"></script>
+    <script src="encounters_frozenreach.js"></script>
+    <script src="encounters_neonstrip.js"></script>
+    <script src="encounters_deadzone.js"></script>
     <script>
         // Game State
         const game = {
@@ -1176,6 +1197,41 @@
                 enemies: ENEMIES_DOWNTOWN,
                 encounters: ENCOUNTERS_DOWNTOWN,
                 desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks."
+            },
+            orbitalstation: {
+                enemies: ENEMIES_ORBITALSTATION,
+                encounters: ENCOUNTERS_ORBITALSTATION,
+                desc: "A derelict orbital platform. Rogue drones and hijacked defense systems stalk the corridors."
+            },
+            wasteland: {
+                enemies: ENEMIES_WASTELAND,
+                encounters: ENCOUNTERS_WASTELAND,
+                desc: "Irradiated badlands where feral war machines and dust-choked scavengers fight over scraps."
+            },
+            undercity: {
+                enemies: ENEMIES_UNDERCITY,
+                encounters: ENCOUNTERS_UNDERCITY,
+                desc: "A labyrinth of tunnels and sewers beneath the streets. Black-ops units and tunnel rats lurk in the dark."
+            },
+            industrialzone: {
+                enemies: ENEMIES_INDUSTRIALZONE,
+                encounters: ENCOUNTERS_INDUSTRIALZONE,
+                desc: "Sprawling factories and refineries. Malfunctioning production bots guard the assembly lines."
+            },
+            frozenreach: {
+                enemies: ENEMIES_FROZENREACH,
+                encounters: ENCOUNTERS_FROZENREACH,
+                desc: "Arctic tundra locked in permanent winter. Cryo-adapted war machines patrol the frozen expanse."
+            },
+            neonstrip: {
+                enemies: ENEMIES_NEONSTRIP,
+                encounters: ENCOUNTERS_NEONSTRIP,
+                desc: "The flashy entertainment district. Syndicate enforcers and casino muscle keep the peace their way."
+            },
+            deadzone: {
+                enemies: ENEMIES_DEADZONE,
+                encounters: ENCOUNTERS_DEADZONE,
+                desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked."
             }
         };
 
@@ -1192,7 +1248,14 @@
         const LOCATION_NAMES = {
             scrapyard: 'SCRAP YARD',
             oldbattlefield: 'OLD BATTLEFIELD',
-            downtown: 'DOWNTOWN'
+            downtown: 'DOWNTOWN',
+            orbitalstation: 'ORBITAL STATION',
+            wasteland: 'WASTELAND',
+            undercity: 'UNDERCITY',
+            industrialzone: 'INDUSTRIAL ZONE',
+            frozenreach: 'FROZEN REACH',
+            neonstrip: 'NEON STRIP',
+            deadzone: 'DEAD ZONE'
         };
 
         function changeLocation(locationKey) {
