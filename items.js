@@ -472,6 +472,62 @@ const ITEMS = [
         dropRate: 14,
         droppedBy: ["Droid Sentinel", "Droid Destroyer"],
         cost: 25
+    },
+
+    // ==================== PROCESSOR (XP Bonus) ====================
+    {
+        name: "Basic Data Processor [+1 XP]",
+        type: "processor",
+        desc: "A salvaged co-processor that logs combat data for marginal experience gains.",
+        stats: { xpBonus: 1 },
+        dropRate: 50,
+        droppedBy: [],
+        cost: 15
+    },
+    {
+        name: "Enhanced Data Processor [+2 XP]",
+        type: "processor",
+        desc: "Upgraded firmware extracts more tactical insight from every engagement.",
+        stats: { xpBonus: 2 },
+        dropRate: 35,
+        droppedBy: [],
+        cost: 35
+    },
+    {
+        name: "Combat Analyzer [+3 XP]",
+        type: "processor",
+        desc: "Real-time battle analysis that breaks down enemy patterns into actionable data.",
+        stats: { xpBonus: 3 },
+        dropRate: 22,
+        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
+        cost: 60
+    },
+    {
+        name: "Tactical Neural Net [+4 XP]",
+        type: "processor",
+        desc: "A neural network that simulates thousands of combat scenarios from a single encounter.",
+        stats: { xpBonus: 4 },
+        dropRate: 14,
+        droppedBy: ["Droid Sentinel"],
+        cost: 90
+    },
+    {
+        name: "Quantum Learning Core [+5 XP]",
+        type: "processor",
+        desc: "Quantum-state processor that learns across parallel probability branches simultaneously.",
+        stats: { xpBonus: 5 },
+        dropRate: 8,
+        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
+        cost: 130
+    },
+    {
+        name: "Omega Experience Engine [+7 XP]",
+        type: "processor",
+        desc: "Prototype engine that rewrites the mech's combat doctrine in real time. Every kill teaches volumes.",
+        stats: { xpBonus: 7 },
+        dropRate: 3,
+        droppedBy: ["Droid Destroyer"],
+        cost: 200
     }
 
 ];
@@ -482,5 +538,6 @@ const ITEM_TYPES = {
     legs: "LEGS READY FOR INSTALLATION",
     arms: "ARMS READY FOR INSTALLATION",
     weapon: "WEAPON READY FOR INSTALLATION",
-    chip: "CHIP READY FOR INSTALLATION"
+    chip: "CHIP READY FOR INSTALLATION",
+    processor: "PROCESSOR READY FOR INSTALLATION"
 };

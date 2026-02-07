@@ -720,6 +720,11 @@
                     <select id="equip-chip"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-chip"></div>
                 </div>
+                <div class="equip-slot">
+                    <label>Processor</label>
+                    <select id="equip-processor"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-processor"></div>
+                </div>
             </div>
         </div>
 
@@ -863,7 +868,8 @@
                 legs: null,
                 arms: null,
                 weapon: null,
-                chip: null
+                chip: null,
+                processor: null
             },
             currentWave: null,
             inBattle: false,
@@ -1009,7 +1015,8 @@
                         legs: data.equipment.legs || null,
                         arms: data.equipment.arms || null,
                         weapon: data.equipment.weapon || null,
-                        chip: data.equipment.chip || null
+                        chip: data.equipment.chip || null,
+                        processor: data.equipment.processor || null
                     };
                 }
             } else {
@@ -1024,7 +1031,7 @@
                 game.player.baseCombo = 5;
                 game.deaths = 0;
                 game.inventory = [];
-                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null };
+                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null };
                 currentLocation = 'scrapyard';
             }
 
@@ -1130,7 +1137,8 @@
                         legs: data.equipment.legs || null,
                         arms: data.equipment.arms || null,
                         weapon: data.equipment.weapon || null,
-                        chip: data.equipment.chip || null
+                        chip: data.equipment.chip || null,
+                        processor: data.equipment.processor || null
                     };
                 }
 
@@ -1388,9 +1396,18 @@
             updateStats();
         }
 
+        // Get current XP bonus from equipped processor
+        function getXpBonus() {
+            const processorName = game.equipment.processor;
+            if (!processorName) return 0;
+            const item = ITEMS.find(i => i.name === processorName);
+            if (item && item.stats && item.stats.xpBonus) return item.stats.xpBonus;
+            return 0;
+        }
+
         // Update equipment dropdowns with inventory items
         function updateEquipmentUI() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
 
             slots.forEach(slot => {
                 const select = document.getElementById(`equip-${slot}`);
@@ -1416,7 +1433,7 @@
 
         // Update equipment description text under each dropdown
         function updateEquipmentDescs() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
             slots.forEach(slot => {
                 const descEl = document.getElementById(`equip-desc-${slot}`);
                 const itemName = game.equipment[slot];
@@ -1448,7 +1465,7 @@
 
         // Lock/unlock equipment dropdowns
         function setEquipmentLocked(locked) {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
@@ -1903,8 +1920,11 @@
                 // Check if current enemy 
                 if (wave.currentEnemy <= 0) {
                     wave.remaining--;
-                    wave.xpEarned = (wave.xpEarned || 0) + et.xp;
-                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${et.xp} XP)`, 'enemy');
+                    const xpBonus = getXpBonus();
+                    const killXp = et.xp + xpBonus;
+                    wave.xpEarned = (wave.xpEarned || 0) + killXp;
+                    const bonusText = xpBonus > 0 ? ` (+${xpBonus} PROC)` : '';
+                    await addMessage(`[KILL CONFIRMED] ${et.name} #${wave.currentTarget} destroyed (+${killXp} XP${bonusText})`, 'enemy');
                     wave.currentTarget++;
                     wave.currentEnemy = null;
 
@@ -2106,7 +2126,7 @@
         // Initialize game
         function init() {
             // Set up equipment dropdown event listeners
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).addEventListener('change', (e) => {
                     onEquipmentChange(slot, e.target.value);
