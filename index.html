@@ -202,9 +202,7 @@
 
         /* Equipment Panel */
         .equipment-panel {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #00ff8844;
+            margin-top: 10px;
         }
 
         .equipment-panel h4 {
@@ -299,14 +297,10 @@
 
         /* Shop Panel */
         .shop-panel {
-            display: none;
+            display: flex;
             flex-direction: column;
             gap: 8px;
             margin-top: 10px;
-        }
-
-        .shop-panel.visible {
-            display: flex;
         }
 
         .shop-btn {
@@ -532,6 +526,55 @@
             color: #0a0a0f;
         }
 
+        /* Panel Pages */
+        .panel-page {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .panel-page.active {
+            display: flex;
+        }
+
+        .panel-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            margin-top: auto;
+            border-top: 1px solid #00ff8844;
+        }
+
+        .panel-nav-btn {
+            background: #1a1a2e;
+            border: 1px solid #00ff8855;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .panel-nav-btn:hover:not(:disabled) {
+            background: #00ff88;
+            color: #0a0a0f;
+        }
+
+        .panel-nav-btn:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
+
+        .panel-nav-label {
+            color: #888;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
         /* Scrollbar */
         .chat-messages::-webkit-scrollbar {
             width: 8px;
@@ -559,85 +602,97 @@
         </div>
         <h4>/// v1.5.0</h4>
 
-        <div class="hp-bar-container">
-            <div class="hp-bar" id="hp-bar">
-                <span class="hp-text" id="hp-text">100 / 100</span>
+        <div class="panel-page active" id="page-stats">
+            <div class="hp-bar-container">
+                <div class="hp-bar" id="hp-bar">
+                    <span class="hp-text" id="hp-text">100 / 100</span>
+                </div>
+            </div>
+
+            <div class="xp-bar-container">
+                <div class="xp-bar" id="xp-bar" style="width: 0%"></div>
+            </div>
+            <div class="xp-label" id="xp-label">XP: 0 / 10</div>
+
+            <div style="margin-top: 20px;">
+                <div class="stat-row">
+                    <span class="stat-label">Level</span>
+                    <span class="stat-value" id="stat-level">1</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Attack</span>
+                    <span class="stat-value" id="stat-attack">5</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Speed</span>
+                    <span class="stat-value" id="stat-speed">10</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Defence</span>
+                    <span class="stat-value" id="stat-defence">3</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Combo</span>
+                    <span class="stat-value" id="stat-combo">5%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Deaths</span>
+                    <span class="stat-value" id="stat-deaths">0</span>
+                </div>
+            </div>
+
+            <div class="timer-display" id="timer-display">
+                Next  in: --:--
+            </div>
+            <div class="save-indicator" id="save-indicator">
+                [SAVED]
+            </div>
+
+            <div class="action-panel">
+                <button class="action-btn engage" id="btn-engage" disabled>Engage</button>
+                <button class="action-btn retreat" id="btn-retreat" disabled>Decline</button>
             </div>
         </div>
 
-        <div class="xp-bar-container">
-            <div class="xp-bar" id="xp-bar" style="width: 0%"></div>
-        </div>
-        <div class="xp-label" id="xp-label">XP: 0 / 10</div>
-
-        <div style="margin-top: 20px;">
-            <div class="stat-row">
-                <span class="stat-label">Level</span>
-                <span class="stat-value" id="stat-level">1</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Attack</span>
-                <span class="stat-value" id="stat-attack">5</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Speed</span>
-                <span class="stat-value" id="stat-speed">10</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Defence</span>
-                <span class="stat-value" id="stat-defence">3</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Combo</span>
-                <span class="stat-value" id="stat-combo">5%</span>
-            </div>
-            <div class="stat-row">
-                <span class="stat-label">Deaths</span>
-                <span class="stat-value" id="stat-deaths">0</span>
+        <div class="panel-page" id="page-installations">
+            <div class="equipment-panel">
+                <h4>[ INSTALLATIONS ]</h4>
+                <div class="equip-slot">
+                    <label>Body</label>
+                    <select id="equip-body"><option value="">-- None --</option></select>
+                </div>
+                <div class="equip-slot">
+                    <label>Legs</label>
+                    <select id="equip-legs"><option value="">-- None --</option></select>
+                </div>
+                <div class="equip-slot">
+                    <label>Arms</label>
+                    <select id="equip-arms"><option value="">-- None --</option></select>
+                </div>
+                <div class="equip-slot">
+                    <label>Weapon</label>
+                    <select id="equip-weapon"><option value="">-- None --</option></select>
+                </div>
+                <div class="equip-slot">
+                    <label>Systems Chip</label>
+                    <select id="equip-chip"><option value="">-- None --</option></select>
+                </div>
             </div>
         </div>
 
-        <div class="timer-display" id="timer-display">
-            Next  in: --:--
-        </div>
-        <div class="save-indicator" id="save-indicator">
-            [SAVED]
-        </div>
-
-        <div class="equipment-panel">
-            <h4>[ INSTALLATIONS ]</h4>
-            <div class="equip-slot">
-                <label>Body</label>
-                <select id="equip-body"><option value="">-- None --</option></select>
-            </div>
-            <div class="equip-slot">
-                <label>Legs</label>
-                <select id="equip-legs"><option value="">-- None --</option></select>
-            </div>
-            <div class="equip-slot">
-                <label>Arms</label>
-                <select id="equip-arms"><option value="">-- None --</option></select>
-            </div>
-            <div class="equip-slot">
-                <label>Weapon</label>
-                <select id="equip-weapon"><option value="">-- None --</option></select>
-            </div>
-            <div class="equip-slot">
-                <label>Systems Chip</label>
-                <select id="equip-chip"><option value="">-- None --</option></select>
+        <div class="panel-page" id="page-store">
+            <div class="shop-panel" id="shop-panel">
+                <button class="shop-btn" id="shop-item-1" disabled>--</button>
+                <button class="shop-btn" id="shop-item-2" disabled>--</button>
+                <button class="shop-btn" id="shop-item-3" disabled>--</button>
+                <button class="shop-btn leave" id="shop-leave">Buy Nothing</button>
             </div>
         </div>
 
-        <div class="action-panel">
-            <button class="action-btn engage" id="btn-engage" disabled>Engage</button>
-            <button class="action-btn retreat" id="btn-retreat" disabled>Decline</button>
-        </div>
-
-        <div class="shop-panel" id="shop-panel">
-            <button class="shop-btn" id="shop-item-1" disabled>--</button>
-            <button class="shop-btn" id="shop-item-2" disabled>--</button>
-            <button class="shop-btn" id="shop-item-3" disabled>--</button>
-            <button class="shop-btn leave" id="shop-leave">Buy Nothing</button>
+        <div class="panel-nav">
+            <button class="panel-nav-btn" id="nav-prev" disabled>&lt;</button>
+            <span class="panel-nav-label" id="nav-label">Stats</span>
+            <button class="panel-nav-btn" id="nav-next">&gt;</button>
         </div>
     </div>
 
@@ -885,9 +940,10 @@
             updateStats();
             saveGame();
 
-            // Reset UI: clear chat, hide shop, disable buttons
+            // Reset UI: clear chat, reset page, disable buttons
             chatMessages.innerHTML = '';
-            hideShopPanel();
+            storeAvailable = false;
+            showPage(0);
             setEquipmentLocked(false);
             btnEngage.disabled = true;
             btnRetreat.disabled = true;
@@ -994,6 +1050,51 @@
         const btnEngage = document.getElementById('btn-engage');
         const btnRetreat = document.getElementById('btn-retreat');
         const timerDisplay = document.getElementById('timer-display');
+
+        // Panel page navigation
+        const PAGES = [
+            { id: 'page-stats', label: 'Stats' },
+            { id: 'page-installations', label: 'Installations' },
+            { id: 'page-store', label: 'Store' }
+        ];
+        let currentPage = 0;
+        let storeAvailable = false;
+
+        function getAvailablePages() {
+            if (storeAvailable) return [0, 1, 2];
+            return [0, 1];
+        }
+
+        function updatePanelNav() {
+            const available = getAvailablePages();
+            const idx = available.indexOf(currentPage);
+            document.getElementById('nav-prev').disabled = idx <= 0;
+            document.getElementById('nav-next').disabled = idx >= available.length - 1;
+            document.getElementById('nav-label').textContent = PAGES[currentPage].label;
+        }
+
+        function showPage(pageIndex) {
+            PAGES.forEach((p, i) => {
+                document.getElementById(p.id).classList.toggle('active', i === pageIndex);
+            });
+            currentPage = pageIndex;
+            updatePanelNav();
+        }
+
+        function navPrev() {
+            const available = getAvailablePages();
+            const idx = available.indexOf(currentPage);
+            if (idx > 0) showPage(available[idx - 1]);
+        }
+
+        function navNext() {
+            const available = getAvailablePages();
+            const idx = available.indexOf(currentPage);
+            if (idx < available.length - 1) showPage(available[idx + 1]);
+        }
+
+        document.getElementById('nav-prev').addEventListener('click', navPrev);
+        document.getElementById('nav-next').addEventListener('click', navNext);
 
         // Add message to chat with delay
         async function addMessage(text, type = 'system') {
@@ -1287,17 +1388,18 @@
             }
         }
 
-        // Show shop panel
+        // Show shop panel (switch to store page)
         function showShopPanel() {
-            document.getElementById('shop-panel').classList.add('visible');
-            document.querySelector('.action-panel').style.display = 'none';
+            storeAvailable = true;
             updateShopUI();
+            showPage(2);
         }
 
-        // Hide shop panel
+        // Hide shop panel (leave store page)
         function hideShopPanel() {
-            document.getElementById('shop-panel').classList.remove('visible');
-            document.querySelector('.action-panel').style.display = 'flex';
+            storeAvailable = false;
+            if (currentPage === 2) showPage(0);
+            updatePanelNav();
         }
 
         // Handle shop purchase
