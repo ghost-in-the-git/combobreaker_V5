@@ -526,6 +526,76 @@
             color: #0a0a0f;
         }
 
+        .confirm-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirm-overlay.visible {
+            display: flex;
+        }
+
+        .confirm-box {
+            background: #12121a;
+            border: 2px solid #ff4444;
+            border-radius: 8px;
+            padding: 20px;
+            width: 320px;
+            max-width: 90vw;
+            text-align: center;
+        }
+
+        .confirm-box p {
+            color: #ccc;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .confirm-btn {
+            padding: 8px 24px;
+            border: 1px solid;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .confirm-btn.yes {
+            background: #ff4444;
+            border-color: #ff4444;
+            color: #fff;
+        }
+
+        .confirm-btn.yes:hover {
+            background: #ff6666;
+        }
+
+        .confirm-btn.no {
+            background: transparent;
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .confirm-btn.no:hover {
+            background: #00ff88;
+            color: #0a0a0f;
+        }
+
         /* Location Panel */
         .location-panel {
             margin-top: 10px;
@@ -823,6 +893,16 @@
         </div>
     </div>
 
+    <div class="confirm-overlay" id="confirm-delete-modal">
+        <div class="confirm-box">
+            <p>Are you sure you want to delete?</p>
+            <div class="confirm-actions">
+                <button class="confirm-btn yes" id="confirm-delete-yes">Yes</button>
+                <button class="confirm-btn no" id="confirm-delete-no">No</button>
+            </div>
+        </div>
+    </div>
+
     <script src="enemies_scrapyard.js"></script>
     <script src="enemies_oldbattlefield.js"></script>
     <script src="enemies_downtown.js"></script>
@@ -1075,11 +1155,30 @@
             }, 2000);
         }
 
-        // Delete a save slot
+        // Delete a save slot (with confirmation)
+        let pendingDeleteSlot = null;
+
         function deleteSlot(slotNum) {
-            localStorage.removeItem(SLOT_KEYS[slotNum - 1]);
-            refreshSlotDisplays();
+            pendingDeleteSlot = slotNum;
+            document.getElementById('confirm-delete-modal').classList.add('visible');
         }
+
+        document.getElementById('confirm-delete-yes').addEventListener('click', () => {
+            if (pendingDeleteSlot !== null) {
+                localStorage.removeItem(SLOT_KEYS[pendingDeleteSlot - 1]);
+                if (game.activeSlot === pendingDeleteSlot) {
+                    game.activeSlot = null;
+                }
+                refreshSlotDisplays();
+                pendingDeleteSlot = null;
+            }
+            document.getElementById('confirm-delete-modal').classList.remove('visible');
+        });
+
+        document.getElementById('confirm-delete-no').addEventListener('click', () => {
+            pendingDeleteSlot = null;
+            document.getElementById('confirm-delete-modal').classList.remove('visible');
+        });
 
         // Save game state to localStorage
         function saveGame() {
