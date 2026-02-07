@@ -432,6 +432,10 @@
                 <span class="stat-label">Combo</span>
                 <span class="stat-value" id="stat-combo">5%</span>
             </div>
+            <div class="stat-row">
+                <span class="stat-label">Deaths</span>
+                <span class="stat-value" id="stat-deaths">0</span>
+            </div>
         </div>
 
         <div class="timer-display" id="timer-display">
@@ -531,7 +535,8 @@
             countdownInterval: null,
             countdownMsg: null,
             REGEN_RATE: 30000, // 1 hp per 30 seconds
-            ENCOUNTER_CHANCE: 20 // % chance for encounter instead of enemy wave
+            ENCOUNTER_CHANCE: 20, // % chance for encounter instead of enemy wave
+            deaths: 0
         };
 
         // Current encounter state
@@ -555,7 +560,8 @@
                     baseCombo: game.player.baseCombo
                 },
                 inventory: game.inventory.map(item => item.name),
-                equipment: { ...game.equipment }
+                equipment: { ...game.equipment },
+                deaths: game.deaths
             };
 
             try {
@@ -583,6 +589,9 @@
                 game.player.baseSpeed = data.player.baseSpeed || 10;
                 game.player.baseDefence = data.player.baseDefence || 3;
                 game.player.baseCombo = data.player.baseCombo || 5;
+
+                // Restore death counter
+                game.deaths = data.deaths || 0;
 
                 // Restore inventory (convert names back to item objects)
                 game.inventory = [];
@@ -658,6 +667,7 @@
             document.getElementById('stat-speed').textContent = p.speed;
             document.getElementById('stat-defence').textContent = p.defence;
             document.getElementById('stat-combo').textContent = `${p.combo}%`;
+            document.getElementById('stat-deaths').textContent = game.deaths;
         }
 
         // Recalculate stats from base + equipment
@@ -1263,6 +1273,7 @@
 
                 checkLevelUp();
             } else {
+                game.deaths++;
                 addMessage(`Your mech has been confirmed destroyed.`, 'system');
                 addMessage(`Systems resetting.`, 'system');
                 // Respawn with half HP
