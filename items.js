@@ -528,6 +528,62 @@ const ITEMS = [
         dropRate: 3,
         droppedBy: ["Droid Destroyer"],
         cost: 200
+    },
+
+    // ==================== PILOT (All Stats) ====================
+    {
+        name: "Rookie Pilot [+1 ALL]",
+        type: "pilot",
+        desc: "A green recruit fresh from the simulator. Eager, clumsy, but better than an empty cockpit.",
+        stats: { hp: 1, attack: 1, speed: 1, defence: 1, combo: 1 },
+        dropRate: 50,
+        droppedBy: [],
+        cost: 20
+    },
+    {
+        name: "Trained Pilot [+2 ALL]",
+        type: "pilot",
+        desc: "A field-tested operator with enough scars to know when to push and when to pull back.",
+        stats: { hp: 2, attack: 2, speed: 2, defence: 2, combo: 2 },
+        dropRate: 35,
+        droppedBy: [],
+        cost: 45
+    },
+    {
+        name: "Veteran Pilot [+3 ALL]",
+        type: "pilot",
+        desc: "Hundreds of sorties logged. Reads the battlefield like a book and moves before the enemy thinks.",
+        stats: { hp: 3, attack: 3, speed: 3, defence: 3, combo: 3 },
+        dropRate: 22,
+        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
+        cost: 75
+    },
+    {
+        name: "Elite Pilot [+4 ALL]",
+        type: "pilot",
+        desc: "Top 1% of mech operators. Neural sync rate is off the charts. The mech feels like a second skin.",
+        stats: { hp: 4, attack: 4, speed: 4, defence: 4, combo: 4 },
+        dropRate: 14,
+        droppedBy: ["Droid Sentinel"],
+        cost: 110
+    },
+    {
+        name: "Ace Pilot [+5 ALL]",
+        type: "pilot",
+        desc: "A living legend on the battlefield. Enemies break formation at the sight of this callsign.",
+        stats: { hp: 5, attack: 5, speed: 5, defence: 5, combo: 5 },
+        dropRate: 8,
+        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
+        cost: 160
+    },
+    {
+        name: "Ghost Pilot [+7 ALL]",
+        type: "pilot",
+        desc: "Officially listed as KIA. Unofficially, the deadliest operator ever to interface with a Breaker frame.",
+        stats: { hp: 7, attack: 7, speed: 7, defence: 7, combo: 7 },
+        dropRate: 3,
+        droppedBy: ["Droid Destroyer"],
+        cost: 250
     }
 
 ];
@@ -539,5 +595,6 @@ const ITEM_TYPES = {
     arms: "ARMS READY FOR INSTALLATION",
     weapon: "WEAPON READY FOR INSTALLATION",
     chip: "CHIP READY FOR INSTALLATION",
-    processor: "PROCESSOR READY FOR INSTALLATION"
+    processor: "PROCESSOR READY FOR INSTALLATION",
+    pilot: "PILOT READY FOR INSTALLATION"
 };

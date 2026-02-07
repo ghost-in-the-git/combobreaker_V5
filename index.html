@@ -725,6 +725,11 @@
                     <select id="equip-processor"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-processor"></div>
                 </div>
+                <div class="equip-slot">
+                    <label>Pilot</label>
+                    <select id="equip-pilot"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-pilot"></div>
+                </div>
             </div>
         </div>
 
@@ -869,7 +874,8 @@
                 arms: null,
                 weapon: null,
                 chip: null,
-                processor: null
+                processor: null,
+                pilot: null
             },
             currentWave: null,
             inBattle: false,
@@ -1016,7 +1022,8 @@
                         arms: data.equipment.arms || null,
                         weapon: data.equipment.weapon || null,
                         chip: data.equipment.chip || null,
-                        processor: data.equipment.processor || null
+                        processor: data.equipment.processor || null,
+                        pilot: data.equipment.pilot || null
                     };
                 }
             } else {
@@ -1031,7 +1038,7 @@
                 game.player.baseCombo = 5;
                 game.deaths = 0;
                 game.inventory = [];
-                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null };
+                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null };
                 currentLocation = 'scrapyard';
             }
 
@@ -1138,7 +1145,8 @@
                         arms: data.equipment.arms || null,
                         weapon: data.equipment.weapon || null,
                         chip: data.equipment.chip || null,
-                        processor: data.equipment.processor || null
+                        processor: data.equipment.processor || null,
+                        pilot: data.equipment.pilot || null
                     };
                 }
 
@@ -1407,7 +1415,7 @@
 
         // Update equipment dropdowns with inventory items
         function updateEquipmentUI() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
 
             slots.forEach(slot => {
                 const select = document.getElementById(`equip-${slot}`);
@@ -1433,7 +1441,7 @@
 
         // Update equipment description text under each dropdown
         function updateEquipmentDescs() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
             slots.forEach(slot => {
                 const descEl = document.getElementById(`equip-desc-${slot}`);
                 const itemName = game.equipment[slot];
@@ -1465,7 +1473,7 @@
 
         // Lock/unlock equipment dropdowns
         function setEquipmentLocked(locked) {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
@@ -2126,7 +2134,7 @@
         // Initialize game
         function init() {
             // Set up equipment dropdown event listeners
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).addEventListener('change', (e) => {
                     onEquipmentChange(slot, e.target.value);
