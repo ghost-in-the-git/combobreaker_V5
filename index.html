@@ -821,6 +821,17 @@
             const data = getSlotData(slotNum);
             game.activeSlot = slotNum;
 
+            // Stop all active timers and battle state
+            game.inBattle = false;
+            game.currentWave = null;
+            currentEncounter = null;
+            shopItems = [];
+            if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
+            if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
+            if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
+            clearCountdown();
+
             if (data && data.player) {
                 // Restore player base stats
                 game.player.level = data.player.level || 1;
@@ -874,6 +885,13 @@
             updateStats();
             saveGame();
 
+            // Reset UI: clear chat, hide shop, disable buttons
+            chatMessages.innerHTML = '';
+            hideShopPanel();
+            setEquipmentLocked(false);
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+
             // Close modal and notify
             document.getElementById('save-modal').classList.remove('visible');
             if (data && data.player) {
@@ -881,6 +899,12 @@
             } else {
                 addMessage(`[FRESH START] All systems reset to factory defaults.`, 'system');
             }
+
+            // Restart wave cycle
+            setTimeout(() => {
+                spawnWave();
+                startWaveTimer();
+            }, 2000);
         }
 
         // Delete a save slot
