@@ -548,6 +548,22 @@
             line-height: 1.5;
         }
 
+        .equip-desc {
+            padding: 6px 8px;
+            background: #1a1a2e;
+            border: 1px solid #00ff8833;
+            border-radius: 4px;
+            color: #888;
+            font-size: 10px;
+            line-height: 1.4;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .equip-desc.visible {
+            display: block;
+        }
+
         /* Panel Pages */
         .panel-page {
             display: none;
@@ -682,22 +698,27 @@
                 <div class="equip-slot">
                     <label>Body</label>
                     <select id="equip-body"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-body"></div>
                 </div>
                 <div class="equip-slot">
                     <label>Legs</label>
                     <select id="equip-legs"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-legs"></div>
                 </div>
                 <div class="equip-slot">
                     <label>Arms</label>
                     <select id="equip-arms"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-arms"></div>
                 </div>
                 <div class="equip-slot">
                     <label>Weapon</label>
                     <select id="equip-weapon"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-weapon"></div>
                 </div>
                 <div class="equip-slot">
                     <label>Systems Chip</label>
                     <select id="equip-chip"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-chip"></div>
                 </div>
             </div>
         </div>
@@ -1390,6 +1411,29 @@
                     select.appendChild(option);
                 });
             });
+            updateEquipmentDescs();
+        }
+
+        // Update equipment description text under each dropdown
+        function updateEquipmentDescs() {
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip'];
+            slots.forEach(slot => {
+                const descEl = document.getElementById(`equip-desc-${slot}`);
+                const itemName = game.equipment[slot];
+                if (itemName) {
+                    const item = ITEMS.find(i => i.name === itemName);
+                    if (item && item.desc) {
+                        descEl.textContent = item.desc;
+                        descEl.classList.add('visible');
+                    } else {
+                        descEl.textContent = '';
+                        descEl.classList.remove('visible');
+                    }
+                } else {
+                    descEl.textContent = '';
+                    descEl.classList.remove('visible');
+                }
+            });
         }
 
         // Handle equipment change
@@ -1398,6 +1442,7 @@
 
             game.equipment[slot] = itemName || null;
             recalculateStats();
+            updateEquipmentDescs();
             saveGame();
         }
 
