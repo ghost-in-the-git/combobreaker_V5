@@ -526,6 +526,28 @@
             color: #0a0a0f;
         }
 
+        /* Location Panel */
+        .location-panel {
+            margin-top: 10px;
+        }
+
+        .location-panel h4 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .location-desc {
+            margin-top: 15px;
+            padding: 10px;
+            background: #1a1a2e;
+            border: 1px solid #00ff8833;
+            border-radius: 4px;
+            color: #888;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
         /* Panel Pages */
         .panel-page {
             display: none;
@@ -680,6 +702,23 @@
             </div>
         </div>
 
+        <div class="panel-page" id="page-location">
+            <div class="location-panel">
+                <h4>[ LOCATION ]</h4>
+                <div class="equip-slot">
+                    <label>Current Zone</label>
+                    <select id="location-select">
+                        <option value="scrapyard">Scrap Yard</option>
+                        <option value="oldbattlefield">Old Battlefield</option>
+                        <option value="downtown">Downtown</option>
+                    </select>
+                </div>
+                <div class="location-desc" id="location-desc">
+                    Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.
+                </div>
+            </div>
+        </div>
+
         <div class="panel-page" id="page-store">
             <div class="shop-panel" id="shop-panel">
                 <button class="shop-btn" id="shop-item-1" disabled>--</button>
@@ -746,9 +785,13 @@
         </div>
     </div>
 
-    <script src="enemies.js"></script>
+    <script src="enemies_scrapyard.js"></script>
+    <script src="enemies_oldbattlefield.js"></script>
+    <script src="enemies_downtown.js"></script>
     <script src="items.js"></script>
-    <script src="encounters.js"></script>
+    <script src="encounters_scrapyard.js"></script>
+    <script src="encounters_oldbattlefield.js"></script>
+    <script src="encounters_downtown.js"></script>
     <script>
         // Game State
         const game = {
@@ -821,7 +864,8 @@
                 inventory: game.inventory.map(item => item.name),
                 equipment: { ...game.equipment },
                 deaths: game.deaths,
-                activeSlot: game.activeSlot
+                activeSlot: game.activeSlot,
+                location: currentLocation
             };
         }
 
@@ -900,6 +944,13 @@
 
                 game.deaths = data.deaths || 0;
 
+                // Restore location
+                if (data.location && LOCATIONS[data.location]) {
+                    currentLocation = data.location;
+                } else {
+                    currentLocation = 'scrapyard';
+                }
+
                 // Restore inventory
                 game.inventory = [];
                 if (data.inventory && Array.isArray(data.inventory)) {
@@ -932,7 +983,12 @@
                 game.deaths = 0;
                 game.inventory = [];
                 game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null };
+                currentLocation = 'scrapyard';
             }
+
+            // Update location UI
+            document.getElementById('location-select').value = currentLocation;
+            document.getElementById('location-desc').textContent = LOCATIONS[currentLocation].desc;
 
             recalculateStats();
             game.player.hp = game.player.maxHp;
@@ -1007,6 +1063,13 @@
                 game.deaths = data.deaths || 0;
                 game.activeSlot = data.activeSlot || null;
 
+                // Restore location
+                if (data.location && LOCATIONS[data.location]) {
+                    currentLocation = data.location;
+                    document.getElementById('location-select').value = currentLocation;
+                    document.getElementById('location-desc').textContent = LOCATIONS[currentLocation].desc;
+                }
+
                 // Restore inventory (convert names back to item objects)
                 game.inventory = [];
                 if (data.inventory && Array.isArray(data.inventory)) {
@@ -1055,14 +1118,15 @@
         const PAGES = [
             { id: 'page-stats', label: 'Stats' },
             { id: 'page-installations', label: 'Installations' },
+            { id: 'page-location', label: 'Location' },
             { id: 'page-store', label: 'Store' }
         ];
         let currentPage = 0;
         let storeAvailable = false;
 
         function getAvailablePages() {
-            if (storeAvailable) return [0, 1, 2];
-            return [0, 1];
+            if (storeAvailable) return [0, 1, 2, 3];
+            return [0, 1, 2];
         }
 
         function updatePanelNav() {
@@ -1095,6 +1159,45 @@
 
         document.getElementById('nav-prev').addEventListener('click', navPrev);
         document.getElementById('nav-next').addEventListener('click', navNext);
+
+        // Location system
+        const LOCATIONS = {
+            scrapyard: {
+                enemies: ENEMIES_SCRAPYARD,
+                encounters: ENCOUNTERS_SCRAPYARD,
+                desc: "Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage."
+            },
+            oldbattlefield: {
+                enemies: ENEMIES_OLDBATTLEFIELD,
+                encounters: ENCOUNTERS_OLDBATTLEFIELD,
+                desc: "Scarred terrain littered with war machines still running combat protocols from a forgotten conflict."
+            },
+            downtown: {
+                enemies: ENEMIES_DOWNTOWN,
+                encounters: ENCOUNTERS_DOWNTOWN,
+                desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks."
+            }
+        };
+
+        let currentLocation = 'scrapyard';
+
+        function getEnemies() {
+            return LOCATIONS[currentLocation].enemies;
+        }
+
+        function getEncounters() {
+            return LOCATIONS[currentLocation].encounters;
+        }
+
+        function changeLocation(locationKey) {
+            currentLocation = locationKey;
+            document.getElementById('location-desc').textContent = LOCATIONS[locationKey].desc;
+            saveGame();
+        }
+
+        document.getElementById('location-select').addEventListener('change', (e) => {
+            changeLocation(e.target.value);
+        });
 
         // Add message to chat with delay
         async function addMessage(text, type = 'system') {
@@ -1274,7 +1377,7 @@
             const playerLevel = game.player.level;
 
             // Filter enemies by level requirement
-            const available = ENEMIES.filter(e => e.minLevel <= playerLevel);
+            const available = getEnemies().filter(e => e.minLevel <= playerLevel);
 
             // Calculate total appearance rate
             const totalRate = available.reduce((sum, e) => sum + e.appearanceRate, 0);
@@ -1314,7 +1417,7 @@
             const playerLevel = game.player.level;
 
             // Filter encounters by level requirement
-            const available = ENCOUNTERS.filter(e => e.minLevel <= playerLevel);
+            const available = getEncounters().filter(e => e.minLevel <= playerLevel);
             if (available.length === 0) return null;
 
             // Calculate total appearance rate
@@ -1392,13 +1495,13 @@
         function showShopPanel() {
             storeAvailable = true;
             updateShopUI();
-            showPage(2);
+            showPage(3);
         }
 
         // Hide shop panel (leave store page)
         function hideShopPanel() {
             storeAvailable = false;
-            if (currentPage === 2) showPage(0);
+            if (currentPage === 3) showPage(0);
             updatePanelNav();
         }
 
