@@ -1,5 +1,5 @@
 /**
- * DOWNTOWN - ENEMY CONFIGURATION
+ * DOWNTOWN - ENEMY CONFIGURATION (Zone 3)
  *
  * Corporate security mechs, street-modded combat rigs, and
  * black-market enforcers patrolling the neon-lit urban sprawl.
@@ -7,22 +7,11 @@
 
 const ENEMIES_DOWNTOWN = [
     {
-        name: "T1 Scout",
-        attack: 2,
-        defence: 0,
-        hp: 1,
-        xp: 2,
-        appearanceRate: 20,
-        minLevel: 1,
-        squadMin: 1,
-        squadMax: 4
-    },
-    {
         name: "Street Modder",
-        attack: 4,
+        attack: 7,
         defence: 3,
-        hp: 8,
-        xp: 8,
+        hp: 12,
+        xp: 10,
         appearanceRate: 25,
         minLevel: 1,
         squadMin: 1,
@@ -30,54 +19,65 @@ const ENEMIES_DOWNTOWN = [
     },
     {
         name: "Corp Security Drone",
-        attack: 6,
-        defence: 4,
-        hp: 12,
-        xp: 12,
-        appearanceRate: 20,
+        attack: 10,
+        defence: 6,
+        hp: 18,
+        xp: 14,
+        appearanceRate: 22,
         minLevel: 1,
         squadMin: 1,
         squadMax: 3
     },
     {
         name: "Neon Ronin",
-        attack: 9,
-        defence: 1,
-        hp: 6,
-        xp: 10,
-        appearanceRate: 12,
+        attack: 14,
+        defence: 4,
+        hp: 15,
+        xp: 18,
+        appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
         squadMax: 2
     },
     {
-        name: "T1 Sentinel",
-        attack: 5,
-        defence: 5,
-        hp: 25,
-        xp: 25,
-        appearanceRate: 8,
+        name: "T2 Sentinel",
+        attack: 12,
+        defence: 8,
+        hp: 35,
+        xp: 28,
+        appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 4
+        squadMax: 2
     },
     {
-        name: "T1 Assassin",
-        attack: 30,
-        defence: 0,
-        hp: 10,
-        xp: 30,
+        name: "Corporate Mech Squad",
+        attack: 10,
+        defence: 10,
+        hp: 40,
+        xp: 35,
+        appearanceRate: 10,
+        minLevel: 1,
+        squadMin: 1,
+        squadMax: 2
+    },
+    {
+        name: "Black Market Enforcer",
+        attack: 18,
+        defence: 8,
+        hp: 30,
+        xp: 40,
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
         squadMax: 1
     },
     {
-        name: "T1 Destroyer",
-        attack: 10,
-        defence: 10,
-        hp: 100,
-        xp: 100,
+        name: "Corporate Warlord",
+        attack: 20,
+        defence: 15,
+        hp: 220,
+        xp: 220,
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,

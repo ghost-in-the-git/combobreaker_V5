@@ -1,5 +1,5 @@
 /**
- * UNDERCITY - ENEMY CONFIGURATION
+ * UNDERCITY - ENEMY CONFIGURATION (Zone 6)
  *
  * Tunnel rats, sewer drones, and black-ops units lurking
  * in the labyrinth beneath the streets.
@@ -8,10 +8,10 @@
 const ENEMIES_UNDERCITY = [
     {
         name: "Tunnel Rat",
-        attack: 3,
-        defence: 1,
-        hp: 5,
-        xp: 4,
+        attack: 18,
+        defence: 8,
+        hp: 28,
+        xp: 25,
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
@@ -19,65 +19,65 @@ const ENEMIES_UNDERCITY = [
     },
     {
         name: "Sewer Drone",
-        attack: 4,
-        defence: 3,
-        hp: 10,
-        xp: 8,
-        appearanceRate: 20,
+        attack: 22,
+        defence: 12,
+        hp: 45,
+        xp: 38,
+        appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
         squadMax: 3
     },
     {
         name: "Pipe Lurker",
-        attack: 8,
-        defence: 2,
-        hp: 9,
-        xp: 10,
-        appearanceRate: 18,
+        attack: 28,
+        defence: 10,
+        hp: 38,
+        xp: 40,
+        appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
         squadMax: 2
     },
     {
         name: "Black-Ops Infiltrator",
-        attack: 11,
-        defence: 4,
-        hp: 15,
-        xp: 18,
-        appearanceRate: 12,
+        attack: 35,
+        defence: 8,
+        hp: 30,
+        xp: 45,
+        appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
         squadMax: 2
     },
     {
         name: "Chem Sprayer",
-        attack: 7,
-        defence: 5,
-        hp: 22,
-        xp: 20,
+        attack: 25,
+        defence: 18,
+        hp: 85,
+        xp: 70,
         appearanceRate: 10,
-        minLevel: 1,
-        squadMin: 1,
-        squadMax: 2
-    },
-    {
-        name: "Subterranean Warden",
-        attack: 9,
-        defence: 9,
-        hp: 40,
-        xp: 35,
-        appearanceRate: 6,
         minLevel: 1,
         squadMin: 1,
         squadMax: 1
     },
     {
-        name: "T1 Destroyer",
-        attack: 10,
-        defence: 10,
-        hp: 100,
-        xp: 100,
+        name: "Subterranean Warden",
+        attack: 38,
+        defence: 25,
+        hp: 110,
+        xp: 90,
+        appearanceRate: 5,
+        minLevel: 1,
+        squadMin: 1,
+        squadMax: 1
+    },
+    {
+        name: "Hive Overlord",
+        attack: 42,
+        defence: 35,
+        hp: 550,
+        xp: 550,
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
