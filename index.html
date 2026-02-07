@@ -330,6 +330,29 @@
             color: #666;
         }
 
+        .shop-item-wrapper {
+            display: none;
+        }
+
+        .shop-item-wrapper.visible {
+            display: block;
+        }
+
+        .shop-item-wrapper .shop-btn {
+            border-radius: 4px 4px 0 0;
+        }
+
+        .shop-desc {
+            padding: 6px 8px;
+            background: #1a1a2e;
+            border: 1px solid #4488ff33;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            color: #888;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
         .shop-btn.leave {
             border-color: #888;
             color: #888;
@@ -829,9 +852,18 @@
 
         <div class="panel-page" id="page-store">
             <div class="shop-panel" id="shop-panel">
-                <button class="shop-btn" id="shop-item-1" disabled>--</button>
-                <button class="shop-btn" id="shop-item-2" disabled>--</button>
-                <button class="shop-btn" id="shop-item-3" disabled>--</button>
+                <div class="shop-item-wrapper" id="shop-wrapper-1">
+                    <button class="shop-btn" id="shop-item-1" disabled>--</button>
+                    <div class="shop-desc" id="shop-desc-1"></div>
+                </div>
+                <div class="shop-item-wrapper" id="shop-wrapper-2">
+                    <button class="shop-btn" id="shop-item-2" disabled>--</button>
+                    <div class="shop-desc" id="shop-desc-2"></div>
+                </div>
+                <div class="shop-item-wrapper" id="shop-wrapper-3">
+                    <button class="shop-btn" id="shop-item-3" disabled>--</button>
+                    <div class="shop-desc" id="shop-desc-3"></div>
+                </div>
                 <button class="shop-btn leave" id="shop-leave">Buy Nothing</button>
             </div>
         </div>
@@ -1744,7 +1776,9 @@
             const playerXP = game.player.xp;
 
             for (let i = 0; i < 3; i++) {
+                const wrapper = document.getElementById(`shop-wrapper-${i + 1}`);
                 const btn = document.getElementById(`shop-item-${i + 1}`);
+                const descEl = document.getElementById(`shop-desc-${i + 1}`);
                 const item = shopItems[i];
 
                 if (item) {
@@ -1752,9 +1786,10 @@
                     const costClass = canAfford ? 'affordable' : '';
                     btn.innerHTML = `${item.name} <span class="shop-cost ${costClass}">[${item.cost} XP]</span>`;
                     btn.disabled = !canAfford;
-                    btn.style.display = 'block';
+                    descEl.textContent = item.desc || '';
+                    wrapper.classList.add('visible');
                 } else {
-                    btn.style.display = 'none';
+                    wrapper.classList.remove('visible');
                 }
             }
         }
