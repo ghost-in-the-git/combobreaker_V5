@@ -1189,10 +1189,45 @@
             return LOCATIONS[currentLocation].encounters;
         }
 
+        const LOCATION_NAMES = {
+            scrapyard: 'SCRAP YARD',
+            oldbattlefield: 'OLD BATTLEFIELD',
+            downtown: 'DOWNTOWN'
+        };
+
         function changeLocation(locationKey) {
             currentLocation = locationKey;
             document.getElementById('location-desc').textContent = LOCATIONS[locationKey].desc;
+
+            // Stop all active timers and battle state
+            game.inBattle = false;
+            game.currentWave = null;
+            currentEncounter = null;
+            shopItems = [];
+            if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
+            if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
+            if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
+            clearCountdown();
+
+            // Reset UI
+            chatMessages.innerHTML = '';
+            storeAvailable = false;
+            if (currentPage === 3) showPage(0);
+            updatePanelNav();
+            setEquipmentLocked(false);
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+
             saveGame();
+
+            addMessage(`[NOW IN ${LOCATION_NAMES[locationKey]}]`, 'system');
+
+            // Restart wave cycle
+            setTimeout(() => {
+                spawnWave();
+                startWaveTimer();
+            }, 2000);
         }
 
         document.getElementById('location-select').addEventListener('change', (e) => {
@@ -1309,6 +1344,7 @@
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
+            document.getElementById('location-select').disabled = locked;
         }
 
         // Add item to inventory
