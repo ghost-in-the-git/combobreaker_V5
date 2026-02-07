@@ -480,17 +480,6 @@
             transition: all 0.2s ease;
         }
 
-        .slot-btn.save {
-            background: #1a2a1a;
-            border-color: #00ff88;
-            color: #00ff88;
-        }
-
-        .slot-btn.save:hover {
-            background: #00ff88;
-            color: #0a0a0f;
-        }
-
         .slot-btn.load {
             background: #1a1a2e;
             border-color: #4488ff;
@@ -665,8 +654,7 @@
                     <span class="save-slot-empty">-- Empty --</span>
                 </div>
                 <div class="save-slot-actions">
-                    <button class="slot-btn save" onclick="saveToSlot(1)">Save</button>
-                    <button class="slot-btn load" id="slot-1-load" onclick="loadFromSlot(1)" disabled>Load</button>
+                    <button class="slot-btn load" id="slot-1-load" onclick="loadFromSlot(1)">Load</button>
                     <button class="slot-btn delete" id="slot-1-delete" onclick="deleteSlot(1)" disabled>Delete</button>
                 </div>
             </div>
@@ -678,8 +666,7 @@
                     <span class="save-slot-empty">-- Empty --</span>
                 </div>
                 <div class="save-slot-actions">
-                    <button class="slot-btn save" onclick="saveToSlot(2)">Save</button>
-                    <button class="slot-btn load" id="slot-2-load" onclick="loadFromSlot(2)" disabled>Load</button>
+                    <button class="slot-btn load" id="slot-2-load" onclick="loadFromSlot(2)">Load</button>
                     <button class="slot-btn delete" id="slot-2-delete" onclick="deleteSlot(2)" disabled>Delete</button>
                 </div>
             </div>
@@ -691,8 +678,7 @@
                     <span class="save-slot-empty">-- Empty --</span>
                 </div>
                 <div class="save-slot-actions">
-                    <button class="slot-btn save" onclick="saveToSlot(3)">Save</button>
-                    <button class="slot-btn load" id="slot-3-load" onclick="loadFromSlot(3)" disabled>Load</button>
+                    <button class="slot-btn load" id="slot-3-load" onclick="loadFromSlot(3)">Load</button>
                     <button class="slot-btn delete" id="slot-3-delete" onclick="deleteSlot(3)" disabled>Delete</button>
                 </div>
             </div>
@@ -809,58 +795,62 @@
                     loadBtn.disabled = false;
                     deleteBtn.disabled = false;
                 } else {
-                    infoEl.innerHTML = '<span class="save-slot-empty">-- Empty --</span>';
-                    loadBtn.disabled = true;
+                    infoEl.innerHTML = '<span class="save-slot-empty">-- Empty (Fresh Start) --</span>';
+                    loadBtn.disabled = false;
                     deleteBtn.disabled = true;
                 }
             }
         }
 
-        // Save current game to a slot
-        function saveToSlot(slotNum) {
-            try {
-                localStorage.setItem(SLOT_KEYS[slotNum - 1], JSON.stringify(buildSaveData()));
-                refreshSlotDisplays();
-            } catch (e) {
-                console.error('Failed to save to slot:', e);
-            }
-        }
-
-        // Load game from a slot
+        // Load game from a slot (empty slot = fresh start)
         function loadFromSlot(slotNum) {
             const data = getSlotData(slotNum);
-            if (!data || !data.player) return;
 
-            // Restore player base stats
-            game.player.level = data.player.level || 1;
-            game.player.xp = data.player.xp || 0;
-            game.player.xpToLevel = data.player.xpToLevel || 10;
-            game.player.baseMaxHp = data.player.baseMaxHp || 100;
-            game.player.baseAttack = data.player.baseAttack || 5;
-            game.player.baseSpeed = data.player.baseSpeed || 10;
-            game.player.baseDefence = data.player.baseDefence || 3;
-            game.player.baseCombo = data.player.baseCombo || 5;
+            if (data && data.player) {
+                // Restore player base stats
+                game.player.level = data.player.level || 1;
+                game.player.xp = data.player.xp || 0;
+                game.player.xpToLevel = data.player.xpToLevel || 10;
+                game.player.baseMaxHp = data.player.baseMaxHp || 100;
+                game.player.baseAttack = data.player.baseAttack || 5;
+                game.player.baseSpeed = data.player.baseSpeed || 10;
+                game.player.baseDefence = data.player.baseDefence || 3;
+                game.player.baseCombo = data.player.baseCombo || 5;
 
-            game.deaths = data.deaths || 0;
+                game.deaths = data.deaths || 0;
 
-            // Restore inventory
-            game.inventory = [];
-            if (data.inventory && Array.isArray(data.inventory)) {
-                data.inventory.forEach(itemName => {
-                    const item = ITEMS.find(i => i.name === itemName);
-                    if (item) game.inventory.push(item);
-                });
-            }
+                // Restore inventory
+                game.inventory = [];
+                if (data.inventory && Array.isArray(data.inventory)) {
+                    data.inventory.forEach(itemName => {
+                        const item = ITEMS.find(i => i.name === itemName);
+                        if (item) game.inventory.push(item);
+                    });
+                }
 
-            // Restore equipment
-            if (data.equipment) {
-                game.equipment = {
-                    body: data.equipment.body || null,
-                    legs: data.equipment.legs || null,
-                    arms: data.equipment.arms || null,
-                    weapon: data.equipment.weapon || null,
-                    chip: data.equipment.chip || null
-                };
+                // Restore equipment
+                if (data.equipment) {
+                    game.equipment = {
+                        body: data.equipment.body || null,
+                        legs: data.equipment.legs || null,
+                        arms: data.equipment.arms || null,
+                        weapon: data.equipment.weapon || null,
+                        chip: data.equipment.chip || null
+                    };
+                }
+            } else {
+                // Empty slot = fresh start
+                game.player.level = 1;
+                game.player.xp = 0;
+                game.player.xpToLevel = 10;
+                game.player.baseMaxHp = 100;
+                game.player.baseAttack = 5;
+                game.player.baseSpeed = 10;
+                game.player.baseDefence = 3;
+                game.player.baseCombo = 5;
+                game.deaths = 0;
+                game.inventory = [];
+                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null };
             }
 
             recalculateStats();
@@ -871,7 +861,11 @@
 
             // Close modal and notify
             document.getElementById('save-modal').classList.remove('visible');
-            addMessage(`[SLOT ${slotNum} LOADED] Level ${game.player.level} restored.`, 'system');
+            if (data && data.player) {
+                addMessage(`[SLOT ${slotNum} LOADED] Level ${game.player.level} restored.`, 'system');
+            } else {
+                addMessage(`[FRESH START] All systems reset to factory defaults.`, 'system');
+            }
         }
 
         // Delete a save slot
