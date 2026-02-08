@@ -656,6 +656,49 @@
             line-height: 1.5;
         }
 
+        /* Mining Panel */
+        .mining-panel {
+            margin-top: 10px;
+        }
+
+        .mining-panel h4 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .mining-category {
+            margin-bottom: 6px;
+        }
+
+        .mining-cat-label {
+            display: block;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mining-cat-label.common { color: #aaaaaa; }
+        .mining-cat-label.uncommon { color: #44cc44; }
+        .mining-cat-label.scarce { color: #4488ff; }
+        .mining-cat-label.valuable { color: #aa44ff; }
+        .mining-cat-label.precious { color: #ffaa00; }
+        .mining-cat-label.exotic { color: #ff4488; }
+        .mining-cat-label.ultrarare { color: #ff44ff; }
+
+        .mining-category select {
+            width: 100%;
+            background: #1a1a2e;
+            color: #888;
+            border: 1px solid #00ff8833;
+            border-radius: 4px;
+            padding: 6px 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
         .equip-desc {
             padding: 6px 8px;
             background: #1a1a2e;
@@ -861,6 +904,88 @@
                 </div>
                 <div class="location-desc" id="location-desc">
                     Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-page" id="page-mining">
+            <div class="mining-panel">
+                <h4>[ MINING ]</h4>
+                <div class="mining-category">
+                    <label class="mining-cat-label common">Common</label>
+                    <select id="mining-common" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="limestone">Limestone</option>
+                        <option value="sandstone">Sandstone</option>
+                        <option value="clay">Clay</option>
+                        <option value="quartz">Quartz</option>
+                        <option value="feldspar">Feldspar</option>
+                    </select>
+                </div>
+                <div class="mining-category">
+                    <label class="mining-cat-label uncommon">Uncommon</label>
+                    <select id="mining-uncommon" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="gypsum">Gypsum</option>
+                        <option value="fluorite">Fluorite</option>
+                        <option value="calcite">Calcite</option>
+                        <option value="mica">Mica</option>
+                        <option value="sulfur">Sulfur</option>
+                    </select>
+                </div>
+                <div class="mining-category">
+                    <label class="mining-cat-label scarce">Scarce</label>
+                    <select id="mining-scarce" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="hematite">Hematite</option>
+                        <option value="magnetite">Magnetite</option>
+                        <option value="bauxite">Bauxite</option>
+                        <option value="galena">Galena</option>
+                        <option value="sphalerite">Sphalerite</option>
+                    </select>
+                </div>
+                <div class="mining-category">
+                    <label class="mining-cat-label valuable">Valuable</label>
+                    <select id="mining-valuable" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="chalcopyrite">Chalcopyrite</option>
+                        <option value="cassiterite">Cassiterite</option>
+                        <option value="cinnabar">Cinnabar</option>
+                        <option value="chromite">Chromite</option>
+                        <option value="ilmenite">Ilmenite</option>
+                    </select>
+                </div>
+                <div class="mining-category">
+                    <label class="mining-cat-label precious">Precious</label>
+                    <select id="mining-precious" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="argentite">Argentite</option>
+                        <option value="gold">Gold</option>
+                        <option value="platinum">Platinum</option>
+                        <option value="garnet">Garnet</option>
+                    </select>
+                </div>
+                <div class="mining-category">
+                    <label class="mining-cat-label exotic">Exotic</label>
+                    <select id="mining-exotic" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="uraninite">Uraninite</option>
+                        <option value="cobaltite">Cobaltite</option>
+                        <option value="molybdenite">Molybdenite</option>
+                        <option value="vanadinite">Vanadinite</option>
+                        <option value="scheelite">Scheelite</option>
+                    </select>
+                </div>
+                <div class="mining-category">
+                    <label class="mining-cat-label ultrarare">Ultra-Rare</label>
+                    <select id="mining-ultrarare" disabled>
+                        <option value="">-- Empty --</option>
+                        <option value="diamond">Diamond</option>
+                        <option value="emerald">Emerald</option>
+                        <option value="sapphire">Sapphire</option>
+                        <option value="alexandrite">Alexandrite</option>
+                        <option value="tanzanite">Tanzanite</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -1326,14 +1451,15 @@
             { id: 'page-stats', label: 'Stats' },
             { id: 'page-installations', label: 'Installations' },
             { id: 'page-location', label: 'Location' },
+            { id: 'page-mining', label: 'Mining' },
             { id: 'page-store', label: 'Store' }
         ];
         let currentPage = 0;
         let storeAvailable = false;
 
         function getAvailablePages() {
-            if (storeAvailable) return [0, 1, 2, 3];
-            return [0, 1, 2];
+            if (storeAvailable) return [0, 1, 2, 3, 4];
+            return [0, 1, 2, 3];
         }
 
         function updatePanelNav() {
@@ -1462,7 +1588,7 @@
             // Reset UI
             chatMessages.innerHTML = '';
             storeAvailable = false;
-            if (currentPage === 3) showPage(0);
+            if (currentPage === 4) showPage(0);
             updatePanelNav();
             setEquipmentLocked(false);
             btnEngage.disabled = true;
@@ -1817,13 +1943,13 @@
         function showShopPanel() {
             storeAvailable = true;
             updateShopUI();
-            showPage(3);
+            showPage(4);
         }
 
         // Hide shop panel (leave store page)
         function hideShopPanel() {
             storeAvailable = false;
-            if (currentPage === 3) showPage(0);
+            if (currentPage === 4) showPage(0);
             updatePanelNav();
         }
 
