@@ -1158,12 +1158,61 @@
             REGEN_RATE: 30000, // 1 hp per 30 seconds
             ENCOUNTER_CHANCE: 20, // % chance for encounter instead of enemy wave
             deaths: 0,
-            activeSlot: null // Which save slot is currently active (1-3 or null)
+            activeSlot: null, // Which save slot is currently active (1-3 or null)
+            minerals: {} // Collected minerals by category
         };
 
         // Current encounter state
         let currentEncounter = null;
         let shopItems = [];
+        let currentMiningEvent = null;
+
+        // Mining asteroid data: each mineral has depth (ft), stabilityLoss per turn, category
+        const ASTEROIDS = [
+            // Common (shallow, very stable)
+            { mineral: 'Limestone', category: 'common', depth: 30, stabilityLoss: 5 },
+            { mineral: 'Sandstone', category: 'common', depth: 35, stabilityLoss: 5 },
+            { mineral: 'Clay', category: 'common', depth: 25, stabilityLoss: 5 },
+            { mineral: 'Quartz', category: 'common', depth: 40, stabilityLoss: 5 },
+            { mineral: 'Feldspar', category: 'common', depth: 30, stabilityLoss: 5 },
+            // Uncommon (moderate depth, stable)
+            { mineral: 'Gypsum', category: 'uncommon', depth: 60, stabilityLoss: 8 },
+            { mineral: 'Fluorite', category: 'uncommon', depth: 65, stabilityLoss: 8 },
+            { mineral: 'Calcite', category: 'uncommon', depth: 55, stabilityLoss: 7 },
+            { mineral: 'Mica', category: 'uncommon', depth: 50, stabilityLoss: 7 },
+            { mineral: 'Sulfur', category: 'uncommon', depth: 70, stabilityLoss: 9 },
+            // Scarce (deeper, moderate stability)
+            { mineral: 'Hematite', category: 'scarce', depth: 100, stabilityLoss: 10 },
+            { mineral: 'Magnetite', category: 'scarce', depth: 110, stabilityLoss: 11 },
+            { mineral: 'Bauxite', category: 'scarce', depth: 90, stabilityLoss: 10 },
+            { mineral: 'Galena', category: 'scarce', depth: 105, stabilityLoss: 12 },
+            { mineral: 'Sphalerite', category: 'scarce', depth: 95, stabilityLoss: 11 },
+            // Valuable (deep, unstable)
+            { mineral: 'Chalcopyrite', category: 'valuable', depth: 150, stabilityLoss: 14 },
+            { mineral: 'Cassiterite', category: 'valuable', depth: 160, stabilityLoss: 15 },
+            { mineral: 'Cinnabar', category: 'valuable', depth: 140, stabilityLoss: 13 },
+            { mineral: 'Chromite', category: 'valuable', depth: 155, stabilityLoss: 14 },
+            { mineral: 'Ilmenite', category: 'valuable', depth: 145, stabilityLoss: 13 },
+            // Precious (very deep, very unstable)
+            { mineral: 'Argentite', category: 'precious', depth: 200, stabilityLoss: 17 },
+            { mineral: 'Gold', category: 'precious', depth: 220, stabilityLoss: 18 },
+            { mineral: 'Platinum', category: 'precious', depth: 230, stabilityLoss: 19 },
+            { mineral: 'Garnet', category: 'precious', depth: 190, stabilityLoss: 16 },
+            // Exotic (extreme depth, highly unstable)
+            { mineral: 'Uraninite', category: 'exotic', depth: 280, stabilityLoss: 20 },
+            { mineral: 'Cobaltite', category: 'exotic', depth: 270, stabilityLoss: 20 },
+            { mineral: 'Molybdenite', category: 'exotic', depth: 290, stabilityLoss: 21 },
+            { mineral: 'Vanadinite', category: 'exotic', depth: 260, stabilityLoss: 19 },
+            { mineral: 'Scheelite', category: 'exotic', depth: 300, stabilityLoss: 22 },
+            // Ultra-Rare (deepest, most unstable)
+            { mineral: 'Diamond', category: 'ultrarare', depth: 400, stabilityLoss: 22 },
+            { mineral: 'Emerald', category: 'ultrarare', depth: 380, stabilityLoss: 23 },
+            { mineral: 'Sapphire', category: 'ultrarare', depth: 390, stabilityLoss: 24 },
+            { mineral: 'Alexandrite', category: 'ultrarare', depth: 420, stabilityLoss: 25 },
+            { mineral: 'Tanzanite', category: 'ultrarare', depth: 410, stabilityLoss: 24 }
+        ];
+
+        const MINING_CHANCE = 15; // % chance for mining event instead of enemy wave
 
         const SAVE_KEY = 'combobreaker_save';
         const SLOT_KEYS = ['combobreaker_slot_1', 'combobreaker_slot_2', 'combobreaker_slot_3'];
@@ -1187,7 +1236,8 @@
                 equipment: { ...game.equipment },
                 deaths: game.deaths,
                 activeSlot: game.activeSlot,
-                location: currentLocation
+                location: currentLocation,
+                minerals: game.minerals || {}
             };
         }
 
@@ -1246,6 +1296,7 @@
             game.inBattle = false;
             game.currentWave = null;
             currentEncounter = null;
+            currentMiningEvent = null;
             shopItems = [];
             if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
             if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
@@ -1266,6 +1317,7 @@
                 game.player.baseMining = data.player.baseMining || 0;
 
                 game.deaths = data.deaths || 0;
+                game.minerals = data.minerals || {};
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
@@ -1308,6 +1360,7 @@
                 game.player.baseCombo = 5;
                 game.player.baseMining = 0;
                 game.deaths = 0;
+                game.minerals = {};
                 game.inventory = [];
                 game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null };
                 currentLocation = 'scrapyard';
@@ -1320,6 +1373,7 @@
             recalculateStats();
             game.player.hp = game.player.maxHp;
             updateEquipmentUI();
+            updateMiningUI();
             updateStats();
             saveGame();
 
@@ -1406,9 +1460,10 @@
                 game.player.baseCombo = data.player.baseCombo || 5;
                 game.player.baseMining = data.player.baseMining || 0;
 
-                // Restore death counter and active slot
+                // Restore death counter, active slot, and minerals
                 game.deaths = data.deaths || 0;
                 game.activeSlot = data.activeSlot || null;
+                game.minerals = data.minerals || {};
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
@@ -1596,6 +1651,7 @@
             game.inBattle = false;
             game.currentWave = null;
             currentEncounter = null;
+            currentMiningEvent = null;
             shopItems = [];
             if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
             if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
@@ -2088,6 +2144,232 @@
             startWaveTimer();
         }
 
+        // Select a random asteroid appropriate for player's mining stat
+        function selectAsteroid() {
+            const mining = game.player.mining;
+            // Filter to asteroids the player could theoretically mine
+            // Allow asteroids where mining stat could reach depth within stability budget
+            const candidates = ASTEROIDS.filter(a => {
+                const turnsNeeded = Math.ceil(a.depth / Math.max(1, mining));
+                const stabilityAtEnd = 100 - (a.stabilityLoss * turnsNeeded);
+                // Include asteroids that are challenging but not always impossible
+                return turnsNeeded >= 1 && stabilityAtEnd > -30;
+            });
+            if (candidates.length === 0) return ASTEROIDS[0];
+            return candidates[Math.floor(Math.random() * candidates.length)];
+        }
+
+        // Spawn mining event
+        function spawnMiningEvent() {
+            const asteroid = selectAsteroid();
+            if (!asteroid) return false;
+
+            currentMiningEvent = {
+                mineral: asteroid.mineral,
+                category: asteroid.category,
+                depth: asteroid.depth,
+                stabilityLoss: asteroid.stabilityLoss,
+                currentDepth: 0,
+                stability: 100
+            };
+
+            addMessage(`[MINING EVENT] An asteroid with ${asteroid.mineral} deposits at ${asteroid.depth}ft has been detected.`, 'system');
+            addMessage(`Asteroid stability: 100 | Your mining power: ${game.player.mining}`, 'system');
+
+            // Create countdown message
+            let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
+            const countdownMsg = document.createElement('div');
+            countdownMsg.className = 'message system';
+            countdownMsg.textContent = `Asteroid in range for [${secondsLeft}] seconds.`;
+            chatMessages.appendChild(countdownMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            game.countdownMsg = countdownMsg;
+
+            addMessage(`Do you want to attempt to mine it?`, 'system');
+
+            // Update countdown every second
+            game.countdownInterval = setInterval(() => {
+                secondsLeft--;
+                if (secondsLeft > 0) {
+                    countdownMsg.textContent = `Asteroid in range for [${secondsLeft}] seconds.`;
+                } else {
+                    clearCountdown();
+                }
+            }, 1000);
+
+            btnEngage.disabled = false;
+            btnRetreat.disabled = false;
+
+            // Set expiration timer
+            if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
+            game.waveExpireTimer = setTimeout(() => {
+                clearCountdown();
+                if (currentMiningEvent) {
+                    addMessage(`Asteroid has drifted out of range.`, 'system');
+                    currentMiningEvent = null;
+                    btnEngage.disabled = true;
+                    btnRetreat.disabled = true;
+                    startWaveTimer();
+                }
+            }, game.WAVE_EXPIRE);
+
+            return true;
+        }
+
+        // Engage mining event
+        async function engageMining() {
+            if (!currentMiningEvent) return;
+
+            // Clear expire timer and countdown
+            if (game.waveExpireTimer) {
+                clearTimeout(game.waveExpireTimer);
+                game.waveExpireTimer = null;
+            }
+            clearCountdown();
+
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+            game.inBattle = true;
+            setEquipmentLocked(true);
+
+            if (game.regenInterval) {
+                clearInterval(game.regenInterval);
+                game.regenInterval = null;
+            }
+
+            const mining = currentMiningEvent;
+            await addMessage(`Mining operation commencing on ${mining.mineral} asteroid...`, 'player');
+            await addMessage(`> > >  M I N I N G  S T A R T  < < <`, 'system');
+
+            // Mining loop
+            let turn = 0;
+            while (mining.stability > 0 && mining.currentDepth < mining.depth) {
+                turn++;
+                await addMessage(`- - - - - - - - - - - - - - - - - - - - -[ Turn ${turn} ]- - - - - - - - - - - - - - - - - - - - - `, 'system');
+
+                // Player mines deeper
+                mining.currentDepth = Math.min(mining.currentDepth + game.player.mining, mining.depth);
+                await addMessage(`Mech mines to ${mining.currentDepth} / ${mining.depth}ft`, 'player');
+
+                // Check if deposit reached
+                if (mining.currentDepth >= mining.depth) {
+                    await addMessage(`[EXTRACTION COMPLETE] ${mining.mineral} has been successfully extracted.`, 'victory');
+                    endMining(true);
+                    return;
+                }
+
+                // Asteroid loses stability
+                mining.stability = Math.max(0, mining.stability - mining.stabilityLoss);
+                await addMessage(`Asteroid stability at ${mining.stability}`, 'system');
+
+                // Check for collapse
+                if (mining.stability <= 0) {
+                    await addMessage(`[ASTEROID COLLAPSE] The asteroid has destabilised!`, 'enemy');
+
+                    // Collapse damage = current depth, reduced by defence
+                    const collapseDamage = mining.currentDepth;
+                    const p = game.player;
+                    let remainingDefence = p.defence;
+
+                    if (remainingDefence >= collapseDamage) {
+                        await addMessage(`Collapse impact: ${collapseDamage} damage. Defence absorbs all damage.`, 'player');
+                    } else if (remainingDefence > 0) {
+                        const damageTaken = collapseDamage - remainingDefence;
+                        await addMessage(`Collapse impact: ${collapseDamage} damage. Defence absorbs ${remainingDefence}, ${damageTaken} damage taken.`, 'player');
+                        p.hp = Math.max(0, p.hp - damageTaken);
+                        updateStats();
+                    } else {
+                        p.hp = Math.max(0, p.hp - collapseDamage);
+                        await addMessage(`Collapse impact: ${collapseDamage} damage taken.`, 'player');
+                        updateStats();
+                    }
+
+                    await addMessage(`Mining operation failed. No minerals recovered.`, 'system');
+
+                    if (p.hp <= 0) {
+                        game.deaths++;
+                        await addMessage(`Your mech has been confirmed destroyed.`, 'system');
+                        await addMessage(`Systems resetting.`, 'system');
+                        p.hp = Math.floor(p.maxHp / 2);
+                    }
+
+                    endMining(false);
+                    return;
+                }
+            }
+        }
+
+        // End mining event
+        function endMining(success) {
+            game.inBattle = false;
+            setEquipmentLocked(false);
+
+            if (success) {
+                // Add mineral to player's collection
+                addMineral(currentMiningEvent.mineral, currentMiningEvent.category);
+            }
+
+            currentMiningEvent = null;
+            updateStats();
+            saveGame();
+            startRegen();
+            startWaveTimer();
+        }
+
+        // Decline mining event
+        function declineMining() {
+            if (!currentMiningEvent) return;
+
+            // Clear expire timer and countdown
+            if (game.waveExpireTimer) {
+                clearTimeout(game.waveExpireTimer);
+                game.waveExpireTimer = null;
+            }
+            clearCountdown();
+
+            addMessage(`Mining operation declined. Asteroid ignored.`, 'player');
+            currentMiningEvent = null;
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+            startWaveTimer();
+        }
+
+        // Add a mineral to the player's mining collection
+        function addMineral(mineralName, category) {
+            if (!game.minerals) game.minerals = {};
+            if (!game.minerals[category]) game.minerals[category] = [];
+            if (!game.minerals[category].includes(mineralName)) {
+                game.minerals[category].push(mineralName);
+            }
+            updateMiningUI();
+            saveGame();
+        }
+
+        // Update mining page dropdowns to show collected minerals
+        function updateMiningUI() {
+            if (!game.minerals) return;
+            const categories = ['common', 'uncommon', 'scarce', 'valuable', 'precious', 'exotic', 'ultrarare'];
+            categories.forEach(cat => {
+                const select = document.getElementById(`mining-${cat}`);
+                if (!select) return;
+                const collected = (game.minerals[cat] || []);
+                // Enable/disable options based on collection
+                for (let i = 1; i < select.options.length; i++) {
+                    const opt = select.options[i];
+                    const mineralName = opt.textContent;
+                    if (collected.includes(mineralName)) {
+                        opt.disabled = false;
+                    } else {
+                        opt.disabled = true;
+                    }
+                }
+                // Enable dropdown if player has at least one mineral in this category
+                if (collected.length > 0) {
+                    select.disabled = false;
+                }
+            });
+        }
+
         // Clear countdown timer
         function clearCountdown() {
             if (game.countdownInterval) {
@@ -2102,11 +2384,16 @@
 
         // Spawn new wave
         function spawnWave() {
-            if (game.inBattle || game.currentWave || currentEncounter) return;
+            if (game.inBattle || game.currentWave || currentEncounter || currentMiningEvent) return;
 
             // Check for encounter chance
             if (Math.random() * 100 < game.ENCOUNTER_CHANCE) {
                 if (spawnEncounter()) return;
+            }
+
+            // Check for mining event chance (only if player has mining stat > 0)
+            if (game.player.mining > 0 && Math.random() * 100 < MINING_CHANCE) {
+                if (spawnMiningEvent()) return;
             }
 
             game.currentWave = generateWave();
@@ -2398,14 +2685,18 @@
 
         // Event listeners
         btnEngage.addEventListener('click', () => {
-            if (currentEncounter) {
+            if (currentMiningEvent) {
+                engageMining();
+            } else if (currentEncounter) {
                 engageEncounter();
             } else {
                 engageBattle();
             }
         });
         btnRetreat.addEventListener('click', () => {
-            if (currentEncounter) {
+            if (currentMiningEvent) {
+                declineMining();
+            } else if (currentEncounter) {
                 declineEncounter();
             } else {
                 declineBattle();
@@ -2452,6 +2743,7 @@
             }
 
             updateEquipmentUI();
+            updateMiningUI();
 
             addMessage(`============================================`, 'system');
             addMessage(`=== C O M B O B R E A K E R  O N L I N E ===`, 'system');
