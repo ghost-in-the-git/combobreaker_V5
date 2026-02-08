@@ -1108,6 +1108,16 @@
     <script src="encounters_frozenreach.js"></script>
     <script src="encounters_neonstrip.js"></script>
     <script src="encounters_deadzone.js"></script>
+    <script src="mining_scrapyard.js"></script>
+    <script src="mining_oldbattlefield.js"></script>
+    <script src="mining_downtown.js"></script>
+    <script src="mining_orbitalstation.js"></script>
+    <script src="mining_wasteland.js"></script>
+    <script src="mining_undercity.js"></script>
+    <script src="mining_industrialzone.js"></script>
+    <script src="mining_frozenreach.js"></script>
+    <script src="mining_neonstrip.js"></script>
+    <script src="mining_deadzone.js"></script>
     <script>
         // Game State
         const game = {
@@ -1166,51 +1176,6 @@
         let currentEncounter = null;
         let shopItems = [];
         let currentMiningEvent = null;
-
-        // Mining asteroid data: each mineral has depth (ft), stabilityLoss per turn, category
-        const ASTEROIDS = [
-            // Common (shallow, very stable)
-            { mineral: 'Limestone', category: 'common', depth: 30, stabilityLoss: 5 },
-            { mineral: 'Sandstone', category: 'common', depth: 35, stabilityLoss: 5 },
-            { mineral: 'Clay', category: 'common', depth: 25, stabilityLoss: 5 },
-            { mineral: 'Quartz', category: 'common', depth: 40, stabilityLoss: 5 },
-            { mineral: 'Feldspar', category: 'common', depth: 30, stabilityLoss: 5 },
-            // Uncommon (moderate depth, stable)
-            { mineral: 'Gypsum', category: 'uncommon', depth: 60, stabilityLoss: 8 },
-            { mineral: 'Fluorite', category: 'uncommon', depth: 65, stabilityLoss: 8 },
-            { mineral: 'Calcite', category: 'uncommon', depth: 55, stabilityLoss: 7 },
-            { mineral: 'Mica', category: 'uncommon', depth: 50, stabilityLoss: 7 },
-            { mineral: 'Sulfur', category: 'uncommon', depth: 70, stabilityLoss: 9 },
-            // Scarce (deeper, moderate stability)
-            { mineral: 'Hematite', category: 'scarce', depth: 100, stabilityLoss: 10 },
-            { mineral: 'Magnetite', category: 'scarce', depth: 110, stabilityLoss: 11 },
-            { mineral: 'Bauxite', category: 'scarce', depth: 90, stabilityLoss: 10 },
-            { mineral: 'Galena', category: 'scarce', depth: 105, stabilityLoss: 12 },
-            { mineral: 'Sphalerite', category: 'scarce', depth: 95, stabilityLoss: 11 },
-            // Valuable (deep, unstable)
-            { mineral: 'Chalcopyrite', category: 'valuable', depth: 150, stabilityLoss: 14 },
-            { mineral: 'Cassiterite', category: 'valuable', depth: 160, stabilityLoss: 15 },
-            { mineral: 'Cinnabar', category: 'valuable', depth: 140, stabilityLoss: 13 },
-            { mineral: 'Chromite', category: 'valuable', depth: 155, stabilityLoss: 14 },
-            { mineral: 'Ilmenite', category: 'valuable', depth: 145, stabilityLoss: 13 },
-            // Precious (very deep, very unstable)
-            { mineral: 'Argentite', category: 'precious', depth: 200, stabilityLoss: 17 },
-            { mineral: 'Gold', category: 'precious', depth: 220, stabilityLoss: 18 },
-            { mineral: 'Platinum', category: 'precious', depth: 230, stabilityLoss: 19 },
-            { mineral: 'Garnet', category: 'precious', depth: 190, stabilityLoss: 16 },
-            // Exotic (extreme depth, highly unstable)
-            { mineral: 'Uraninite', category: 'exotic', depth: 280, stabilityLoss: 20 },
-            { mineral: 'Cobaltite', category: 'exotic', depth: 270, stabilityLoss: 20 },
-            { mineral: 'Molybdenite', category: 'exotic', depth: 290, stabilityLoss: 21 },
-            { mineral: 'Vanadinite', category: 'exotic', depth: 260, stabilityLoss: 19 },
-            { mineral: 'Scheelite', category: 'exotic', depth: 300, stabilityLoss: 22 },
-            // Ultra-Rare (deepest, most unstable)
-            { mineral: 'Diamond', category: 'ultrarare', depth: 400, stabilityLoss: 22 },
-            { mineral: 'Emerald', category: 'ultrarare', depth: 380, stabilityLoss: 23 },
-            { mineral: 'Sapphire', category: 'ultrarare', depth: 390, stabilityLoss: 24 },
-            { mineral: 'Alexandrite', category: 'ultrarare', depth: 420, stabilityLoss: 25 },
-            { mineral: 'Tanzanite', category: 'ultrarare', depth: 410, stabilityLoss: 24 }
-        ];
 
         const MINING_CHANCE = 15; // % chance for mining event instead of enemy wave
 
@@ -1571,51 +1536,61 @@
             scrapyard: {
                 enemies: ENEMIES_SCRAPYARD,
                 encounters: ENCOUNTERS_SCRAPYARD,
+                mining: MINING_SCRAPYARD,
                 desc: "Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage."
             },
             oldbattlefield: {
                 enemies: ENEMIES_OLDBATTLEFIELD,
                 encounters: ENCOUNTERS_OLDBATTLEFIELD,
+                mining: MINING_OLDBATTLEFIELD,
                 desc: "Scarred terrain littered with war machines still running combat protocols from a forgotten conflict."
             },
             downtown: {
                 enemies: ENEMIES_DOWNTOWN,
                 encounters: ENCOUNTERS_DOWNTOWN,
+                mining: MINING_DOWNTOWN,
                 desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks."
             },
             orbitalstation: {
                 enemies: ENEMIES_ORBITALSTATION,
                 encounters: ENCOUNTERS_ORBITALSTATION,
+                mining: MINING_ORBITALSTATION,
                 desc: "A derelict orbital platform. Rogue drones and hijacked defense systems stalk the corridors."
             },
             wasteland: {
                 enemies: ENEMIES_WASTELAND,
                 encounters: ENCOUNTERS_WASTELAND,
+                mining: MINING_WASTELAND,
                 desc: "Irradiated badlands where feral war machines and dust-choked scavengers fight over scraps."
             },
             undercity: {
                 enemies: ENEMIES_UNDERCITY,
                 encounters: ENCOUNTERS_UNDERCITY,
+                mining: MINING_UNDERCITY,
                 desc: "A labyrinth of tunnels and sewers beneath the streets. Black-ops units and tunnel rats lurk in the dark."
             },
             industrialzone: {
                 enemies: ENEMIES_INDUSTRIALZONE,
                 encounters: ENCOUNTERS_INDUSTRIALZONE,
+                mining: MINING_INDUSTRIALZONE,
                 desc: "Sprawling factories and refineries. Malfunctioning production bots guard the assembly lines."
             },
             frozenreach: {
                 enemies: ENEMIES_FROZENREACH,
                 encounters: ENCOUNTERS_FROZENREACH,
+                mining: MINING_FROZENREACH,
                 desc: "Arctic tundra locked in permanent winter. Cryo-adapted war machines patrol the frozen expanse."
             },
             neonstrip: {
                 enemies: ENEMIES_NEONSTRIP,
                 encounters: ENCOUNTERS_NEONSTRIP,
+                mining: MINING_NEONSTRIP,
                 desc: "The flashy entertainment district. Syndicate enforcers and casino muscle keep the peace their way."
             },
             deadzone: {
                 enemies: ENEMIES_DEADZONE,
                 encounters: ENCOUNTERS_DEADZONE,
+                mining: MINING_DEADZONE,
                 desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked."
             }
         };
@@ -2146,17 +2121,9 @@
 
         // Select a random asteroid appropriate for player's mining stat
         function selectAsteroid() {
-            const mining = game.player.mining;
-            // Filter to asteroids the player could theoretically mine
-            // Allow asteroids where mining stat could reach depth within stability budget
-            const candidates = ASTEROIDS.filter(a => {
-                const turnsNeeded = Math.ceil(a.depth / Math.max(1, mining));
-                const stabilityAtEnd = 100 - (a.stabilityLoss * turnsNeeded);
-                // Include asteroids that are challenging but not always impossible
-                return turnsNeeded >= 1 && stabilityAtEnd > -30;
-            });
-            if (candidates.length === 0) return ASTEROIDS[0];
-            return candidates[Math.floor(Math.random() * candidates.length)];
+            const locationAsteroids = LOCATIONS[currentLocation].mining;
+            if (!locationAsteroids || locationAsteroids.length === 0) return null;
+            return locationAsteroids[Math.floor(Math.random() * locationAsteroids.length)];
         }
 
         // Spawn mining event
