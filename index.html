@@ -825,6 +825,10 @@
                     <span class="stat-value" id="stat-combo">5%</span>
                 </div>
                 <div class="stat-row">
+                    <span class="stat-label">Mining</span>
+                    <span class="stat-value" id="stat-mining">0</span>
+                </div>
+                <div class="stat-row">
                     <span class="stat-label">Deaths</span>
                     <span class="stat-value" id="stat-deaths">0</span>
                 </div>
@@ -880,6 +884,11 @@
                     <label>Pilot</label>
                     <select id="equip-pilot"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-pilot"></div>
+                </div>
+                <div class="equip-slot">
+                    <label>Mining Drill</label>
+                    <select id="equip-drill"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-drill"></div>
                 </div>
             </div>
         </div>
@@ -1109,6 +1118,7 @@
                 baseSpeed: 10,
                 baseDefence: 3,
                 baseCombo: 5,
+                baseMining: 0,
                 // Current stats (with equipment)
                 level: 1,
                 xp: 0,
@@ -1118,7 +1128,8 @@
                 attack: 5,
                 speed: 10,
                 defence: 3,
-                combo: 5
+                combo: 5,
+                mining: 0
             },
             // Inventory: array of item objects
             inventory: [],
@@ -1130,7 +1141,8 @@
                 weapon: null,
                 chip: null,
                 processor: null,
-                pilot: null
+                pilot: null,
+                drill: null
             },
             currentWave: null,
             inBattle: false,
@@ -1168,7 +1180,8 @@
                     baseAttack: game.player.baseAttack,
                     baseSpeed: game.player.baseSpeed,
                     baseDefence: game.player.baseDefence,
-                    baseCombo: game.player.baseCombo
+                    baseCombo: game.player.baseCombo,
+                    baseMining: game.player.baseMining
                 },
                 inventory: game.inventory.map(item => item.name),
                 equipment: { ...game.equipment },
@@ -1250,6 +1263,7 @@
                 game.player.baseSpeed = data.player.baseSpeed || 10;
                 game.player.baseDefence = data.player.baseDefence || 3;
                 game.player.baseCombo = data.player.baseCombo || 5;
+                game.player.baseMining = data.player.baseMining || 0;
 
                 game.deaths = data.deaths || 0;
 
@@ -1278,7 +1292,8 @@
                         weapon: data.equipment.weapon || null,
                         chip: data.equipment.chip || null,
                         processor: data.equipment.processor || null,
-                        pilot: data.equipment.pilot || null
+                        pilot: data.equipment.pilot || null,
+                        drill: data.equipment.drill || null
                     };
                 }
             } else {
@@ -1291,9 +1306,10 @@
                 game.player.baseSpeed = 10;
                 game.player.baseDefence = 3;
                 game.player.baseCombo = 5;
+                game.player.baseMining = 0;
                 game.deaths = 0;
                 game.inventory = [];
-                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null };
+                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null };
                 currentLocation = 'scrapyard';
             }
 
@@ -1388,6 +1404,7 @@
                 game.player.baseSpeed = data.player.baseSpeed || 10;
                 game.player.baseDefence = data.player.baseDefence || 3;
                 game.player.baseCombo = data.player.baseCombo || 5;
+                game.player.baseMining = data.player.baseMining || 0;
 
                 // Restore death counter and active slot
                 game.deaths = data.deaths || 0;
@@ -1420,7 +1437,8 @@
                         weapon: data.equipment.weapon || null,
                         chip: data.equipment.chip || null,
                         processor: data.equipment.processor || null,
-                        pilot: data.equipment.pilot || null
+                        pilot: data.equipment.pilot || null,
+                        drill: data.equipment.drill || null
                     };
                 }
 
@@ -1639,6 +1657,7 @@
             document.getElementById('stat-speed').textContent = p.speed;
             document.getElementById('stat-defence').textContent = p.defence;
             document.getElementById('stat-combo').textContent = `${p.combo}%`;
+            document.getElementById('stat-mining').textContent = p.mining;
             document.getElementById('stat-deaths').textContent = game.deaths;
         }
 
@@ -1653,6 +1672,7 @@
             p.speed = p.baseSpeed;
             p.defence = p.baseDefence;
             p.combo = p.baseCombo;
+            p.mining = p.baseMining;
 
             // Add equipment bonuses
             for (const slot in game.equipment) {
@@ -1665,6 +1685,7 @@
                         if (item.stats.speed) p.speed += item.stats.speed;
                         if (item.stats.defence) p.defence += item.stats.defence;
                         if (item.stats.combo) p.combo += item.stats.combo;
+                        if (item.stats.mining) p.mining += item.stats.mining;
                     }
                 }
             }
@@ -1690,7 +1711,7 @@
 
         // Update equipment dropdowns with inventory items
         function updateEquipmentUI() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
 
             slots.forEach(slot => {
                 const select = document.getElementById(`equip-${slot}`);
@@ -1716,7 +1737,7 @@
 
         // Update equipment description text under each dropdown
         function updateEquipmentDescs() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
             slots.forEach(slot => {
                 const descEl = document.getElementById(`equip-desc-${slot}`);
                 const itemName = game.equipment[slot];
@@ -1748,7 +1769,7 @@
 
         // Lock/unlock equipment dropdowns
         function setEquipmentLocked(locked) {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
@@ -1801,13 +1822,14 @@
                 p.baseSpeed += 3;
                 p.baseDefence += 1;
                 p.baseCombo = Math.min(p.baseCombo + 2, 50);
+                p.baseMining += 1;
 
                 // Recalculate with equipment and full heal
                 recalculateStats();
                 p.hp = p.maxHp;
 
                 addMessage(`[LEVEL INCREASED TO ${p.level}]`, 'system');
-                addMessage(`Stats gained: [ATK+2] [SPD+3] [DEF+1] [COMBO+2%] [MAX HP+10]`, 'system');
+                addMessage(`Stats gained: [ATK+2] [SPD+3] [DEF+1] [COMBO+2%] [MAX HP+10] [MINING+1]`, 'system');
                 updateStats();
                 saveGame();
 
@@ -2413,7 +2435,7 @@
         // Initialize game
         function init() {
             // Set up equipment dropdown event listeners
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).addEventListener('change', (e) => {
                     onEquipmentChange(slot, e.target.value);

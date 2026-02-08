@@ -5,7 +5,7 @@
  *
  * Each item has:
  * - name: Display name
- * - type: "body", "legs", "arms", "weapon", or "chip"
+ * - type: "body", "legs", "arms", "weapon", "chip", "processor", "pilot", or "drill"
  * - desc: Flavour text shown when installed
  * - stats: Object with stat bonuses { hp, defence, speed, attack, combo }
  * - dropRate: Relative chance to drop (higher = more common)
@@ -584,6 +584,62 @@ const ITEMS = [
         dropRate: 3,
         droppedBy: ["Droid Destroyer"],
         cost: 250
+    },
+
+    // ==================== MINING DRILL (Mining) ====================
+    {
+        name: "Salvage Pick [+1 MINING]",
+        type: "drill",
+        desc: "A repurposed construction tool. Crude but functional for cracking open mineral deposits.",
+        stats: { mining: 1 },
+        dropRate: 50,
+        droppedBy: [],
+        cost: 15
+    },
+    {
+        name: "Pneumatic Drill [+2 MINING]",
+        type: "drill",
+        desc: "Compressed-air powered bore head. Punches through soft rock and corroded metal with ease.",
+        stats: { mining: 2 },
+        dropRate: 35,
+        droppedBy: [],
+        cost: 40
+    },
+    {
+        name: "Diamond-Tip Auger [+4 MINING]",
+        type: "drill",
+        desc: "Industrial-grade diamond cutting teeth mounted on a reinforced shaft. Eats through stone like butter.",
+        stats: { mining: 4 },
+        dropRate: 22,
+        droppedBy: ["Furnace Guardian", "Reactor Sentinel"],
+        cost: 80
+    },
+    {
+        name: "Plasma Bore [+7 MINING]",
+        type: "drill",
+        desc: "Superheated plasma stream focused into a cutting beam. Melts through anything short of void-steel.",
+        stats: { mining: 7 },
+        dropRate: 14,
+        droppedBy: ["Reactor Sentinel", "Smelter Titan"],
+        cost: 130
+    },
+    {
+        name: "Tectonic Shatterer [+11 MINING]",
+        type: "drill",
+        desc: "Generates focused seismic pulses that fracture entire mineral veins in a single burst.",
+        stats: { mining: 11 },
+        dropRate: 8,
+        droppedBy: ["Cryo Warlord", "Avalanche Colossus"],
+        cost: 200
+    },
+    {
+        name: "Quantum Excavator [+16 MINING]",
+        type: "drill",
+        desc: "Phase-shifts through solid matter to extract minerals at the atomic level. The pinnacle of extraction tech.",
+        stats: { mining: 16 },
+        dropRate: 3,
+        droppedBy: ["Abomination Core"],
+        cost: 320
     }
 
 ];
@@ -596,5 +652,6 @@ const ITEM_TYPES = {
     weapon: "WEAPON READY FOR INSTALLATION",
     chip: "CHIP READY FOR INSTALLATION",
     processor: "PROCESSOR READY FOR INSTALLATION",
-    pilot: "PILOT READY FOR INSTALLATION"
+    pilot: "PILOT READY FOR INSTALLATION",
+    drill: "MINING DRILL READY FOR INSTALLATION"
 };
