@@ -106,6 +106,27 @@
             margin-top: 4px;
         }
 
+        .fuel-bar-container {
+            margin-top: 10px;
+            background: #1a1a2e;
+            border: 1px solid #ff8800;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .fuel-bar {
+            height: 16px;
+            background: linear-gradient(90deg, #ff8800, #cc6600);
+            transition: width 0.3s ease;
+        }
+
+        .fuel-label {
+            text-align: center;
+            font-size: 11px;
+            color: #ff8800;
+            margin-top: 4px;
+        }
+
         /* Chat Panel */
         .chat-panel {
             flex: 1;
@@ -800,6 +821,11 @@
         </div>
         <div class="xp-label" id="xp-label">XP: 0 / 10</div>
 
+        <div class="fuel-bar-container">
+            <div class="fuel-bar" id="fuel-bar" style="width: 100%"></div>
+        </div>
+        <div class="fuel-label" id="fuel-label">FUEL: 100 / 100</div>
+
         <div class="panel-page active" id="page-stats">
             <div style="margin-top: 20px;">
                 <div class="stat-row">
@@ -1141,7 +1167,9 @@
                 speed: 10,
                 defence: 3,
                 combo: 5,
-                mining: 0
+                mining: 0,
+                fuel: 100,
+                maxFuel: 100
             },
             // Inventory: array of item objects
             inventory: [],
@@ -1201,6 +1229,7 @@
                 },
                 inventory: game.inventory.map(item => item.name),
                 equipment: { ...game.equipment },
+                fuel: game.player.fuel,
                 deaths: game.deaths,
                 activeSlot: game.activeSlot,
                 location: currentLocation,
@@ -1283,6 +1312,7 @@
                 game.player.baseCombo = data.player.baseCombo || 5;
                 game.player.baseMining = data.player.baseMining || 0;
 
+                game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
                 game.deaths = data.deaths || 0;
                 game.minerals = data.minerals || {};
 
@@ -1326,6 +1356,7 @@
                 game.player.baseDefence = 3;
                 game.player.baseCombo = 5;
                 game.player.baseMining = 0;
+                game.player.fuel = 100;
                 game.deaths = 0;
                 game.minerals = {};
                 game.inventory = [];
@@ -1426,7 +1457,8 @@
                 game.player.baseCombo = data.player.baseCombo || 5;
                 game.player.baseMining = data.player.baseMining || 0;
 
-                // Restore death counter, active slot, and minerals
+                // Restore death counter, active slot, fuel, and minerals
+                game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
                 game.deaths = data.deaths || 0;
                 game.activeSlot = data.activeSlot || null;
                 game.minerals = data.minerals || {};
@@ -1703,6 +1735,11 @@
             const xpPercent = (p.xp / p.xpToLevel) * 100;
             document.getElementById('xp-bar').style.width = `${xpPercent}%`;
             document.getElementById('xp-label').textContent = `XP: ${p.xp} / ${p.xpToLevel}`;
+
+            // Fuel Bar
+            const fuelPercent = (p.fuel / p.maxFuel) * 100;
+            document.getElementById('fuel-bar').style.width = `${fuelPercent}%`;
+            document.getElementById('fuel-label').textContent = `FUEL: ${p.fuel} / ${p.maxFuel}`;
 
             // Stats
             document.getElementById('stat-level').textContent = p.level;
