@@ -372,19 +372,28 @@
         .shop-name {
             padding: 8px 10px;
             background: #1a1a2e;
-            border: 1px solid #4488ff;
+            border: 1px solid #00ff88;
             border-radius: 4px 4px 0 0;
-            color: #4488ff;
+            color: #00ff88;
             font-family: 'Courier New', monospace;
             font-size: 11px;
             font-weight: bold;
         }
 
+        .shop-name.cant-afford {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
         .shop-desc {
             padding: 0;
             background: #1a1a2e;
-            border: 1px solid #4488ff33;
+            border: 1px solid #00ff8833;
             border-top: none;
+        }
+
+        .shop-name.cant-afford + .shop-desc {
+            border-color: #ff444433;
         }
 
         .shop-buy-btn {
@@ -2135,6 +2144,7 @@
                     nameEl.textContent = `[${tag}] ${item.name}`;
                     const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                     descEl.innerHTML = item.desc ? `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>` : '';
+                    nameEl.classList.toggle('cant-afford', !canAfford);
                     buyBtn.textContent = `[Buy ${item.cost} XP]`;
                     buyBtn.disabled = !canAfford;
                     wrapper.classList.add('visible');
