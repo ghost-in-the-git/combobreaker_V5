@@ -904,6 +904,7 @@
                         <option value="frozenreach">Frozen Reach</option>
                         <option value="neonstrip">Neon Strip</option>
                         <option value="deadzone">Dead Zone</option>
+                        <option value="asteroidbelt">Asteroid Belt</option>
                     </select>
                 </div>
                 <div class="location-desc" id="location-desc">
@@ -1118,6 +1119,7 @@
     <script src="mining_frozenreach.js"></script>
     <script src="mining_neonstrip.js"></script>
     <script src="mining_deadzone.js"></script>
+    <script src="mining_asteroidbelt.js"></script>
     <script>
         // Game State
         const game = {
@@ -1606,6 +1608,12 @@
                 encounters: ENCOUNTERS_DEADZONE,
                 mining: MINING_DEADZONE,
                 desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked."
+            },
+            asteroidbelt: {
+                enemies: null,
+                encounters: null,
+                mining: MINING_ASTEROIDBELT,
+                desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void."
             }
         };
 
@@ -1629,7 +1637,8 @@
             industrialzone: 'INDUSTRIAL ZONE',
             frozenreach: 'FROZEN REACH',
             neonstrip: 'NEON STRIP',
-            deadzone: 'DEAD ZONE'
+            deadzone: 'DEAD ZONE',
+            asteroidbelt: 'ASTEROID BELT'
         };
 
         function changeLocation(locationKey) {
@@ -2387,6 +2396,17 @@
         // Spawn new wave
         function spawnWave() {
             if (game.inBattle || game.currentWave || currentEncounter || currentMiningEvent) return;
+
+            // Mining-only locations: only spawn mining events
+            const loc = LOCATIONS[currentLocation];
+            if (!loc.enemies && !loc.encounters) {
+                if (game.player.mining > 0) {
+                    spawnMiningEvent();
+                } else {
+                    addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'system');
+                }
+                return;
+            }
 
             // Check for encounter chance
             if (Math.random() * 100 < game.ENCOUNTER_CHANCE) {
