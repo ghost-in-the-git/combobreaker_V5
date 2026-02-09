@@ -889,6 +889,10 @@
                     <span class="stat-value" id="stat-mining">0</span>
                 </div>
                 <div class="stat-row">
+                    <span class="stat-label">Regen</span>
+                    <span class="stat-value" id="stat-regen">0</span>
+                </div>
+                <div class="stat-row">
                     <span class="stat-label">Deaths</span>
                     <span class="stat-value" id="stat-deaths">0</span>
                 </div>
@@ -1207,6 +1211,7 @@
                 baseDefence: 3,
                 baseCombo: 5,
                 baseMining: 0,
+                baseRegen: 0,
                 // Current stats (with equipment)
                 level: 1,
                 xp: 0,
@@ -1218,6 +1223,7 @@
                 defence: 3,
                 combo: 5,
                 mining: 0,
+                regen: 0,
                 fuel: 100,
                 maxFuel: 100
             },
@@ -1245,7 +1251,6 @@
             WAVE_EXPIRE: 30000, // 30 seconds to engage
             countdownInterval: null,
             countdownMsg: null,
-            REGEN_RATE: 30000, // 1 hp per 30 seconds
             ENCOUNTER_CHANCE: 20, // % chance for encounter instead of enemy wave
             deaths: 0,
             activeSlot: null, // Which save slot is currently active (1-3 or null)
@@ -1278,7 +1283,8 @@
                     baseSpeed: game.player.baseSpeed,
                     baseDefence: game.player.baseDefence,
                     baseCombo: game.player.baseCombo,
-                    baseMining: game.player.baseMining
+                    baseMining: game.player.baseMining,
+                    baseRegen: game.player.baseRegen
                 },
                 inventory: game.inventory.map(item => item.name),
                 equipment: { ...game.equipment },
@@ -1366,6 +1372,7 @@
                 game.player.baseDefence = data.player.baseDefence || 3;
                 game.player.baseCombo = data.player.baseCombo || 5;
                 game.player.baseMining = data.player.baseMining || 0;
+                game.player.baseRegen = data.player.baseRegen || 0;
 
                 game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
                 game.deaths = data.deaths || 0;
@@ -1412,6 +1419,7 @@
                 game.player.baseDefence = 3;
                 game.player.baseCombo = 5;
                 game.player.baseMining = 0;
+                game.player.baseRegen = 0;
                 game.player.fuel = 100;
                 game.deaths = 0;
                 game.minerals = {};
@@ -1514,6 +1522,7 @@
                 game.player.baseDefence = data.player.baseDefence || 3;
                 game.player.baseCombo = data.player.baseCombo || 5;
                 game.player.baseMining = data.player.baseMining || 0;
+                game.player.baseRegen = data.player.baseRegen || 0;
 
                 // Restore death counter, active slot, fuel, and minerals
                 game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
@@ -1845,6 +1854,7 @@
             document.getElementById('stat-defence').textContent = p.defence;
             document.getElementById('stat-combo').textContent = `${p.combo}%`;
             document.getElementById('stat-mining').textContent = p.mining;
+            document.getElementById('stat-regen').textContent = p.regen;
             document.getElementById('stat-deaths').textContent = game.deaths;
         }
 
@@ -1860,6 +1870,7 @@
             p.defence = p.baseDefence;
             p.combo = p.baseCombo;
             p.mining = p.baseMining;
+            p.regen = p.baseRegen;
 
             // Add equipment bonuses
             for (const slot in game.equipment) {
@@ -1873,6 +1884,7 @@
                         if (item.stats.defence) p.defence += item.stats.defence;
                         if (item.stats.combo) p.combo += item.stats.combo;
                         if (item.stats.mining) p.mining += item.stats.mining;
+                        if (item.stats.regen) p.regen += item.stats.regen;
                     }
                 }
             }
@@ -2948,21 +2960,22 @@
             startWaveTimer();
         }
 
-        // Start HP regeneration
+        // Start HP regeneration (1 regen = 1 HP per second)
         function startRegen() {
             if (game.regenInterval) clearInterval(game.regenInterval);
+            if (game.player.regen <= 0) return;
 
             game.regenInterval = setInterval(() => {
                 if (game.inBattle) return;
 
                 if (game.player.hp < game.player.maxHp) {
-                    game.player.hp = Math.min(game.player.maxHp, game.player.hp + 1);
+                    game.player.hp = Math.min(game.player.maxHp, game.player.hp + game.player.regen);
                     updateStats();
                 } else {
                     clearInterval(game.regenInterval);
                     game.regenInterval = null;
                 }
-            }, game.REGEN_RATE);
+            }, 1000);
         }
 
         // Utility delay
