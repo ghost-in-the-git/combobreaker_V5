@@ -1061,6 +1061,10 @@
                     <select id="storage-debris"><option value="">[DEBRIS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-debris"></div>
                 </div>
+                <div class="equip-slot">
+                    <select id="storage-scrap"><option value="">[SCRAP] -- Empty --</option></select>
+                    <div class="storage-desc" id="storage-desc-scrap"></div>
+                </div>
             </div>
         </div>
 
@@ -2527,9 +2531,9 @@
 
         // Update storage UI dropdowns with collected story items
         function updateStorageUI() {
-            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', dna: 'DNA', debris: 'DEBRIS' };
+            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', dna: 'DNA', debris: 'DEBRIS', scrap: 'SCRAP' };
             const items = game.storyItems || [];
-            const cats = ['log', 'key', 'dna', 'debris'];
+            const cats = ['log', 'key', 'dna', 'debris', 'scrap'];
             cats.forEach(cat => {
                 const select = document.getElementById(`storage-${cat}`);
                 const desc = document.getElementById(`storage-desc-${cat}`);
@@ -2549,7 +2553,7 @@
         }
 
         // Storage dropdown change listeners
-        ['log', 'key', 'dna', 'debris'].forEach(cat => {
+        ['log', 'key', 'dna', 'debris', 'scrap'].forEach(cat => {
             document.getElementById(`storage-${cat}`).addEventListener('change', (e) => {
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 const item = STORY_ITEMS.find(i => i.name === e.target.value);

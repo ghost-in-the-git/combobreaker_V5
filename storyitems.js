@@ -7,7 +7,7 @@
  * Each item has:
  * - name: Display name
  * - desc: Flavour text / lore description
- * - category: "log", "key", "dna", "debris"
+ * - category: "log", "key", "dna", "debris", "scrap"
  * - image: Path to item image
  *
  * Categories:
@@ -15,6 +15,7 @@
  * - "key"    : Keys (access cards, fobs, unlock devices)
  * - "dna"    : DNA Tags (biological samples, genetic markers)
  * - "debris" : Mech Debris (random mech parts and wreckage)
+ * - "scrap"  : Scrap (salvageable junk and miscellaneous finds)
  */
 
 const STORY_ITEMS = [
