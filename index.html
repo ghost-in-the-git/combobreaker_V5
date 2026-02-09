@@ -778,40 +778,49 @@
 
         .panel-nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            gap: 4px;
             padding: 8px 0;
             margin-top: auto;
             border-top: 1px solid #00ff8844;
         }
 
-        .panel-nav-btn {
+        .nav-icon {
+            width: 40px;
+            height: 40px;
             background: #1a1a2e;
-            border: 1px solid #00ff8855;
-            color: #00ff88;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 4px 12px;
+            border: 1px solid #00ff8833;
             border-radius: 4px;
             cursor: pointer;
+            padding: 4px;
             transition: all 0.2s ease;
+            opacity: 0.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .panel-nav-btn:hover:not(:disabled) {
-            background: #00ff88;
-            color: #0a0a0f;
+        .nav-icon img {
+            width: 28px;
+            height: 28px;
+            image-rendering: pixelated;
         }
 
-        .panel-nav-btn:disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
+        .nav-icon:hover {
+            opacity: 0.8;
+            border-color: #00ff8888;
+            box-shadow: 0 0 8px #00ff8844;
         }
 
-        .panel-nav-label {
-            color: #888;
-            font-size: 11px;
-            text-transform: uppercase;
+        .nav-icon.active {
+            opacity: 1;
+            border-color: #00ff88;
+            box-shadow: 0 0 12px #00ff8866;
+        }
+
+        .nav-icon.hidden {
+            display: none;
         }
 
         /* Scrollbar */
@@ -1086,10 +1095,7 @@
             </div>
         </div>
 
-        <div class="panel-nav">
-            <button class="panel-nav-btn" id="nav-prev" disabled>&lt;</button>
-            <span class="panel-nav-label" id="nav-label">Stats</span>
-            <button class="panel-nav-btn" id="nav-next">&gt;</button>
+        <div class="panel-nav" id="panel-nav">
         </div>
     </div>
 
@@ -1579,16 +1585,34 @@
 
         // Panel page navigation
         const PAGES = [
-            { id: 'page-stats', label: 'Stats' },        // 0
-            { id: 'page-installations', label: 'Installations' }, // 1
-            { id: 'page-pilot', label: 'Pilot' },         // 2
-            { id: 'page-location', label: 'Location' },   // 3
-            { id: 'page-mining', label: 'Mining' },        // 4
-            { id: 'page-storage', label: 'Storage' },     // 5
-            { id: 'page-store', label: 'Store' }           // 6
+            { id: 'page-stats', label: 'Stats', icon: 'images/STATS.gif' },        // 0
+            { id: 'page-installations', label: 'Installations', icon: 'images/INSTALLATIONS.gif' }, // 1
+            { id: 'page-pilot', label: 'Pilot', icon: 'images/PILOT.gif' },         // 2
+            { id: 'page-location', label: 'Location', icon: 'images/LOCATION.gif' },   // 3
+            { id: 'page-mining', label: 'Mining', icon: 'images/MINING.gif' },        // 4
+            { id: 'page-storage', label: 'Storage', icon: 'images/STORAGE.gif' },     // 5
+            { id: 'page-store', label: 'Store', icon: 'images/STORE.gif' }           // 6
         ];
         let currentPage = 0;
         let storeAvailable = false;
+
+        // Build nav icons
+        const panelNav = document.getElementById('panel-nav');
+        PAGES.forEach((page, i) => {
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'nav-icon';
+            iconDiv.id = `nav-icon-${i}`;
+            iconDiv.title = page.label;
+            const img = document.createElement('img');
+            img.src = page.icon;
+            img.alt = page.label;
+            iconDiv.appendChild(img);
+            iconDiv.addEventListener('click', () => showPage(i));
+            panelNav.appendChild(iconDiv);
+        });
+        // Set initial active state and hide store icon
+        document.getElementById('nav-icon-0').classList.add('active');
+        document.getElementById('nav-icon-6').classList.add('hidden');
 
         function getAvailablePages() {
             if (storeAvailable) return [0, 1, 2, 3, 4, 5, 6];
@@ -1597,10 +1621,12 @@
 
         function updatePanelNav() {
             const available = getAvailablePages();
-            const idx = available.indexOf(currentPage);
-            document.getElementById('nav-prev').disabled = idx <= 0;
-            document.getElementById('nav-next').disabled = idx >= available.length - 1;
-            document.getElementById('nav-label').textContent = PAGES[currentPage].label;
+            PAGES.forEach((p, i) => {
+                const icon = document.getElementById(`nav-icon-${i}`);
+                if (!icon) return;
+                icon.classList.toggle('active', i === currentPage);
+                icon.classList.toggle('hidden', !available.includes(i));
+            });
         }
 
         function showPage(pageIndex) {
@@ -1610,21 +1636,6 @@
             currentPage = pageIndex;
             updatePanelNav();
         }
-
-        function navPrev() {
-            const available = getAvailablePages();
-            const idx = available.indexOf(currentPage);
-            if (idx > 0) showPage(available[idx - 1]);
-        }
-
-        function navNext() {
-            const available = getAvailablePages();
-            const idx = available.indexOf(currentPage);
-            if (idx < available.length - 1) showPage(available[idx + 1]);
-        }
-
-        document.getElementById('nav-prev').addEventListener('click', navPrev);
-        document.getElementById('nav-next').addEventListener('click', navNext);
 
         // Location system
         const LOCATIONS = {
