@@ -2169,11 +2169,11 @@
                 depth: asteroid.depth,
                 stabilityLoss: asteroid.stabilityLoss,
                 currentDepth: 0,
-                stability: 100
+                stability: asteroid.stability
             };
 
             addMessage(`[MINING EVENT] An asteroid with ${asteroid.mineral} deposits at ${asteroid.depth}ft has been detected.`, 'system');
-            addMessage(`Asteroid stability: 100 | Your mining power: ${game.player.mining}`, 'system');
+            addMessage(`Asteroid stability: ${asteroid.stability} | Your mining power: ${game.player.mining}`, 'system');
 
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);

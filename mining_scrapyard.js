@@ -4,7 +4,7 @@
  */
 
 const MINING_SCRAPYARD = [
-    { mineral: 'Limestone', category: 'common', depth: 30, stabilityLoss: 5 },
-    { mineral: 'Sandstone', category: 'common', depth: 35, stabilityLoss: 5 },
-    { mineral: 'Clay', category: 'common', depth: 25, stabilityLoss: 5 }
+    { mineral: 'Limestone', category: 'common', depth: 30, stabilityLoss: 5, stability: 200 },
+    { mineral: 'Sandstone', category: 'common', depth: 35, stabilityLoss: 5, stability: 200 },
+    { mineral: 'Clay', category: 'common', depth: 25, stabilityLoss: 5, stability: 200 }
 ];
