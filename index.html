@@ -2528,6 +2528,7 @@
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 const item = STORY_ITEMS.find(i => i.name === e.target.value);
                 desc.textContent = item ? item.desc : '';
+                desc.classList.toggle('visible', !!item);
             });
         });
 
