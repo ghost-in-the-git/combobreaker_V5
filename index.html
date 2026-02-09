@@ -71,18 +71,16 @@
         }
 
         .hp-bar {
-            height: 24px;
+            height: 8px;
             background: linear-gradient(90deg, #00ff88, #00cc66);
             transition: width 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .hp-text {
-            color: #0a0a0f;
-            font-weight: bold;
-            font-size: 12px;
+        .hp-label {
+            text-align: center;
+            font-size: 11px;
+            color: #00ff88;
+            margin-top: 4px;
         }
 
         .xp-bar-container {
@@ -94,7 +92,7 @@
         }
 
         .xp-bar {
-            height: 16px;
+            height: 8px;
             background: linear-gradient(90deg, #4488ff, #2266cc);
             transition: width 0.3s ease;
         }
@@ -115,7 +113,7 @@
         }
 
         .fuel-bar {
-            height: 16px;
+            height: 8px;
             background: linear-gradient(90deg, #ff8800, #cc6600);
             transition: width 0.3s ease;
         }
@@ -811,10 +809,9 @@
         <h4>/// v1.5.0</h4>
 
         <div class="hp-bar-container">
-            <div class="hp-bar" id="hp-bar">
-                <span class="hp-text" id="hp-text">100 / 100</span>
-            </div>
+            <div class="hp-bar" id="hp-bar" style="width: 100%"></div>
         </div>
+        <div class="hp-label" id="hp-label">HP: 100 / 100</div>
 
         <div class="xp-bar-container">
             <div class="xp-bar" id="xp-bar" style="width: 0%"></div>
@@ -1729,7 +1726,7 @@
             // HP Bar
             const hpPercent = (p.hp / p.maxHp) * 100;
             document.getElementById('hp-bar').style.width = `${hpPercent}%`;
-            document.getElementById('hp-text').textContent = `${p.hp} / ${p.maxHp}`;
+            document.getElementById('hp-label').textContent = `HP: ${p.hp} / ${p.maxHp}`;
 
             // XP Bar
             const xpPercent = (p.xp / p.xpToLevel) * 100;
