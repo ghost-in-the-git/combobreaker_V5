@@ -5,7 +5,7 @@
  *
  * Each item has:
  * - name: Display name
- * - type: "body", "legs", "arms", "weapon", "chip", "processor", "pilot", or "drill"
+ * - type: "body", "legs", "arms", "weapon", "chip", "processor", "pilot", "drill", or "implant"
  * - desc: Flavour text shown when installed
  * - image: Image path for the item icon
  * - stats: Object with stat bonuses { hp, defence, speed, attack, combo }
@@ -709,6 +709,108 @@ const ITEMS = [
         dropRate: 3,
         droppedBy: ["Abomination Core"],
         cost: 320
+    },
+
+    // ==================== IMPLANT (Regen) ====================
+    {
+        name: "Salvaged Repair Node [+1 REGEN]",
+        type: "implant",
+        desc: "A crude self-repair module pulled from a wrecked maintenance drone. Slow, but it works.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 1 },
+        dropRate: 50,
+        droppedBy: [],
+        cost: 15
+    },
+    {
+        name: "Basic Nano Injector [+2 REGEN]",
+        type: "implant",
+        desc: "A subdermal injector that releases repair nanites into the mech's structural lattice.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 2 },
+        dropRate: 40,
+        droppedBy: [],
+        cost: 30
+    },
+    {
+        name: "Tissue Welder Implant [+3 REGEN]",
+        type: "implant",
+        desc: "Micro-welders embedded in the frame that continuously seal cracks and fractures.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 3 },
+        dropRate: 32,
+        droppedBy: [],
+        cost: 50
+    },
+    {
+        name: "Regenerative Mesh [+4 REGEN]",
+        type: "implant",
+        desc: "A woven lattice of self-healing polymers that knit armor back together between impacts.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 4 },
+        dropRate: 25,
+        droppedBy: ["Droid Scout", "Droid Enforcer"],
+        cost: 75
+    },
+    {
+        name: "Bio-Repair Matrix [+5 REGEN]",
+        type: "implant",
+        desc: "Organic tissue grafted into the mech's hull. It grows back. Don't think about it too hard.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 5 },
+        dropRate: 20,
+        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
+        cost: 100
+    },
+    {
+        name: "Nano Reconstruction Array [+6 REGEN]",
+        type: "implant",
+        desc: "Swarms of repair nanites that rebuild damaged sections at the molecular level.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 6 },
+        dropRate: 16,
+        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
+        cost: 130
+    },
+    {
+        name: "Adaptive Hull Implant [+8 REGEN]",
+        type: "implant",
+        desc: "Memory-metal plating that remembers its original shape and reforms after taking damage.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 8 },
+        dropRate: 12,
+        droppedBy: ["Droid Sentinel"],
+        cost: 170
+    },
+    {
+        name: "Phoenix Core Module [+10 REGEN]",
+        type: "implant",
+        desc: "A thermite-laced repair core that burns away damaged material and regrows it from stored templates.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 10 },
+        dropRate: 8,
+        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
+        cost: 220
+    },
+    {
+        name: "Lazarus Engine [+13 REGEN]",
+        type: "implant",
+        desc: "Experimental resurrection tech. The mech's frame heals so fast it's practically unkillable. Practically.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 13 },
+        dropRate: 5,
+        droppedBy: ["Droid Destroyer"],
+        cost: 280
+    },
+    {
+        name: "Omega Regeneration Core [+16 REGEN]",
+        type: "implant",
+        desc: "Prototype self-repair system that operates at the quantum level. Damage is undone before it fully registers.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 16 },
+        dropRate: 3,
+        droppedBy: ["Droid Destroyer"],
+        cost: 350
     }
 
 ];
@@ -722,5 +824,6 @@ const ITEM_TYPES = {
     chip: "CHIP READY FOR INSTALLATION",
     processor: "PROCESSOR READY FOR INSTALLATION",
     pilot: "PILOT READY FOR INSTALLATION",
-    drill: "MINING DRILL READY FOR INSTALLATION"
+    drill: "MINING DRILL READY FOR INSTALLATION",
+    implant: "IMPLANT READY FOR INSTALLATION"
 };

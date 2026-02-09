@@ -933,6 +933,10 @@
                     <select id="equip-processor"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-processor"></div>
                 </div>
+                <div class="equip-slot">
+                    <select id="equip-implant"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-implant"></div>
+                </div>
             </div>
         </div>
 
@@ -1238,7 +1242,8 @@
                 chip: null,
                 processor: null,
                 pilot: null,
-                drill: null
+                drill: null,
+                implant: null
             },
             currentWave: null,
             inBattle: false,
@@ -1425,7 +1430,7 @@
                 game.minerals = {};
                 game.storyItems = ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
                 game.inventory = [];
-                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null };
+                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null };
                 currentLocation = 'scrapyard';
             }
 
@@ -1911,11 +1916,11 @@
         // Update equipment dropdowns with inventory items
         const SLOT_LABELS = {
             body: 'BODY', legs: 'LEGS', arms: 'ARMS', weapon: 'WEAPON',
-            chip: 'CHIP', processor: 'PROC', pilot: 'PILOT', drill: 'DRILL'
+            chip: 'CHIP', processor: 'PROC', implant: 'IMPLANT', pilot: 'PILOT', drill: 'DRILL'
         };
 
         function updateEquipmentUI() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant'];
 
             slots.forEach(slot => {
                 const select = document.getElementById(`equip-${slot}`);
@@ -1942,7 +1947,7 @@
 
         // Update equipment description text under each dropdown
         function updateEquipmentDescs() {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant'];
             slots.forEach(slot => {
                 const descEl = document.getElementById(`equip-desc-${slot}`);
                 const itemName = game.equipment[slot];
@@ -1975,7 +1980,7 @@
 
         // Lock/unlock equipment dropdowns
         function setEquipmentLocked(locked) {
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
@@ -3075,7 +3080,7 @@
         // Initialize game
         function init() {
             // Set up equipment dropdown event listeners
-            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
+            const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill', 'implant'];
             slots.forEach(slot => {
                 document.getElementById(`equip-${slot}`).addEventListener('change', (e) => {
                     onEquipmentChange(slot, e.target.value);
