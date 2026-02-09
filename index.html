@@ -2144,9 +2144,10 @@
 
                 if (item) {
                     const canAfford = playerXP >= item.cost;
-                    nameEl.textContent = item.name;
+                    const tag = SLOT_LABELS[item.type] || item.type.toUpperCase();
+                    nameEl.textContent = `[${tag}] ${item.name}`;
                     descEl.textContent = item.desc || '';
-                    buyBtn.textContent = canAfford ? `[Buy ${item.cost} XP]` : '[Insufficient XP]';
+                    buyBtn.textContent = `[Buy ${item.cost} XP]`;
                     buyBtn.disabled = !canAfford;
                     wrapper.classList.add('visible');
                 } else {
