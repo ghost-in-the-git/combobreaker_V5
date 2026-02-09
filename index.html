@@ -1170,6 +1170,16 @@
     <script src="enemies_frozenreach.js"></script>
     <script src="enemies_neonstrip.js"></script>
     <script src="enemies_deadzone.js"></script>
+    <script src="ambush_scrapyard.js"></script>
+    <script src="ambush_oldbattlefield.js"></script>
+    <script src="ambush_downtown.js"></script>
+    <script src="ambush_orbitalstation.js"></script>
+    <script src="ambush_wasteland.js"></script>
+    <script src="ambush_undercity.js"></script>
+    <script src="ambush_industrialzone.js"></script>
+    <script src="ambush_frozenreach.js"></script>
+    <script src="ambush_neonstrip.js"></script>
+    <script src="ambush_deadzone.js"></script>
     <script src="items.js"></script>
     <script src="storyitems.js"></script>
     <script src="encounters_home.js"></script>
@@ -1248,7 +1258,8 @@
             deaths: 0,
             activeSlot: null, // Which save slot is currently active (1-3 or null)
             minerals: {}, // Collected minerals by category
-            storyItems: [] // Collected story items
+            storyItems: [], // Collected story items
+            isAmbush: false // Whether current wave is an ambush
         };
 
         // Current encounter state
@@ -1257,6 +1268,7 @@
         let currentMiningEvent = null;
 
         const MINING_CHANCE = 15; // % chance for mining event instead of enemy wave
+        const AMBUSH_CHANCE = 10; // % chance for ambush instead of normal enemy wave
 
         const SAVE_KEY = 'combobreaker_save';
         const SLOT_KEYS = ['combobreaker_slot_1', 'combobreaker_slot_2', 'combobreaker_slot_3'];
@@ -1341,6 +1353,7 @@
             // Stop all active timers and battle state
             game.inBattle = false;
             game.currentWave = null;
+            game.isAmbush = false;
             currentEncounter = null;
             currentMiningEvent = null;
             shopItems = [];
@@ -1645,72 +1658,84 @@
                 enemies: ENEMIES_SCRAPYARD,
                 encounters: ENCOUNTERS_SCRAPYARD,
                 mining: MINING_SCRAPYARD,
+                ambush: AMBUSH_SCRAPYARD,
                 desc: "Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage."
             },
             oldbattlefield: {
                 enemies: ENEMIES_OLDBATTLEFIELD,
                 encounters: ENCOUNTERS_OLDBATTLEFIELD,
                 mining: MINING_OLDBATTLEFIELD,
+                ambush: AMBUSH_OLDBATTLEFIELD,
                 desc: "Scarred terrain littered with war machines still running combat protocols from a forgotten conflict."
             },
             downtown: {
                 enemies: ENEMIES_DOWNTOWN,
                 encounters: ENCOUNTERS_DOWNTOWN,
                 mining: MINING_DOWNTOWN,
+                ambush: AMBUSH_DOWNTOWN,
                 desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks."
             },
             orbitalstation: {
                 enemies: ENEMIES_ORBITALSTATION,
                 encounters: ENCOUNTERS_ORBITALSTATION,
                 mining: MINING_ORBITALSTATION,
+                ambush: AMBUSH_ORBITALSTATION,
                 desc: "A derelict orbital platform. Rogue drones and hijacked defense systems stalk the corridors."
             },
             wasteland: {
                 enemies: ENEMIES_WASTELAND,
                 encounters: ENCOUNTERS_WASTELAND,
                 mining: MINING_WASTELAND,
+                ambush: AMBUSH_WASTELAND,
                 desc: "Irradiated badlands where feral war machines and dust-choked scavengers fight over scraps."
             },
             undercity: {
                 enemies: ENEMIES_UNDERCITY,
                 encounters: ENCOUNTERS_UNDERCITY,
                 mining: MINING_UNDERCITY,
+                ambush: AMBUSH_UNDERCITY,
                 desc: "A labyrinth of tunnels and sewers beneath the streets. Black-ops units and tunnel rats lurk in the dark."
             },
             industrialzone: {
                 enemies: ENEMIES_INDUSTRIALZONE,
                 encounters: ENCOUNTERS_INDUSTRIALZONE,
                 mining: MINING_INDUSTRIALZONE,
+                ambush: AMBUSH_INDUSTRIALZONE,
                 desc: "Sprawling factories and refineries. Malfunctioning production bots guard the assembly lines."
             },
             frozenreach: {
                 enemies: ENEMIES_FROZENREACH,
                 encounters: ENCOUNTERS_FROZENREACH,
                 mining: MINING_FROZENREACH,
+                ambush: AMBUSH_FROZENREACH,
                 desc: "Arctic tundra locked in permanent winter. Cryo-adapted war machines patrol the frozen expanse."
             },
             neonstrip: {
                 enemies: ENEMIES_NEONSTRIP,
                 encounters: ENCOUNTERS_NEONSTRIP,
                 mining: MINING_NEONSTRIP,
+                ambush: AMBUSH_NEONSTRIP,
                 desc: "The flashy entertainment district. Syndicate enforcers and casino muscle keep the peace their way."
             },
             deadzone: {
                 enemies: ENEMIES_DEADZONE,
                 encounters: ENCOUNTERS_DEADZONE,
                 mining: MINING_DEADZONE,
+                ambush: AMBUSH_DEADZONE,
                 desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked."
             },
             asteroidbelt: {
                 enemies: null,
                 encounters: null,
                 mining: MINING_ASTEROIDBELT,
+                ambush: null,
                 desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void."
             },
             home: {
                 enemies: null,
                 encounters: ENCOUNTERS_HOME,
                 mining: null,
+                ambush: null,
                 desc: "Your workshop. The Professor is here, tinkering with salvage and offering what they've found."
             }
         };
@@ -1747,6 +1772,7 @@
             // Stop all active timers and battle state
             game.inBattle = false;
             game.currentWave = null;
+            game.isAmbush = false;
             currentEncounter = null;
             currentMiningEvent = null;
             shopItems = [];
@@ -2531,6 +2557,110 @@
         }
 
         // Spawn new wave
+        // Select ambush enemy type based on player level and appearance rates
+        function selectAmbushType() {
+            const loc = LOCATIONS[currentLocation];
+            if (!loc.ambush || loc.ambush.length === 0) return null;
+            const playerLevel = game.player.level;
+            const available = loc.ambush.filter(e => e.minLevel <= playerLevel);
+            if (available.length === 0) return null;
+            const totalRate = available.reduce((sum, e) => sum + e.appearanceRate, 0);
+            let roll = Math.random() * totalRate;
+            for (const enemy of available) {
+                roll -= enemy.appearanceRate;
+                if (roll <= 0) return enemy;
+            }
+            return available[0];
+        }
+
+        // Spawn an ambush event
+        function spawnAmbush() {
+            const ambushEnemy = selectAmbushType();
+            if (!ambushEnemy) return false;
+
+            const min = ambushEnemy.squadMin || 1;
+            const max = ambushEnemy.squadMax || 1;
+            const enemyCount = Math.floor(Math.random() * (max - min + 1)) + min;
+
+            game.currentWave = {
+                enemyType: ambushEnemy,
+                count: enemyCount,
+                remaining: enemyCount,
+                currentTarget: 1,
+                currentEnemy: null,
+                turn: 0
+            };
+            game.isAmbush = true;
+
+            addMessage(`[AMBUSH] A squad of ${enemyCount} ${ambushEnemy.name}s has locked onto your location [ATK:${ambushEnemy.attack} DEF:${ambushEnemy.defence} HP:${ambushEnemy.hp}]`, 'enemy');
+
+            // Create countdown message
+            let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
+            const countdownMsg = document.createElement('div');
+            countdownMsg.className = 'message system';
+            countdownMsg.textContent = `Contact in [${secondsLeft}] seconds.`;
+            chatMessages.appendChild(countdownMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            game.countdownMsg = countdownMsg;
+
+            addMessage(`Hostile signatures closing fast...`, 'player');
+
+            // Update countdown every second
+            game.countdownInterval = setInterval(() => {
+                secondsLeft--;
+                if (secondsLeft > 0) {
+                    countdownMsg.textContent = `Contact in [${secondsLeft}] seconds.`;
+                } else {
+                    clearCountdown();
+                }
+            }, 1000);
+
+            // Set button text for ambush
+            btnRetreat.textContent = 'Evade';
+            showInlineButtons();
+
+            // Ambush expires - if player doesn't act, fight starts automatically
+            if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
+            game.waveExpireTimer = setTimeout(() => {
+                clearCountdown();
+                if (game.currentWave && !game.inBattle) {
+                    addMessage(`[CONTACT] No time left — they're on you!`, 'enemy');
+                    hideInlineButtons();
+                    btnRetreat.textContent = 'Decline';
+                    engageBattle();
+                }
+            }, game.WAVE_EXPIRE);
+
+            return true;
+        }
+
+        // Evade an ambush using speed stat (same calculation as speedbreaker)
+        function evadeAmbush() {
+            if (!game.currentWave || game.inBattle) return;
+
+            // Clear expire timer and countdown
+            if (game.waveExpireTimer) {
+                clearTimeout(game.waveExpireTimer);
+                game.waveExpireTimer = null;
+            }
+            clearCountdown();
+
+            const p = game.player;
+            const evadeRoll = Math.random() * 100 < p.speed;
+
+            if (evadeRoll) {
+                addMessage(`[EVADE SUCCESSFUL] Speedbreaker engaged — you slipped their sensors!`, 'player');
+                game.currentWave = null;
+                game.isAmbush = false;
+                btnRetreat.textContent = 'Decline';
+                startWaveTimer();
+            } else {
+                addMessage(`[EVADE FAILED] They've cut off your escape — combat is unavoidable!`, 'enemy');
+                btnRetreat.textContent = 'Decline';
+                engageBattle();
+            }
+        }
+
         function spawnWave() {
             if (game.inBattle || game.currentWave || currentEncounter || currentMiningEvent) return;
 
@@ -2555,6 +2685,11 @@
             // Check for encounter chance
             if (Math.random() * 100 < game.ENCOUNTER_CHANCE) {
                 if (spawnEncounter()) return;
+            }
+
+            // Check for ambush chance
+            if (loc.ambush && Math.random() * 100 < AMBUSH_CHANCE) {
+                if (spawnAmbush()) return;
             }
 
             // Check for mining event chance (only if player has mining stat > 0)
@@ -2768,6 +2903,8 @@
             }
 
             game.currentWave = null;
+            game.isAmbush = false;
+            btnRetreat.textContent = 'Decline';
             updateStats();
             startRegen();
             startWaveTimer();
@@ -2858,6 +2995,8 @@
                 declineMining();
             } else if (currentEncounter) {
                 declineEncounter();
+            } else if (game.isAmbush) {
+                evadeAmbush();
             } else {
                 declineBattle();
             }
