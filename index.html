@@ -918,32 +918,26 @@
             <div class="equipment-panel">
                 <h4>[ INSTALLATIONS ]</h4>
                 <div class="equip-slot">
-                    <label>Body</label>
                     <select id="equip-body"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-body"></div>
                 </div>
                 <div class="equip-slot">
-                    <label>Legs</label>
                     <select id="equip-legs"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-legs"></div>
                 </div>
                 <div class="equip-slot">
-                    <label>Arms</label>
                     <select id="equip-arms"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-arms"></div>
                 </div>
                 <div class="equip-slot">
-                    <label>Weapon</label>
                     <select id="equip-weapon"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-weapon"></div>
                 </div>
                 <div class="equip-slot">
-                    <label>Systems Chip</label>
                     <select id="equip-chip"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-chip"></div>
                 </div>
                 <div class="equip-slot">
-                    <label>Processor</label>
                     <select id="equip-processor"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-processor"></div>
                 </div>
@@ -954,7 +948,6 @@
             <div class="equipment-panel">
                 <h4>[ PILOT ]</h4>
                 <div class="equip-slot">
-                    <label>Pilot</label>
                     <select id="equip-pilot"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-pilot"></div>
                 </div>
@@ -991,7 +984,6 @@
             <div class="mining-panel">
                 <h4>[ MINING ]</h4>
                 <div class="equip-slot">
-                    <label>Mining Drill</label>
                     <select id="equip-drill"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-drill"></div>
                 </div>
@@ -1918,22 +1910,28 @@
         }
 
         // Update equipment dropdowns with inventory items
+        const SLOT_LABELS = {
+            body: 'BODY', legs: 'LEGS', arms: 'ARMS', weapon: 'WEAPON',
+            chip: 'CHIP', processor: 'PROC', pilot: 'PILOT', drill: 'DRILL'
+        };
+
         function updateEquipmentUI() {
             const slots = ['body', 'legs', 'arms', 'weapon', 'chip', 'processor', 'pilot', 'drill'];
 
             slots.forEach(slot => {
                 const select = document.getElementById(`equip-${slot}`);
                 const currentValue = game.equipment[slot] || '';
+                const tag = SLOT_LABELS[slot];
 
                 // Clear and rebuild options
-                select.innerHTML = '<option value="">-- None --</option>';
+                select.innerHTML = `<option value="">[${tag}] -- None --</option>`;
 
                 // Add items from inventory that match this slot
                 const slotItems = game.inventory.filter(item => item.type === slot);
                 slotItems.forEach(item => {
                     const option = document.createElement('option');
                     option.value = item.name;
-                    option.textContent = item.name;
+                    option.textContent = `[${tag}] ${item.name}`;
                     if (item.name === currentValue) {
                         option.selected = true;
                     }
