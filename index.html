@@ -433,16 +433,7 @@
             width: 100%;
         }
 
-        .shop-btn.leave {
-            border-color: #888;
-            color: #888;
-            margin-top: 5px;
-        }
 
-        .shop-btn.leave:hover {
-            background: #888;
-            color: #0a0a0f;
-        }
 
 
 
@@ -1084,7 +1075,6 @@
                     <div class="shop-desc" id="shop-desc-3"></div>
                     <button class="shop-buy-btn" id="shop-buy-3" disabled>--</button>
                 </div>
-                <button class="shop-btn leave" id="shop-leave">Buy Nothing</button>
             </div>
         </div>
 
@@ -3048,7 +3038,6 @@
         document.getElementById('shop-buy-1').addEventListener('click', () => purchaseItem(0));
         document.getElementById('shop-buy-2').addEventListener('click', () => purchaseItem(1));
         document.getElementById('shop-buy-3').addEventListener('click', () => purchaseItem(2));
-        document.getElementById('shop-leave').addEventListener('click', endShopEncounter);
 
         // Initialize game
         function init() {
