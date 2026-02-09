@@ -1074,23 +1074,19 @@
             <div class="storage-panel">
                 <h4>[ STORAGE ]</h4>
                 <div class="equip-slot">
-                    <label class="storage-label log">System Logs</label>
-                    <select id="storage-log"><option value="">-- Empty --</option></select>
+                    <select id="storage-log"><option value="">[LOGS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-log"></div>
                 </div>
                 <div class="equip-slot">
-                    <label class="storage-label key">Keys</label>
-                    <select id="storage-key"><option value="">-- Empty --</option></select>
+                    <select id="storage-key"><option value="">[KEYS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-key"></div>
                 </div>
                 <div class="equip-slot">
-                    <label class="storage-label dna">DNA Tags</label>
-                    <select id="storage-dna"><option value="">-- Empty --</option></select>
+                    <select id="storage-dna"><option value="">[DNA] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-dna"></div>
                 </div>
                 <div class="equip-slot">
-                    <label class="storage-label debris">Mech Debris</label>
-                    <select id="storage-debris"><option value="">-- Empty --</option></select>
+                    <select id="storage-debris"><option value="">[DEBRIS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-debris"></div>
                 </div>
             </div>
@@ -2536,18 +2532,20 @@
 
         // Update storage UI dropdowns with collected story items
         function updateStorageUI() {
+            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', dna: 'DNA', debris: 'DEBRIS' };
             const items = game.storyItems || [];
             const cats = ['log', 'key', 'dna', 'debris'];
             cats.forEach(cat => {
                 const select = document.getElementById(`storage-${cat}`);
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 if (!select || !desc) return;
+                const tag = STORAGE_LABELS[cat];
                 const collected = items.map(name => STORY_ITEMS.find(i => i.name === name)).filter(i => i && i.category === cat);
-                select.innerHTML = '<option value="">-- Empty --</option>';
+                select.innerHTML = `<option value="">[${tag}] -- Empty --</option>`;
                 collected.forEach(item => {
                     const opt = document.createElement('option');
                     opt.value = item.name;
-                    opt.textContent = item.name;
+                    opt.textContent = `[${tag}] ${item.name}`;
                     select.appendChild(opt);
                 });
                 select.disabled = collected.length === 0;
