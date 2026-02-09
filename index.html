@@ -2037,6 +2037,10 @@
         // End shop encounter
         function endShopEncounter() {
             hideShopPanel();
+            if (game.shopLeaveBtn && game.shopLeaveBtn.parentNode) {
+                game.shopLeaveBtn.remove();
+                game.shopLeaveBtn = null;
+            }
             currentEncounter = null;
             shopItems = [];
             addMessage(`Transaction complete. The trader departs.`, 'system');
@@ -2104,6 +2108,19 @@
 
             await addMessage(currentEncounter.engageText, 'system');
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
+
+            // Add inline leave button in chat
+            game.shopLeaveBtn = document.createElement('div');
+            game.shopLeaveBtn.className = 'action-btn-container';
+            const leaveBtn = document.createElement('button');
+            leaveBtn.className = 'action-btn engage';
+            leaveBtn.textContent = 'Leave';
+            leaveBtn.addEventListener('click', () => {
+                endShopEncounter();
+            });
+            game.shopLeaveBtn.appendChild(leaveBtn);
+            chatMessages.appendChild(game.shopLeaveBtn);
+            game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
             showShopPanel();
         }
