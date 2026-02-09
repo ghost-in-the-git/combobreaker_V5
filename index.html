@@ -381,13 +381,10 @@
         }
 
         .shop-desc {
-            padding: 6px 8px;
+            padding: 0;
             background: #1a1a2e;
             border: 1px solid #4488ff33;
             border-top: none;
-            color: #888;
-            font-size: 10px;
-            line-height: 1.4;
         }
 
         .shop-buy-btn {
@@ -2136,7 +2133,8 @@
                     const canAfford = playerXP >= item.cost;
                     const tag = SLOT_LABELS[item.type] || item.type.toUpperCase();
                     nameEl.textContent = `[${tag}] ${item.name}`;
-                    descEl.textContent = item.desc || '';
+                    const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
+                    descEl.innerHTML = item.desc ? `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>` : '';
                     buyBtn.textContent = `[Buy ${item.cost} XP]`;
                     buyBtn.disabled = !canAfford;
                     wrapper.classList.add('visible');
