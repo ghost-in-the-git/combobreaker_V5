@@ -875,14 +875,20 @@
                     <div class="equip-desc" id="equip-desc-processor"></div>
                 </div>
                 <div class="equip-slot">
-                    <label>Pilot</label>
-                    <select id="equip-pilot"><option value="">-- None --</option></select>
-                    <div class="equip-desc" id="equip-desc-pilot"></div>
-                </div>
-                <div class="equip-slot">
                     <label>Mining Drill</label>
                     <select id="equip-drill"><option value="">-- None --</option></select>
                     <div class="equip-desc" id="equip-desc-drill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-page" id="page-pilot">
+            <div class="equipment-panel">
+                <h4>[ PILOT ]</h4>
+                <div class="equip-slot">
+                    <label>Pilot</label>
+                    <select id="equip-pilot"><option value="">-- None --</option></select>
+                    <div class="equip-desc" id="equip-desc-pilot"></div>
                 </div>
             </div>
         </div>
@@ -1493,18 +1499,19 @@
 
         // Panel page navigation
         const PAGES = [
-            { id: 'page-stats', label: 'Stats' },
-            { id: 'page-installations', label: 'Installations' },
-            { id: 'page-location', label: 'Location' },
-            { id: 'page-mining', label: 'Mining' },
-            { id: 'page-store', label: 'Store' }
+            { id: 'page-stats', label: 'Stats' },        // 0
+            { id: 'page-installations', label: 'Installations' }, // 1
+            { id: 'page-pilot', label: 'Pilot' },         // 2
+            { id: 'page-location', label: 'Location' },   // 3
+            { id: 'page-mining', label: 'Mining' },        // 4
+            { id: 'page-store', label: 'Store' }           // 5
         ];
         let currentPage = 0;
         let storeAvailable = false;
 
         function getAvailablePages() {
-            if (storeAvailable) return [0, 1, 2, 3, 4];
-            return [0, 1, 2, 3];
+            if (storeAvailable) return [0, 1, 2, 3, 4, 5];
+            return [0, 1, 2, 3, 4];
         }
 
         function updatePanelNav() {
@@ -1644,7 +1651,7 @@
             // Reset UI
             chatMessages.innerHTML = '';
             storeAvailable = false;
-            if (currentPage === 4) showPage(0);
+            if (currentPage === 5) showPage(0);
             updatePanelNav();
             setEquipmentLocked(false);
             hideInlineButtons();
@@ -2002,13 +2009,13 @@
         function showShopPanel() {
             storeAvailable = true;
             updateShopUI();
-            showPage(4);
+            showPage(5);
         }
 
         // Hide shop panel (leave store page)
         function hideShopPanel() {
             storeAvailable = false;
-            if (currentPage === 4) showPage(0);
+            if (currentPage === 5) showPage(0);
             updatePanelNav();
         }
 
