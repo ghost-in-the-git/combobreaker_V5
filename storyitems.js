@@ -12,6 +12,28 @@
  */
 
 const STORY_ITEMS = [
+    // Starter Items
+    {
+        name: "Mysterious Note",
+        desc: "A crumpled note found in your cockpit on day one. The handwriting is yours, but you don't remember writing it.",
+        category: "log"
+    },
+    {
+        name: "Old Key",
+        desc: "A tarnished key you've had as long as you can remember. Whatever it opens, you haven't found it yet.",
+        category: "key"
+    },
+    {
+        name: "Unreadable DNA Tag",
+        desc: "A smudged genetic tag clipped to your pilot jacket. The data is too degraded to scan.",
+        category: "dna"
+    },
+    {
+        name: "Destroyed Mech Heart",
+        desc: "The fused core reactor of a mech you once piloted. It's dead now, but it's warm when you hold it.",
+        category: "debris"
+    },
+
     // System Logs
     {
         name: "Battle Report: Sector 7 Collapse",
