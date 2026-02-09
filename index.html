@@ -140,10 +140,19 @@
             font-weight: bold;
         }
 
-        .storage-item-name.common { color: #888; }
-        .storage-item-name.uncommon { color: #44cc44; }
-        .storage-item-name.rare { color: #4488ff; }
-        .storage-item-name.unique { color: #ff44ff; }
+        .storage-item-name.log { color: #44cccc; }
+        .storage-item-name.key { color: #ffcc44; }
+        .storage-item-name.dna { color: #ff4488; }
+        .storage-item-name.debris { color: #888; }
+
+        .storage-category {
+            font-size: 11px;
+            color: #555;
+            text-transform: uppercase;
+            padding: 10px 10px 4px;
+            border-bottom: 1px solid #1a1a2e;
+            letter-spacing: 1px;
+        }
 
         .storage-item-desc {
             font-size: 11px;
@@ -2517,13 +2526,25 @@
                 return;
             }
             list.innerHTML = '';
-            items.forEach(itemName => {
-                const item = STORY_ITEMS.find(i => i.name === itemName);
-                if (!item) return;
-                const div = document.createElement('div');
-                div.className = 'storage-item';
-                div.innerHTML = `<div class="storage-item-name ${item.rarity}">${item.name}</div><div class="storage-item-desc">${item.desc}</div>`;
-                list.appendChild(div);
+            const categories = [
+                { key: 'log', label: 'System Logs' },
+                { key: 'key', label: 'Keys' },
+                { key: 'dna', label: 'DNA Tags' },
+                { key: 'debris', label: 'Mech Debris' }
+            ];
+            categories.forEach(cat => {
+                const catItems = items.map(name => STORY_ITEMS.find(i => i.name === name)).filter(i => i && i.category === cat.key);
+                if (catItems.length === 0) return;
+                const header = document.createElement('div');
+                header.className = 'storage-category';
+                header.textContent = `[ ${cat.label} ]`;
+                list.appendChild(header);
+                catItems.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'storage-item';
+                    div.innerHTML = `<div class="storage-item-name ${item.category}">${item.name}</div><div class="storage-item-desc">${item.desc}</div>`;
+                    list.appendChild(div);
+                });
             });
         }
 

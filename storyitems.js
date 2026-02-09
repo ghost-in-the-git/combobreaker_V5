@@ -4,127 +4,139 @@
  * Collectible items tied to story events, exploration, and lore.
  * These are NOT equipment, minerals, or consumables.
  *
- * Each item has:
- * - name: Display name
- * - desc: Flavour text / lore description
- * - rarity: "common", "uncommon", "rare", "unique"
+ * Categories:
+ * - "log"    : System Logs (battle reports, experiments, world events)
+ * - "key"    : Keys (access cards, fobs, unlock devices)
+ * - "dna"    : DNA Tags (biological samples, genetic markers)
+ * - "debris" : Mech Debris (random mech parts and wreckage)
  */
 
 const STORY_ITEMS = [
-    // Scrap & Salvage
+    // System Logs
     {
-        name: "Twisted Servo Arm",
-        desc: "A mangled hydraulic arm ripped from a fallen mech. Still twitches when you touch the wiring.",
-        rarity: "common"
+        name: "Battle Report: Sector 7 Collapse",
+        desc: "A fragmented log detailing the fall of Sector 7. The defending unit was overwhelmed in under three minutes.",
+        category: "log"
     },
     {
-        name: "Burnt Circuit Board",
-        desc: "Charred beyond recognition. Whatever data it held is gone, but the gold traces might be worth something.",
-        rarity: "common"
+        name: "Experiment Log: Project Lazarus",
+        desc: "Notes on a failed attempt to reboot a destroyed mech's AI core. The core rebooted — then refused to comply.",
+        category: "log"
     },
     {
-        name: "Cracked Sensor Lens",
-        desc: "A targeting optic shattered by impact. Light refracts through it in strange patterns.",
-        rarity: "common"
+        name: "Distress Signal Transcript",
+        desc: "A decoded transmission from an orbital station. The last line reads: 'They're inside the walls.'",
+        category: "log"
     },
     {
-        name: "Dented Dog Tags",
-        desc: "Military-issue pilot tags. The name has been scratched off. Only the serial number remains: 00-4417.",
-        rarity: "common"
+        name: "Incident Report: Dead Zone Breach",
+        desc: "An official report on the first incursion into the Dead Zone. Casualty rate: 97%. Classification: BURIED.",
+        category: "log"
     },
     {
-        name: "Rusted Bolt Collection",
-        desc: "A handful of corroded bolts rattling in a tin. Someone was collecting these. Why?",
-        rarity: "common"
-    },
-
-    // Maps & Navigation
-    {
-        name: "Torn Sector Map",
-        desc: "A partial map of the lower districts. Several routes are circled in red ink.",
-        rarity: "uncommon"
+        name: "Maintenance Log: Unit 00-4417",
+        desc: "Routine service record for a mech that was decommissioned. The final entry just says 'IT MOVED'.",
+        category: "log"
     },
     {
-        name: "Nav Chip Fragment",
-        desc: "A broken navigation module. The coordinates it contains point somewhere deep in the Wasteland.",
-        rarity: "uncommon"
+        name: "Encrypted Comms Fragment",
+        desc: "A partial intercept between two unknown callsigns. They reference something called 'The Fold'.",
+        category: "log"
     },
     {
-        name: "Faded Star Chart",
-        desc: "A printout of orbital trajectories. One path is highlighted — it leads to the Asteroid Belt.",
-        rarity: "uncommon"
+        name: "Blackbox Audio Log",
+        desc: "Recovered from wreckage. The audio is mostly static, but there are screams near the end.",
+        category: "log"
     },
 
-    // Keys & Access
+    // Keys
     {
         name: "Unmarked Keycard",
         desc: "A blank white keycard with no markings. It hums faintly when held near electrical panels.",
-        rarity: "rare"
+        category: "key"
     },
     {
         name: "Corroded Access Fob",
         desc: "An old security fob caked in grime. The LED still blinks red every few seconds.",
-        rarity: "uncommon"
+        category: "key"
     },
     {
         name: "Skeleton Key Module",
         desc: "A black-market bypass chip. It won't open everything, but it opens more than it should.",
-        rarity: "rare"
-    },
-
-    // Mementos & Lore
-    {
-        name: "Pilot's Lucky Coin",
-        desc: "A worn coin with a mech etched on one side and a skull on the other. Heads you fight, tails you run.",
-        rarity: "uncommon"
-    },
-    {
-        name: "Scorched Photograph",
-        desc: "A photo of two pilots standing beside a Breaker frame. Their faces are burned away.",
-        rarity: "uncommon"
-    },
-    {
-        name: "Encrypted Data Stick",
-        desc: "Military-grade encryption. Whatever is on this drive, someone wanted it buried.",
-        rarity: "rare"
-    },
-    {
-        name: "Faded Unit Patch",
-        desc: "A shoulder patch from the 9th Mech Division. They were wiped out in the Dead Zone Incursion.",
-        rarity: "uncommon"
-    },
-
-    // Mech Debris
-    {
-        name: "Shattered Cockpit Glass",
-        desc: "Reinforced glass from a mech canopy. The cracks form a spiderweb pattern around a single impact point.",
-        rarity: "common"
-    },
-    {
-        name: "Blackbox Recorder",
-        desc: "A flight recorder pulled from wreckage. The audio is mostly static, but there are screams near the end.",
-        rarity: "rare"
-    },
-    {
-        name: "Severed Mech Hand",
-        desc: "A massive articulated hand, cleanly cut at the wrist. The fingers are still locked in a fist.",
-        rarity: "common"
-    },
-
-    // Unique / Mystery
-    {
-        name: "Strange Signal Beacon",
-        desc: "Emits a repeating pulse on a frequency no known system uses. Origin unknown.",
-        rarity: "unique"
+        category: "key"
     },
     {
         name: "Unmarked Crate Key",
         desc: "A heavy iron key with no label. It doesn't match any standard lock pattern.",
-        rarity: "rare"
+        category: "key"
+    },
+    {
+        name: "Orbital Docking Permit",
+        desc: "An expired docking authorization for Bay 12. The station it references no longer exists on any map.",
+        category: "key"
+    },
+
+    // DNA Tags
+    {
+        name: "DNA Tag: Unknown Pilot",
+        desc: "A blood-smeared tag with a corrupted genetic profile. Species classification: PENDING.",
+        category: "dna"
+    },
+    {
+        name: "DNA Tag: Mech-Hybrid Sample",
+        desc: "Biological tissue fused with synthetic fibre. The cell structure is still actively dividing.",
+        category: "dna"
+    },
+    {
+        name: "DNA Tag: Contaminated Sample",
+        desc: "A sealed vial of irradiated blood from the Dead Zone. The cells glow faintly under UV light.",
+        category: "dna"
+    },
+    {
+        name: "DNA Tag: Cloned Signature",
+        desc: "Two identical genetic profiles from two different bodies. Recovered six months apart.",
+        category: "dna"
+    },
+    {
+        name: "DNA Tag: Non-Human Marker",
+        desc: "A genetic sequence that doesn't match any known terrestrial organism. Origin: CLASSIFIED.",
+        category: "dna"
+    },
+
+    // Mech Debris
+    {
+        name: "Twisted Servo Arm",
+        desc: "A mangled hydraulic arm ripped from a fallen mech. Still twitches when you touch the wiring.",
+        category: "debris"
+    },
+    {
+        name: "Shattered Cockpit Glass",
+        desc: "Reinforced glass from a mech canopy. The cracks form a spiderweb pattern around a single impact point.",
+        category: "debris"
+    },
+    {
+        name: "Severed Mech Hand",
+        desc: "A massive articulated hand, cleanly cut at the wrist. The fingers are still locked in a fist.",
+        category: "debris"
+    },
+    {
+        name: "Burnt Circuit Board",
+        desc: "Charred beyond recognition. Whatever data it held is gone, but the gold traces might be worth something.",
+        category: "debris"
+    },
+    {
+        name: "Cracked Sensor Lens",
+        desc: "A targeting optic shattered by impact. Light refracts through it in strange patterns.",
+        category: "debris"
+    },
+    {
+        name: "Dented Dog Tags",
+        desc: "Military-issue pilot tags. The name has been scratched off. Only the serial number remains: 00-4417.",
+        category: "debris"
     },
     {
         name: "Fragment of Unknown Alloy",
         desc: "A shard of metal that doesn't match anything in the materials database. Cold to the touch. Always.",
-        rarity: "unique"
+        category: "debris"
     }
 ];
