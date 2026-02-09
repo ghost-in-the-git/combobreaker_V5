@@ -2471,9 +2471,7 @@
         function addMineral(mineralName, category) {
             if (!game.minerals) game.minerals = {};
             if (!game.minerals[category]) game.minerals[category] = [];
-            if (!game.minerals[category].includes(mineralName)) {
-                game.minerals[category].push(mineralName);
-            }
+            game.minerals[category].push(mineralName);
             updateMiningUI();
             saveGame();
         }
@@ -2495,19 +2493,29 @@
         // Update mining page dropdowns to show collected minerals
         function updateMiningUI() {
             if (!game.minerals) return;
+            const MINING_LABELS = { common: 'COMMON', uncommon: 'UNCOMMON', scarce: 'SCARCE', valuable: 'VALUABLE', precious: 'PRECIOUS', exotic: 'EXOTIC', ultrarare: 'ULTRARARE' };
             const categories = ['common', 'uncommon', 'scarce', 'valuable', 'precious', 'exotic', 'ultrarare'];
             categories.forEach(cat => {
                 const select = document.getElementById(`mining-${cat}`);
                 if (!select) return;
                 const collected = (game.minerals[cat] || []);
-                // Enable/disable options based on collection
+                const tag = MINING_LABELS[cat];
+                // Count occurrences of each mineral
+                const counts = {};
+                collected.forEach(m => { counts[m.toLowerCase()] = (counts[m.toLowerCase()] || 0) + 1; });
+                // Enable/disable options and show count
                 for (let i = 1; i < select.options.length; i++) {
                     const opt = select.options[i];
                     const mineralValue = opt.value;
-                    if (collected.some(m => m.toLowerCase() === mineralValue)) {
+                    const count = counts[mineralValue] || 0;
+                    // Get base mineral name from value (capitalize first letter)
+                    const baseName = mineralValue.charAt(0).toUpperCase() + mineralValue.slice(1);
+                    if (count > 0) {
                         opt.disabled = false;
+                        opt.textContent = count > 1 ? `[${tag}] ${baseName} x${count}` : `[${tag}] ${baseName}`;
                     } else {
                         opt.disabled = true;
+                        opt.textContent = `[${tag}] ${baseName}`;
                     }
                 }
                 // Enable dropdown if player has at least one mineral in this category
