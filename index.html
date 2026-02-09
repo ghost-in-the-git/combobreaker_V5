@@ -1387,7 +1387,7 @@
                 game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
                 game.deaths = data.deaths || 0;
                 game.minerals = data.minerals || {};
-                game.storyItems = data.storyItems || [];
+                game.storyItems = data.storyItems && data.storyItems.length > 0 ? data.storyItems : ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
@@ -1537,7 +1537,7 @@
                 game.deaths = data.deaths || 0;
                 game.activeSlot = data.activeSlot || null;
                 game.minerals = data.minerals || {};
-                game.storyItems = data.storyItems || [];
+                game.storyItems = data.storyItems && data.storyItems.length > 0 ? data.storyItems : ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
