@@ -244,17 +244,16 @@
             border-color: #00ff88;
         }
 
-        /* Action Panel */
-        .action-panel {
-            padding: 15px 0;
+        /* Action Buttons (inline in chat) */
+        .action-btn-container {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 0;
         }
 
         .action-btn {
-            padding: 12px 20px;
+            padding: 10px 30px;
             font-family: 'Courier New', monospace;
             font-size: 14px;
             font-weight: bold;
@@ -263,7 +262,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-transform: uppercase;
-            width: 100%;
         }
 
         .action-btn:disabled {
@@ -841,10 +839,6 @@
                 [SAVED]
             </div>
 
-            <div class="action-panel">
-                <button class="action-btn engage" id="btn-engage" disabled>Engage</button>
-                <button class="action-btn retreat" id="btn-retreat" disabled>Decline</button>
-            </div>
         </div>
 
         <div class="panel-page" id="page-installations">
@@ -1347,8 +1341,7 @@
             storeAvailable = false;
             showPage(0);
             setEquipmentLocked(false);
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
+            hideInlineButtons();
 
             // Close modal and notify
             document.getElementById('save-modal').classList.remove('visible');
@@ -1480,9 +1473,23 @@
 
         // DOM Elements
         const chatMessages = document.getElementById('chat-messages');
-        const btnEngage = document.getElementById('btn-engage');
-        const btnRetreat = document.getElementById('btn-retreat');
         const timerDisplay = document.getElementById('timer-display');
+
+        // Create action buttons (inserted into chat flow dynamically)
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'action-btn-container';
+        const btnEngage = document.createElement('button');
+        btnEngage.className = 'action-btn engage';
+        btnEngage.id = 'btn-engage';
+        btnEngage.disabled = true;
+        btnEngage.textContent = 'Engage';
+        const btnRetreat = document.createElement('button');
+        btnRetreat.className = 'action-btn retreat';
+        btnRetreat.id = 'btn-retreat';
+        btnRetreat.disabled = true;
+        btnRetreat.textContent = 'Decline';
+        btnContainer.appendChild(btnEngage);
+        btnContainer.appendChild(btnRetreat);
 
         // Panel page navigation
         const PAGES = [
@@ -1640,8 +1647,7 @@
             if (currentPage === 4) showPage(0);
             updatePanelNav();
             setEquipmentLocked(false);
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
+            hideInlineButtons();
 
             saveGame();
 
@@ -2060,8 +2066,7 @@
                 }
             }, 1000);
 
-            btnEngage.disabled = false;
-            btnRetreat.disabled = false;
+            showInlineButtons();
 
             // Set expiration timer
             if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
@@ -2071,8 +2076,7 @@
                     addMessage(`Signal lost. The ${encounter.name} has moved on.`, 'system');
                     currentEncounter = null;
                     shopItems = [];
-                    btnEngage.disabled = true;
-                    btnRetreat.disabled = true;
+                    hideInlineButtons();
                     startWaveTimer();
                 }
             }, game.WAVE_EXPIRE);
@@ -2090,9 +2094,6 @@
                 game.waveExpireTimer = null;
             }
             clearCountdown();
-
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
 
             await addMessage(currentEncounter.engageText, 'system');
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
@@ -2114,8 +2115,6 @@
             addMessage(`Encounter declined. Moving on.`, 'player');
             currentEncounter = null;
             shopItems = [];
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
             startWaveTimer();
         }
 
@@ -2164,8 +2163,7 @@
                 }
             }, 1000);
 
-            btnEngage.disabled = false;
-            btnRetreat.disabled = false;
+            showInlineButtons();
 
             // Set expiration timer
             if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
@@ -2174,8 +2172,7 @@
                 if (currentMiningEvent) {
                     addMessage(`Asteroid has drifted out of range.`, 'system');
                     currentMiningEvent = null;
-                    btnEngage.disabled = true;
-                    btnRetreat.disabled = true;
+                    hideInlineButtons();
                     startWaveTimer();
                 }
             }, game.WAVE_EXPIRE);
@@ -2194,8 +2191,6 @@
             }
             clearCountdown();
 
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
             game.inBattle = true;
             setEquipmentLocked(true);
 
@@ -2296,8 +2291,6 @@
 
             addMessage(`Mining operation declined. Asteroid ignored.`, 'player');
             currentMiningEvent = null;
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
             startWaveTimer();
         }
 
@@ -2338,6 +2331,23 @@
         }
 
         // Clear countdown timer
+        // Show action buttons inline in chat (below countdown)
+        function showInlineButtons() {
+            btnEngage.disabled = false;
+            btnRetreat.disabled = false;
+            chatMessages.appendChild(btnContainer);
+            btnContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        // Hide action buttons from chat
+        function hideInlineButtons() {
+            btnEngage.disabled = true;
+            btnRetreat.disabled = true;
+            if (btnContainer.parentNode) {
+                btnContainer.remove();
+            }
+        }
+
         function clearCountdown() {
             if (game.countdownInterval) {
                 clearInterval(game.countdownInterval);
@@ -2347,6 +2357,7 @@
                 game.countdownMsg.remove();
                 game.countdownMsg = null;
             }
+            hideInlineButtons();
         }
 
         // Spawn new wave
@@ -2388,8 +2399,7 @@
                 }
             }, 1000);
 
-            btnEngage.disabled = false;
-            btnRetreat.disabled = false;
+            showInlineButtons();
 
             // Set expiration timer
             if (game.waveExpireTimer) clearTimeout(game.waveExpireTimer);
@@ -2398,8 +2408,7 @@
                 if (game.currentWave && !game.inBattle) {
                     addMessage(`Signal lost. Scanning...`, 'system');
                     game.currentWave = null;
-                    btnEngage.disabled = true;
-                    btnRetreat.disabled = true;
+                    hideInlineButtons();
                 }
             }, game.WAVE_EXPIRE);
         }
@@ -2609,8 +2618,6 @@
             }
             clearCountdown();
 
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
             game.inBattle = true;
             setEquipmentLocked(true); // Lock equipment during battle
 
@@ -2646,8 +2653,6 @@
 
             addMessage(`Engagement denied. Live to fight another day.`, 'player');
             game.currentWave = null;
-            btnEngage.disabled = true;
-            btnRetreat.disabled = true;
         }
 
         // Event listeners
