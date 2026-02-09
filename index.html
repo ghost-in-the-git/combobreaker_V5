@@ -135,6 +135,21 @@
         .storage-label.dna { color: #ff4488; }
         .storage-label.debris { color: #888; }
 
+        .storage-desc-content {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .storage-desc-content img {
+            width: 48px;
+            height: 48px;
+            image-rendering: pixelated;
+            flex-shrink: 0;
+            border: 1px solid #00ff8833;
+            border-radius: 4px;
+        }
+
         /* Chat Panel */
         .chat-panel {
             flex: 1;
@@ -2527,7 +2542,11 @@
             document.getElementById(`storage-${cat}`).addEventListener('change', (e) => {
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 const item = STORY_ITEMS.find(i => i.name === e.target.value);
-                desc.textContent = item ? item.desc : '';
+                if (item) {
+                    desc.innerHTML = `<div class="storage-desc-content"><img src="${item.image}" alt="${item.name}"><span>${item.desc}</span></div>`;
+                } else {
+                    desc.innerHTML = '';
+                }
                 desc.classList.toggle('visible', !!item);
             });
         });
