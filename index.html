@@ -125,6 +125,39 @@
             margin-top: 4px;
         }
 
+        /* Storage Panel */
+        .storage-panel {
+            padding: 10px 0;
+        }
+
+        .storage-item {
+            padding: 8px 10px;
+            border-bottom: 1px solid #1a1a2e;
+        }
+
+        .storage-item-name {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .storage-item-name.common { color: #888; }
+        .storage-item-name.uncommon { color: #44cc44; }
+        .storage-item-name.rare { color: #4488ff; }
+        .storage-item-name.unique { color: #ff44ff; }
+
+        .storage-item-desc {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .storage-empty {
+            color: #444;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
         /* Chat Panel */
         .chat-panel {
             flex: 1;
@@ -1023,6 +1056,15 @@
             </div>
         </div>
 
+        <div class="panel-page" id="page-storage">
+            <div class="storage-panel">
+                <h4>[ STORAGE ]</h4>
+                <div id="storage-list">
+                    <div class="storage-empty">-- No items collected --</div>
+                </div>
+            </div>
+        </div>
+
         <div class="panel-page" id="page-store">
             <div class="shop-panel" id="shop-panel">
                 <div class="shop-item-wrapper" id="shop-wrapper-1">
@@ -1122,6 +1164,7 @@
     <script src="enemies_neonstrip.js"></script>
     <script src="enemies_deadzone.js"></script>
     <script src="items.js"></script>
+    <script src="storyitems.js"></script>
     <script src="encounters_scrapyard.js"></script>
     <script src="encounters_oldbattlefield.js"></script>
     <script src="encounters_downtown.js"></script>
@@ -1196,7 +1239,8 @@
             ENCOUNTER_CHANCE: 20, // % chance for encounter instead of enemy wave
             deaths: 0,
             activeSlot: null, // Which save slot is currently active (1-3 or null)
-            minerals: {} // Collected minerals by category
+            minerals: {}, // Collected minerals by category
+            storyItems: [] // Collected story items
         };
 
         // Current encounter state
@@ -1230,7 +1274,8 @@
                 deaths: game.deaths,
                 activeSlot: game.activeSlot,
                 location: currentLocation,
-                minerals: game.minerals || {}
+                minerals: game.minerals || {},
+                storyItems: game.storyItems || []
             };
         }
 
@@ -1312,6 +1357,7 @@
                 game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
                 game.deaths = data.deaths || 0;
                 game.minerals = data.minerals || {};
+                game.storyItems = data.storyItems || [];
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
@@ -1356,6 +1402,7 @@
                 game.player.fuel = 100;
                 game.deaths = 0;
                 game.minerals = {};
+                game.storyItems = [];
                 game.inventory = [];
                 game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null };
                 currentLocation = 'scrapyard';
@@ -1369,6 +1416,7 @@
             game.player.hp = game.player.maxHp;
             updateEquipmentUI();
             updateMiningUI();
+            updateStorageUI();
             updateStats();
             saveGame();
 
@@ -1459,6 +1507,7 @@
                 game.deaths = data.deaths || 0;
                 game.activeSlot = data.activeSlot || null;
                 game.minerals = data.minerals || {};
+                game.storyItems = data.storyItems || [];
 
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
@@ -1535,14 +1584,15 @@
             { id: 'page-pilot', label: 'Pilot' },         // 2
             { id: 'page-location', label: 'Location' },   // 3
             { id: 'page-mining', label: 'Mining' },        // 4
-            { id: 'page-store', label: 'Store' }           // 5
+            { id: 'page-storage', label: 'Storage' },     // 5
+            { id: 'page-store', label: 'Store' }           // 6
         ];
         let currentPage = 0;
         let storeAvailable = false;
 
         function getAvailablePages() {
-            if (storeAvailable) return [0, 1, 2, 3, 4, 5];
-            return [0, 1, 2, 3, 4];
+            if (storeAvailable) return [0, 1, 2, 3, 4, 5, 6];
+            return [0, 1, 2, 3, 4, 5];
         }
 
         function updatePanelNav() {
@@ -1689,7 +1739,7 @@
             // Reset UI
             chatMessages.innerHTML = '';
             storeAvailable = false;
-            if (currentPage === 5) showPage(0);
+            if (currentPage === 6) showPage(0);
             updatePanelNav();
             setEquipmentLocked(false);
             hideInlineButtons();
@@ -2052,13 +2102,13 @@
         function showShopPanel() {
             storeAvailable = true;
             updateShopUI();
-            showPage(5);
+            showPage(6);
         }
 
         // Hide shop panel (leave store page)
         function hideShopPanel() {
             storeAvailable = false;
-            if (currentPage === 5) showPage(0);
+            if (currentPage === 6) showPage(0);
             updatePanelNav();
         }
 
@@ -2372,6 +2422,20 @@
             saveGame();
         }
 
+        // Add a story item to the player's storage
+        function addStoryItem(itemName) {
+            if (!game.storyItems) game.storyItems = [];
+            if (!game.storyItems.includes(itemName)) {
+                game.storyItems.push(itemName);
+                const item = STORY_ITEMS.find(i => i.name === itemName);
+                if (item) {
+                    addMessage(`[ITEM FOUND] ${item.name}`, 'reward');
+                }
+                updateStorageUI();
+                saveGame();
+            }
+        }
+
         // Update mining page dropdowns to show collected minerals
         function updateMiningUI() {
             if (!game.minerals) return;
@@ -2397,7 +2461,26 @@
             });
         }
 
-        // Clear countdown timer
+        // Update storage UI with collected story items
+        function updateStorageUI() {
+            const list = document.getElementById('storage-list');
+            if (!list) return;
+            const items = game.storyItems || [];
+            if (items.length === 0) {
+                list.innerHTML = '<div class="storage-empty">-- No items collected --</div>';
+                return;
+            }
+            list.innerHTML = '';
+            items.forEach(itemName => {
+                const item = STORY_ITEMS.find(i => i.name === itemName);
+                if (!item) return;
+                const div = document.createElement('div');
+                div.className = 'storage-item';
+                div.innerHTML = `<div class="storage-item-name ${item.rarity}">${item.name}</div><div class="storage-item-desc">${item.desc}</div>`;
+                list.appendChild(div);
+            });
+        }
+
         // Show action buttons inline in chat (below countdown)
         function showInlineButtons() {
             btnEngage.disabled = false;
@@ -2794,6 +2877,7 @@
 
             updateEquipmentUI();
             updateMiningUI();
+            updateStorageUI();
 
             addMessage(`============================================`, 'system');
             addMessage(`=== C O M B O B R E A K E R  O N L I N E ===`, 'system');
