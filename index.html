@@ -130,42 +130,10 @@
             padding: 10px 0;
         }
 
-        .storage-item {
-            padding: 8px 10px;
-            border-bottom: 1px solid #1a1a2e;
-        }
-
-        .storage-item-name {
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .storage-item-name.log { color: #44cccc; }
-        .storage-item-name.key { color: #ffcc44; }
-        .storage-item-name.dna { color: #ff4488; }
-        .storage-item-name.debris { color: #888; }
-
-        .storage-category {
-            font-size: 11px;
-            color: #555;
-            text-transform: uppercase;
-            padding: 10px 10px 4px;
-            border-bottom: 1px solid #1a1a2e;
-            letter-spacing: 1px;
-        }
-
-        .storage-item-desc {
-            font-size: 11px;
-            color: #666;
-            margin-top: 3px;
-        }
-
-        .storage-empty {
-            color: #444;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-        }
+        .storage-label.log { color: #44cccc; }
+        .storage-label.key { color: #ffcc44; }
+        .storage-label.dna { color: #ff4488; }
+        .storage-label.debris { color: #888; }
 
         /* Chat Panel */
         .chat-panel {
@@ -1078,8 +1046,25 @@
         <div class="panel-page" id="page-storage">
             <div class="storage-panel">
                 <h4>[ STORAGE ]</h4>
-                <div id="storage-list">
-                    <div class="storage-empty">-- No items collected --</div>
+                <div class="equip-slot">
+                    <label class="storage-label log">System Logs</label>
+                    <select id="storage-log"><option value="">-- Empty --</option></select>
+                    <div class="equip-desc" id="storage-desc-log"></div>
+                </div>
+                <div class="equip-slot">
+                    <label class="storage-label key">Keys</label>
+                    <select id="storage-key"><option value="">-- Empty --</option></select>
+                    <div class="equip-desc" id="storage-desc-key"></div>
+                </div>
+                <div class="equip-slot">
+                    <label class="storage-label dna">DNA Tags</label>
+                    <select id="storage-dna"><option value="">-- Empty --</option></select>
+                    <div class="equip-desc" id="storage-desc-dna"></div>
+                </div>
+                <div class="equip-slot">
+                    <label class="storage-label debris">Mech Debris</label>
+                    <select id="storage-debris"><option value="">-- Empty --</option></select>
+                    <div class="equip-desc" id="storage-desc-debris"></div>
                 </div>
             </div>
         </div>
@@ -2516,37 +2501,35 @@
             });
         }
 
-        // Update storage UI with collected story items
+        // Update storage UI dropdowns with collected story items
         function updateStorageUI() {
-            const list = document.getElementById('storage-list');
-            if (!list) return;
             const items = game.storyItems || [];
-            if (items.length === 0) {
-                list.innerHTML = '<div class="storage-empty">-- No items collected --</div>';
-                return;
-            }
-            list.innerHTML = '';
-            const categories = [
-                { key: 'log', label: 'System Logs' },
-                { key: 'key', label: 'Keys' },
-                { key: 'dna', label: 'DNA Tags' },
-                { key: 'debris', label: 'Mech Debris' }
-            ];
-            categories.forEach(cat => {
-                const catItems = items.map(name => STORY_ITEMS.find(i => i.name === name)).filter(i => i && i.category === cat.key);
-                if (catItems.length === 0) return;
-                const header = document.createElement('div');
-                header.className = 'storage-category';
-                header.textContent = `[ ${cat.label} ]`;
-                list.appendChild(header);
-                catItems.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'storage-item';
-                    div.innerHTML = `<div class="storage-item-name ${item.category}">${item.name}</div><div class="storage-item-desc">${item.desc}</div>`;
-                    list.appendChild(div);
+            const cats = ['log', 'key', 'dna', 'debris'];
+            cats.forEach(cat => {
+                const select = document.getElementById(`storage-${cat}`);
+                const desc = document.getElementById(`storage-desc-${cat}`);
+                if (!select || !desc) return;
+                const collected = items.map(name => STORY_ITEMS.find(i => i.name === name)).filter(i => i && i.category === cat);
+                select.innerHTML = '<option value="">-- Empty --</option>';
+                collected.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.name;
+                    opt.textContent = item.name;
+                    select.appendChild(opt);
                 });
+                select.disabled = collected.length === 0;
+                desc.textContent = '';
             });
         }
+
+        // Storage dropdown change listeners
+        ['log', 'key', 'dna', 'debris'].forEach(cat => {
+            document.getElementById(`storage-${cat}`).addEventListener('change', (e) => {
+                const desc = document.getElementById(`storage-desc-${cat}`);
+                const item = STORY_ITEMS.find(i => i.name === e.target.value);
+                desc.textContent = item ? item.desc : '';
+            });
+        });
 
         // Show action buttons inline in chat (below countdown)
         function showInlineButtons() {
