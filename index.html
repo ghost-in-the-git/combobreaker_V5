@@ -970,6 +970,7 @@
                         <option value="neonstrip">Neon Strip</option>
                         <option value="deadzone">Dead Zone</option>
                         <option value="asteroidbelt">Asteroid Belt</option>
+                        <option value="home">Home</option>
                     </select>
                 </div>
                 <div class="location-desc" id="location-desc">
@@ -1171,6 +1172,7 @@
     <script src="enemies_deadzone.js"></script>
     <script src="items.js"></script>
     <script src="storyitems.js"></script>
+    <script src="encounters_home.js"></script>
     <script src="encounters_scrapyard.js"></script>
     <script src="encounters_oldbattlefield.js"></script>
     <script src="encounters_downtown.js"></script>
@@ -1704,6 +1706,12 @@
                 encounters: null,
                 mining: MINING_ASTEROIDBELT,
                 desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void."
+            },
+            home: {
+                enemies: null,
+                encounters: ENCOUNTERS_HOME,
+                mining: null,
+                desc: "Your workshop. The Professor is here, tinkering with salvage and offering what they've found."
             }
         };
 
@@ -1728,7 +1736,8 @@
             frozenreach: 'FROZEN REACH',
             neonstrip: 'NEON STRIP',
             deadzone: 'DEAD ZONE',
-            asteroidbelt: 'ASTEROID BELT'
+            asteroidbelt: 'ASTEROID BELT',
+            home: 'HOME'
         };
 
         function changeLocation(locationKey) {
@@ -2525,14 +2534,21 @@
         function spawnWave() {
             if (game.inBattle || game.currentWave || currentEncounter || currentMiningEvent) return;
 
-            // Mining-only locations: only spawn mining events
             const loc = LOCATIONS[currentLocation];
+
+            // Mining-only locations: only spawn mining events
             if (!loc.enemies && !loc.encounters) {
                 if (game.player.mining > 0) {
                     spawnMiningEvent();
                 } else {
                     addMessage(`[NO DRILL EQUIPPED] Mining drill required to operate in this zone.`, 'system');
                 }
+                return;
+            }
+
+            // Encounter-only locations: always spawn encounters
+            if (!loc.enemies && loc.encounters) {
+                spawnEncounter();
                 return;
             }
 
