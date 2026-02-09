@@ -130,16 +130,6 @@
             padding: 10px 0;
         }
 
-        .storage-panel .equip-slot select {
-            font-size: 12px;
-            padding: 8px 24px 8px 6px;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300ff88'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-        }
-
         .storage-label {
             color: #00ff88;
             font-size: 12px;
@@ -289,14 +279,19 @@
 
         .equip-slot select {
             width: 100%;
-            padding: 6px;
+            padding: 8px 24px 8px 6px;
             font-family: 'Courier New', monospace;
-            font-size: 11px;
+            font-size: 12px;
             background: #1a1a2e;
             color: #00ff88;
             border: 1px solid #00ff8855;
             border-radius: 4px;
             cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300ff88'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
         }
 
         .equip-slot select:disabled {
@@ -709,14 +704,7 @@
         }
 
         .location-desc {
-            margin-top: 15px;
-            padding: 10px;
-            background: #1a1a2e;
-            border: 1px solid #00ff8833;
-            border-radius: 4px;
-            color: #888;
-            font-size: 11px;
-            line-height: 1.5;
+            margin-top: 4px;
         }
 
         /* Mining Panel */
@@ -754,22 +742,21 @@
         .mining-category select {
             width: 100%;
             background: #1a1a2e;
-            color: #888;
-            border: 1px solid #00ff8833;
+            color: #00ff88;
+            border: 1px solid #00ff8855;
             border-radius: 4px;
-            padding: 6px 8px;
+            padding: 8px 24px 8px 6px;
             font-family: 'Courier New', monospace;
-            font-size: 11px;
+            font-size: 12px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2300ff88'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
         }
 
         .equip-desc {
-            padding: 6px 8px;
-            background: #1a1a2e;
-            border: 1px solid #00ff8833;
-            border-radius: 4px;
-            color: #ddd;
-            font-size: 12px;
-            line-height: 1.2;
             margin-top: 4px;
             display: none;
         }
@@ -976,7 +963,7 @@
                     </select>
                 </div>
                 <div class="location-desc" id="location-desc">
-                    Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.
+                    <div class="storage-desc-content"><img src="images/IMAGE.gif" alt="Location"><span>Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.</span></div>
                 </div>
             </div>
         </div>
@@ -988,79 +975,72 @@
                     <div class="equip-desc" id="equip-desc-drill"></div>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label common">Common</label>
                     <select id="mining-common" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="limestone">Limestone</option>
-                        <option value="sandstone">Sandstone</option>
-                        <option value="clay">Clay</option>
-                        <option value="quartz">Quartz</option>
-                        <option value="feldspar">Feldspar</option>
+                        <option value="">[COMMON] -- Empty --</option>
+                        <option value="limestone">[COMMON] Limestone</option>
+                        <option value="sandstone">[COMMON] Sandstone</option>
+                        <option value="clay">[COMMON] Clay</option>
+                        <option value="quartz">[COMMON] Quartz</option>
+                        <option value="feldspar">[COMMON] Feldspar</option>
                     </select>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label uncommon">Uncommon</label>
                     <select id="mining-uncommon" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="gypsum">Gypsum</option>
-                        <option value="fluorite">Fluorite</option>
-                        <option value="calcite">Calcite</option>
-                        <option value="mica">Mica</option>
-                        <option value="sulfur">Sulfur</option>
+                        <option value="">[UNCOMMON] -- Empty --</option>
+                        <option value="gypsum">[UNCOMMON] Gypsum</option>
+                        <option value="fluorite">[UNCOMMON] Fluorite</option>
+                        <option value="calcite">[UNCOMMON] Calcite</option>
+                        <option value="mica">[UNCOMMON] Mica</option>
+                        <option value="sulfur">[UNCOMMON] Sulfur</option>
                     </select>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label scarce">Scarce</label>
                     <select id="mining-scarce" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="hematite">Hematite</option>
-                        <option value="magnetite">Magnetite</option>
-                        <option value="bauxite">Bauxite</option>
-                        <option value="galena">Galena</option>
-                        <option value="sphalerite">Sphalerite</option>
+                        <option value="">[SCARCE] -- Empty --</option>
+                        <option value="hematite">[SCARCE] Hematite</option>
+                        <option value="magnetite">[SCARCE] Magnetite</option>
+                        <option value="bauxite">[SCARCE] Bauxite</option>
+                        <option value="galena">[SCARCE] Galena</option>
+                        <option value="sphalerite">[SCARCE] Sphalerite</option>
                     </select>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label valuable">Valuable</label>
                     <select id="mining-valuable" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="chalcopyrite">Chalcopyrite</option>
-                        <option value="cassiterite">Cassiterite</option>
-                        <option value="cinnabar">Cinnabar</option>
-                        <option value="chromite">Chromite</option>
-                        <option value="ilmenite">Ilmenite</option>
+                        <option value="">[VALUABLE] -- Empty --</option>
+                        <option value="chalcopyrite">[VALUABLE] Chalcopyrite</option>
+                        <option value="cassiterite">[VALUABLE] Cassiterite</option>
+                        <option value="cinnabar">[VALUABLE] Cinnabar</option>
+                        <option value="chromite">[VALUABLE] Chromite</option>
+                        <option value="ilmenite">[VALUABLE] Ilmenite</option>
                     </select>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label precious">Precious</label>
                     <select id="mining-precious" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="argentite">Argentite</option>
-                        <option value="gold">Gold</option>
-                        <option value="platinum">Platinum</option>
-                        <option value="garnet">Garnet</option>
+                        <option value="">[PRECIOUS] -- Empty --</option>
+                        <option value="argentite">[PRECIOUS] Argentite</option>
+                        <option value="gold">[PRECIOUS] Gold</option>
+                        <option value="platinum">[PRECIOUS] Platinum</option>
+                        <option value="garnet">[PRECIOUS] Garnet</option>
                     </select>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label exotic">Exotic</label>
                     <select id="mining-exotic" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="uraninite">Uraninite</option>
-                        <option value="cobaltite">Cobaltite</option>
-                        <option value="molybdenite">Molybdenite</option>
-                        <option value="vanadinite">Vanadinite</option>
-                        <option value="scheelite">Scheelite</option>
+                        <option value="">[EXOTIC] -- Empty --</option>
+                        <option value="uraninite">[EXOTIC] Uraninite</option>
+                        <option value="cobaltite">[EXOTIC] Cobaltite</option>
+                        <option value="molybdenite">[EXOTIC] Molybdenite</option>
+                        <option value="vanadinite">[EXOTIC] Vanadinite</option>
+                        <option value="scheelite">[EXOTIC] Scheelite</option>
                     </select>
                 </div>
                 <div class="mining-category">
-                    <label class="mining-cat-label ultrarare">Ultra-Rare</label>
                     <select id="mining-ultrarare" disabled>
-                        <option value="">-- Empty --</option>
-                        <option value="diamond">Diamond</option>
-                        <option value="emerald">Emerald</option>
-                        <option value="sapphire">Sapphire</option>
-                        <option value="alexandrite">Alexandrite</option>
-                        <option value="tanzanite">Tanzanite</option>
+                        <option value="">[ULTRARARE] -- Empty --</option>
+                        <option value="diamond">[ULTRARARE] Diamond</option>
+                        <option value="emerald">[ULTRARARE] Emerald</option>
+                        <option value="sapphire">[ULTRARARE] Sapphire</option>
+                        <option value="alexandrite">[ULTRARARE] Alexandrite</option>
+                        <option value="tanzanite">[ULTRARARE] Tanzanite</option>
                     </select>
                 </div>
             </div>
@@ -1443,7 +1423,7 @@
 
             // Update location UI
             document.getElementById('location-select').value = currentLocation;
-            document.getElementById('location-desc').textContent = LOCATIONS[currentLocation].desc;
+            document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
             recalculateStats();
             game.player.hp = game.player.maxHp;
@@ -1546,7 +1526,7 @@
                 if (data.location && LOCATIONS[data.location]) {
                     currentLocation = data.location;
                     document.getElementById('location-select').value = currentLocation;
-                    document.getElementById('location-desc').textContent = LOCATIONS[currentLocation].desc;
+                    document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
                 }
 
                 // Restore inventory (convert names back to item objects)
@@ -1671,84 +1651,96 @@
                 encounters: ENCOUNTERS_SCRAPYARD,
                 mining: MINING_SCRAPYARD,
                 ambush: AMBUSH_SCRAPYARD,
-                desc: "Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage."
+                desc: "Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.",
+                image: "images/IMAGE.gif"
             },
             oldbattlefield: {
                 enemies: ENEMIES_OLDBATTLEFIELD,
                 encounters: ENCOUNTERS_OLDBATTLEFIELD,
                 mining: MINING_OLDBATTLEFIELD,
                 ambush: AMBUSH_OLDBATTLEFIELD,
-                desc: "Scarred terrain littered with war machines still running combat protocols from a forgotten conflict."
+                desc: "Scarred terrain littered with war machines still running combat protocols from a forgotten conflict.",
+                image: "images/IMAGE.gif"
             },
             downtown: {
                 enemies: ENEMIES_DOWNTOWN,
                 encounters: ENCOUNTERS_DOWNTOWN,
                 mining: MINING_DOWNTOWN,
                 ambush: AMBUSH_DOWNTOWN,
-                desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks."
+                desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks.",
+                image: "images/IMAGE.gif"
             },
             orbitalstation: {
                 enemies: ENEMIES_ORBITALSTATION,
                 encounters: ENCOUNTERS_ORBITALSTATION,
                 mining: MINING_ORBITALSTATION,
                 ambush: AMBUSH_ORBITALSTATION,
-                desc: "A derelict orbital platform. Rogue drones and hijacked defense systems stalk the corridors."
+                desc: "A derelict orbital platform. Rogue drones and hijacked defense systems stalk the corridors.",
+                image: "images/IMAGE.gif"
             },
             wasteland: {
                 enemies: ENEMIES_WASTELAND,
                 encounters: ENCOUNTERS_WASTELAND,
                 mining: MINING_WASTELAND,
                 ambush: AMBUSH_WASTELAND,
-                desc: "Irradiated badlands where feral war machines and dust-choked scavengers fight over scraps."
+                desc: "Irradiated badlands where feral war machines and dust-choked scavengers fight over scraps.",
+                image: "images/IMAGE.gif"
             },
             undercity: {
                 enemies: ENEMIES_UNDERCITY,
                 encounters: ENCOUNTERS_UNDERCITY,
                 mining: MINING_UNDERCITY,
                 ambush: AMBUSH_UNDERCITY,
-                desc: "A labyrinth of tunnels and sewers beneath the streets. Black-ops units and tunnel rats lurk in the dark."
+                desc: "A labyrinth of tunnels and sewers beneath the streets. Black-ops units and tunnel rats lurk in the dark.",
+                image: "images/IMAGE.gif"
             },
             industrialzone: {
                 enemies: ENEMIES_INDUSTRIALZONE,
                 encounters: ENCOUNTERS_INDUSTRIALZONE,
                 mining: MINING_INDUSTRIALZONE,
                 ambush: AMBUSH_INDUSTRIALZONE,
-                desc: "Sprawling factories and refineries. Malfunctioning production bots guard the assembly lines."
+                desc: "Sprawling factories and refineries. Malfunctioning production bots guard the assembly lines.",
+                image: "images/IMAGE.gif"
             },
             frozenreach: {
                 enemies: ENEMIES_FROZENREACH,
                 encounters: ENCOUNTERS_FROZENREACH,
                 mining: MINING_FROZENREACH,
                 ambush: AMBUSH_FROZENREACH,
-                desc: "Arctic tundra locked in permanent winter. Cryo-adapted war machines patrol the frozen expanse."
+                desc: "Arctic tundra locked in permanent winter. Cryo-adapted war machines patrol the frozen expanse.",
+                image: "images/IMAGE.gif"
             },
             neonstrip: {
                 enemies: ENEMIES_NEONSTRIP,
                 encounters: ENCOUNTERS_NEONSTRIP,
                 mining: MINING_NEONSTRIP,
                 ambush: AMBUSH_NEONSTRIP,
-                desc: "The flashy entertainment district. Syndicate enforcers and casino muscle keep the peace their way."
+                desc: "The flashy entertainment district. Syndicate enforcers and casino muscle keep the peace their way.",
+                image: "images/IMAGE.gif"
             },
             deadzone: {
                 enemies: ENEMIES_DEADZONE,
                 encounters: ENCOUNTERS_DEADZONE,
                 mining: MINING_DEADZONE,
                 ambush: AMBUSH_DEADZONE,
-                desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked."
+                desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked.",
+                image: "images/IMAGE.gif"
             },
             asteroidbelt: {
                 enemies: null,
                 encounters: null,
                 mining: MINING_ASTEROIDBELT,
                 ambush: null,
-                desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void."
+                desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void.",
+                image: "images/IMAGE.gif"
             },
             home: {
                 enemies: null,
                 encounters: ENCOUNTERS_HOME,
                 mining: null,
                 ambush: null,
-                desc: "Your workshop. The Professor is here, tinkering with salvage and offering what they've found."
+                desc: "Your workshop. The Professor is here, tinkering with salvage and offering what they've found.",
+                image: "images/IMAGE.gif"
             }
         };
 
@@ -1779,7 +1771,7 @@
 
         function changeLocation(locationKey) {
             currentLocation = locationKey;
-            document.getElementById('location-desc').textContent = LOCATIONS[locationKey].desc;
+            document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[locationKey].image}" alt="Location"><span>${LOCATIONS[locationKey].desc}</span></div>`;
 
             // Stop all active timers and battle state
             game.inBattle = false;
@@ -1945,14 +1937,15 @@
                 if (itemName) {
                     const item = ITEMS.find(i => i.name === itemName);
                     if (item && item.desc) {
-                        descEl.textContent = item.desc;
+                        const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
+                        descEl.innerHTML = `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>`;
                         descEl.classList.add('visible');
                     } else {
-                        descEl.textContent = '';
+                        descEl.innerHTML = '';
                         descEl.classList.remove('visible');
                     }
                 } else {
-                    descEl.textContent = '';
+                    descEl.innerHTML = '';
                     descEl.classList.remove('visible');
                 }
             });
@@ -2511,8 +2504,8 @@
                 // Enable/disable options based on collection
                 for (let i = 1; i < select.options.length; i++) {
                     const opt = select.options[i];
-                    const mineralName = opt.textContent;
-                    if (collected.includes(mineralName)) {
+                    const mineralValue = opt.value;
+                    if (collected.some(m => m.toLowerCase() === mineralValue)) {
                         opt.disabled = false;
                     } else {
                         opt.disabled = true;
