@@ -50,7 +50,20 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0 12px;
+            margin-top: 0;
+        }
+
+        .stat-grid-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0 12px;
             margin-top: 20px;
+        }
+
+        .stat-divider {
+            border: none;
+            border-top: 1px solid #00ff8844;
+            margin: 6px 0;
         }
 
         .stat-row {
@@ -888,37 +901,11 @@
         <div class="fuel-label" id="fuel-label">FUEL: 100 / 100</div>
 
         <div class="panel-page active" id="page-stats">
-            <div class="stat-grid">
+            <div class="stat-grid-top">
                 <div class="stat-row">
                     <span class="stat-label">Level</span>
                     <span class="stat-value" id="stat-level">1</span>
                 </div>
-                <div class="stat-row">
-                    <span class="stat-label">Combo</span>
-                    <span class="stat-right"><span class="stat-value" id="stat-combo">0%</span><button class="stat-upgrade" onclick="upgradeStat('combo')">+</button></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Attack</span>
-                    <span class="stat-right"><span class="stat-value" id="stat-attack">0</span><button class="stat-upgrade" onclick="upgradeStat('attack')">+</button></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Mining</span>
-                    <span class="stat-right"><span class="stat-value" id="stat-mining">0</span><button class="stat-upgrade" onclick="upgradeStat('mining')">+</button></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Speed</span>
-                    <span class="stat-right"><span class="stat-value" id="stat-speed">0</span><button class="stat-upgrade" onclick="upgradeStat('speed')">+</button></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Regen</span>
-                    <span class="stat-right"><span class="stat-value" id="stat-regen">0</span><button class="stat-upgrade" onclick="upgradeStat('regen')">+</button></span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Defence</span>
-                    <span class="stat-right"><span class="stat-value" id="stat-defence">0</span><button class="stat-upgrade" onclick="upgradeStat('defence')">+</button></span>
-                </div>
-            </div>
-            <div class="stat-grid" style="margin-top: 0;">
                 <div class="stat-row">
                     <span class="stat-label">XP</span>
                     <span class="stat-value" id="stat-xp">0</span>
@@ -926,6 +913,33 @@
                 <div class="stat-row">
                     <span class="stat-label">ReqXP</span>
                     <span class="stat-value" id="stat-reqxp">10</span>
+                </div>
+            </div>
+            <hr class="stat-divider">
+            <div class="stat-grid">
+                <div class="stat-row">
+                    <span class="stat-label">Attack</span>
+                    <span class="stat-right"><span class="stat-value" id="stat-attack">0</span><button class="stat-upgrade" onclick="upgradeStat('attack')">+</button></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Combo</span>
+                    <span class="stat-right"><span class="stat-value" id="stat-combo">0%</span><button class="stat-upgrade" onclick="upgradeStat('combo')">+</button></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Defence</span>
+                    <span class="stat-right"><span class="stat-value" id="stat-defence">0</span><button class="stat-upgrade" onclick="upgradeStat('defence')">+</button></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Regen</span>
+                    <span class="stat-right"><span class="stat-value" id="stat-regen">0</span><button class="stat-upgrade" onclick="upgradeStat('regen')">+</button></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Speed</span>
+                    <span class="stat-right"><span class="stat-value" id="stat-speed">0</span><button class="stat-upgrade" onclick="upgradeStat('speed')">+</button></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Mining</span>
+                    <span class="stat-right"><span class="stat-value" id="stat-mining">0</span><button class="stat-upgrade" onclick="upgradeStat('mining')">+</button></span>
                 </div>
             </div>
 
