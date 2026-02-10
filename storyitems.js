@@ -7,7 +7,7 @@
  * Each item has:
  * - name: Display name
  * - desc: Flavour text / lore description
- * - category: "log", "key", "dna", "debris", "scrap"
+ * - category: "log", "key", "dna", "debris", "scrap", "map"
  * - image: Path to item image
  *
  * Categories:
@@ -16,6 +16,7 @@
  * - "dna"    : DNA Tags (biological samples, genetic markers)
  * - "debris" : Mech Debris (random mech parts and wreckage)
  * - "scrap"  : Scrap (salvageable junk and miscellaneous finds)
+ * - "map"    : Maps (zone navigation charts and location data)
  */
 
 const STORY_ITEMS = [
@@ -194,6 +195,80 @@ const STORY_ITEMS = [
         name: "Fragment of Unknown Alloy",
         desc: "A shard of metal that doesn't match anything in the materials database. Cold to the touch. Always.",
         category: "debris",
+        image: "images/IMAGE.gif"
+    },
+
+    // Maps
+    {
+        name: "Map: The Ratpile",
+        desc: "A crude sketch of tunnel networks beneath the scrapyard. Rat nests are circled in red ink.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Scrap Yard",
+        desc: "A salvager's chart marking safe paths through the wreckage. Some routes have been crossed out.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Old Battlefield",
+        desc: "A faded military topographic map. Minefields and kill zones are marked in deteriorating ink.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Downtown",
+        desc: "A street-level map of the urban core. Gang territories are colour-coded. Most overlap.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Orbital Station",
+        desc: "A schematic of the station's deck layout. Several sections are labelled DEPRESSURISED.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Wasteland",
+        desc: "A radiation heatmap of the badlands. The safe corridors shift daily. This one is dated last week.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Undercity",
+        desc: "A hand-drawn tunnel map on synthetic paper. Annotations warn of collapse zones and ambush points.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Industrial Zone",
+        desc: "A factory floor plan with conveyor routes and power grid overlays. Someone marked the blind spots.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Frozen Reach",
+        desc: "A thermal survey of the arctic zone. Heat signatures cluster around geothermal vents.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Neon Strip",
+        desc: "A nightlife district guide doubling as a tactical map. Back alleys and escape routes are highlighted.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Dead Zone",
+        desc: "A contamination chart of the killing fields. The safe path is a single line through a sea of red.",
+        category: "map",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Map: Asteroid Belt",
+        desc: "A navigation chart plotting orbital paths through the belt. Mining coordinates are encoded.",
+        category: "map",
         image: "images/IMAGE.gif"
     }
 ];
