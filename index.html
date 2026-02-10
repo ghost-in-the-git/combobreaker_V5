@@ -1930,10 +1930,10 @@
                 const tag = SLOT_LABELS[slot];
 
                 // Clear and rebuild options
-                select.innerHTML = `<option value="">[${tag}] -- None --</option>`;
+                const slotItems = game.inventory.filter(item => item.type === slot);
+                select.innerHTML = `<option value="">[${tag}] ${slotItems.length} items</option>`;
 
                 // Add items from inventory that match this slot
-                const slotItems = game.inventory.filter(item => item.type === slot);
                 slotItems.forEach(item => {
                     const option = document.createElement('option');
                     option.value = item.name;
@@ -2523,6 +2523,9 @@
                 if (!select) return;
                 const collected = (game.minerals[cat] || []);
                 const tag = MINING_LABELS[cat];
+                // Count unique minerals collected
+                const uniqueCount = new Set(collected.map(m => m.toLowerCase())).size;
+                select.options[0].textContent = `[${tag}] ${uniqueCount} items`;
                 // Count occurrences of each mineral
                 const counts = {};
                 collected.forEach(m => { counts[m.toLowerCase()] = (counts[m.toLowerCase()] || 0) + 1; });
