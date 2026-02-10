@@ -1231,6 +1231,7 @@
     <script src="items.js"></script>
     <script src="storyitems.js"></script>
     <script src="encounters_home.js"></script>
+    <script src="encounters_ratpile.js"></script>
     <script src="encounters_scrapyard.js"></script>
     <script src="encounters_oldbattlefield.js"></script>
     <script src="encounters_downtown.js"></script>
@@ -1773,7 +1774,7 @@
         const LOCATIONS = {
             ratpile: {
                 enemies: ENEMIES_RATPILE,
-                encounters: null,
+                encounters: ENCOUNTERS_RATPILE,
                 mining: null,
                 ambush: null,
                 desc: "A festering nest of silicon rats beneath the scrapyard. Weak vermin, but they never stop coming.",
@@ -1918,6 +1919,9 @@
             deadzone: 'Map: Dead Zone',
             asteroidbelt: 'Map: Asteroid Belt'
         };
+
+        // Zone difficulty order (for Mapmaker: each zone sells the next zone's map)
+        const ZONE_ORDER = ['ratpile', 'scrapyard', 'oldbattlefield', 'downtown', 'orbitalstation', 'wasteland', 'undercity', 'industrialzone', 'frozenreach', 'neonstrip', 'deadzone', 'asteroidbelt'];
 
         function updateLocationDropdown() {
             const select = document.getElementById('location-select');
@@ -2445,6 +2449,55 @@
                 await addMessage(`"Here — take this. It's a map to The Ratpile. Not much down there but rats, but it's a start."`, 'system');
             }
 
+            // The Mapmaker sells the next zone's map
+            if (currentEncounter.name === 'The Mapmaker') {
+                const zoneIndex = ZONE_ORDER.indexOf(currentLocation);
+                const nextZone = zoneIndex >= 0 && zoneIndex < ZONE_ORDER.length - 1 ? ZONE_ORDER[zoneIndex + 1] : null;
+                const mapName = nextZone ? LOCATION_MAP_ITEMS[nextZone] : null;
+
+                if (!mapName || (game.storyItems || []).includes(mapName)) {
+                    await addMessage(`He stares at you blankly. He has nothing to sell.`, 'system');
+                    endMapmakerEncounter();
+                    return;
+                }
+
+                const MAP_COST = 100;
+                await addMessage(`He holds up a rolled chart: ${mapName}`, 'system');
+                await addMessage(`Cost: ${MAP_COST} XP | Your XP: ${game.player.xp}`, 'system');
+
+                const btnContainer = document.createElement('div');
+                btnContainer.className = 'action-btn-container';
+
+                const buyBtn = document.createElement('button');
+                buyBtn.className = 'action-btn engage';
+                buyBtn.textContent = `Buy [${MAP_COST} XP]`;
+                buyBtn.disabled = game.player.xp < MAP_COST;
+                buyBtn.addEventListener('click', () => {
+                    game.player.xp -= MAP_COST;
+                    addStoryItem(mapName);
+                    addMessage(`You hand over ${MAP_COST} XP. He nods once and walks away.`, 'system');
+                    updateStats();
+                    saveGame();
+                    btnContainer.remove();
+                    endMapmakerEncounter();
+                });
+
+                const leaveBtn = document.createElement('button');
+                leaveBtn.className = 'action-btn engage';
+                leaveBtn.textContent = 'Leave';
+                leaveBtn.addEventListener('click', () => {
+                    addMessage(`He watches you leave. Says nothing.`, 'system');
+                    btnContainer.remove();
+                    endMapmakerEncounter();
+                });
+
+                btnContainer.appendChild(buyBtn);
+                btnContainer.appendChild(leaveBtn);
+                chatMessages.appendChild(btnContainer);
+                btnContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                return;
+            }
+
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
 
             // Add inline leave button in chat
@@ -2461,6 +2514,11 @@
             game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
             showShopPanel();
+        }
+
+        function endMapmakerEncounter() {
+            currentEncounter = null;
+            startWaveTimer();
         }
 
         // Decline encounter
