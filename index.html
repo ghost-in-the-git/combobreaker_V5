@@ -917,10 +917,6 @@
                     <span class="stat-label">Defence</span>
                     <span class="stat-right"><span class="stat-value" id="stat-defence">0</span><button class="stat-upgrade" onclick="upgradeStat('defence')">+</button></span>
                 </div>
-                <div class="stat-row">
-                    <span class="stat-label">Deaths</span>
-                    <span class="stat-value" id="stat-deaths">0</span>
-                </div>
             </div>
             <div class="stat-grid" style="margin-top: 0;">
                 <div class="stat-row">
@@ -1955,7 +1951,6 @@
             document.getElementById('stat-combo').textContent = `${p.combo}%`;
             document.getElementById('stat-mining').textContent = p.mining;
             document.getElementById('stat-regen').textContent = p.regen;
-            document.getElementById('stat-deaths').textContent = game.deaths;
 
             // Enable/disable upgrade buttons based on XP
             const canUpgrade = p.xp >= p.xpToLevel;
