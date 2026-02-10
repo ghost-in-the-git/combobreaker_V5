@@ -46,10 +46,17 @@
             text-shadow: 0 0 10px #00ff8855;
         }
 
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 12px;
+            margin-top: 20px;
+        }
+
         .stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #00ff8833;
         }
 
@@ -874,34 +881,34 @@
         <div class="fuel-label" id="fuel-label">FUEL: 100 / 100</div>
 
         <div class="panel-page active" id="page-stats">
-            <div style="margin-top: 20px;">
+            <div class="stat-grid">
                 <div class="stat-row">
                     <span class="stat-label">Level</span>
                     <span class="stat-value" id="stat-level">1</span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-label">Attack</span>
-                    <span class="stat-value" id="stat-attack">5</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Speed</span>
-                    <span class="stat-value" id="stat-speed">10</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Defence</span>
-                    <span class="stat-value" id="stat-defence">3</span>
-                </div>
-                <div class="stat-row">
                     <span class="stat-label">Combo</span>
-                    <span class="stat-value" id="stat-combo">5%</span>
+                    <span class="stat-value" id="stat-combo">0%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Attack</span>
+                    <span class="stat-value" id="stat-attack">0</span>
                 </div>
                 <div class="stat-row">
                     <span class="stat-label">Mining</span>
                     <span class="stat-value" id="stat-mining">0</span>
                 </div>
                 <div class="stat-row">
+                    <span class="stat-label">Speed</span>
+                    <span class="stat-value" id="stat-speed">0</span>
+                </div>
+                <div class="stat-row">
                     <span class="stat-label">Regen</span>
                     <span class="stat-value" id="stat-regen">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Defence</span>
+                    <span class="stat-value" id="stat-defence">0</span>
                 </div>
                 <div class="stat-row">
                     <span class="stat-label">Deaths</span>
