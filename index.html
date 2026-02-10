@@ -1446,7 +1446,7 @@
             const starterWeapon = ITEMS.find(i => i.name === "Rusty Pipe [+1 ATK]");
             game.inventory = starterWeapon ? [starterWeapon] : [];
             game.equipment = { body: null, legs: null, arms: null, weapon: starterWeapon ? starterWeapon.name : null, chip: null, processor: null, pilot: null, drill: null, implant: null };
-            currentLocation = 'ratpile';
+            currentLocation = 'home';
 
             // Update location UI
             updateLocationDropdown();
@@ -1906,6 +1906,7 @@
 
         // Map story item name to location key (ratpile and home are always unlocked)
         const LOCATION_MAP_ITEMS = {
+            ratpile: 'Map: The Ratpile',
             scrapyard: 'Map: Scrap Yard',
             oldbattlefield: 'Map: Old Battlefield',
             downtown: 'Map: Downtown',
@@ -2438,6 +2439,13 @@
             clearCountdown();
 
             await addMessage(currentEncounter.engageText, 'system');
+
+            // The Professor gives the Ratpile map for free if the player doesn't have it
+            if (currentEncounter.name === 'The Professor' && !(game.storyItems || []).includes('Map: The Ratpile')) {
+                addStoryItem('Map: The Ratpile');
+                await addMessage(`"Here — take this. It's a map to The Ratpile. Not much down there but rats, but it's a start."`, 'system');
+            }
+
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
 
             // Add inline leave button in chat
