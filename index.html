@@ -1228,7 +1228,7 @@
                 baseMining: 0,
                 baseRegen: 0,
                 // Current stats (with equipment)
-                level: 0,
+                level: 1,
                 xp: 0,
                 xpToLevel: 10,
                 maxHp: 100,
@@ -1392,7 +1392,7 @@
             clearCountdown();
 
             // Fresh start stats
-            game.player.level = 0;
+            game.player.level = 1;
             game.player.xp = 0;
             game.player.xpToLevel = 10;
             game.player.baseMaxHp = 100;
@@ -1462,7 +1462,7 @@
             if (!data || !data.player) return; // Empty slots use newGame() instead
 
             // Restore player base stats
-            game.player.level = data.player.level !== undefined ? data.player.level : 0;
+            game.player.level = data.player.level !== undefined ? data.player.level : 1;
             game.player.xp = data.player.xp || 0;
             game.player.xpToLevel = data.player.xpToLevel || 10;
             game.player.baseMaxHp = data.player.baseMaxHp !== undefined ? data.player.baseMaxHp : 100;
@@ -1589,7 +1589,7 @@
                 const data = JSON.parse(savedData);
 
                 // Restore player base stats and progression
-                game.player.level = data.player.level !== undefined ? data.player.level : 0;
+                game.player.level = data.player.level !== undefined ? data.player.level : 1;
                 game.player.xp = data.player.xp || 0;
                 game.player.xpToLevel = data.player.xpToLevel || 10;
                 game.player.baseMaxHp = data.player.baseMaxHp !== undefined ? data.player.baseMaxHp : 100;
