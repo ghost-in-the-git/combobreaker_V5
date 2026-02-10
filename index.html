@@ -1896,10 +1896,8 @@
                 }
             }
 
-            // Adjust current HP if max HP changed
-            if (p.maxHp > oldMaxHp) {
-                p.hp += (p.maxHp - oldMaxHp);
-            } else if (p.hp > p.maxHp) {
+            // Adjust current HP if it exceeds new max
+            if (p.hp > p.maxHp) {
                 p.hp = p.maxHp;
             }
 
