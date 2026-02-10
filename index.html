@@ -66,6 +66,14 @@
             margin: 6px 0;
         }
 
+        .mech-idle {
+            width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+            display: block;
+            margin-top: 10px;
+        }
+
         .stat-row {
             display: flex;
             justify-content: space-between;
@@ -942,6 +950,8 @@
                     <span class="stat-right"><span class="stat-value" id="stat-mining">0</span><button class="stat-upgrade" onclick="upgradeStat('mining')">+</button></span>
                 </div>
             </div>
+
+            <img src="images/COMBOBREAKER_IDLE.gif" alt="COMBOBREAKER" class="mech-idle">
 
             <div class="timer-display" id="timer-display">
                 Next  in: --:--
