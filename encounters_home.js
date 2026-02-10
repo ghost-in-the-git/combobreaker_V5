@@ -12,7 +12,7 @@ const ENCOUNTERS_HOME = [
         engageText: "The Professor looks up from a disassembled servo unit and adjusts their goggles. 'Ah, you're back. Let me see what I've got for you.'",
         appearanceRate: 100,
         minLevel: 1,
-        itemSlot1: [],
+        itemSlot1: ["Rusty Pipe [+1 ATK]"],
         itemSlot2: [],
         itemSlot3: []
     }

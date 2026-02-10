@@ -1443,9 +1443,8 @@
             game.deaths = 0;
             game.minerals = {};
             game.storyItems = ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
-            const starterWeapon = ITEMS.find(i => i.name === "Rusty Pipe [+1 ATK]");
-            game.inventory = starterWeapon ? [starterWeapon] : [];
-            game.equipment = { body: null, legs: null, arms: null, weapon: starterWeapon ? starterWeapon.name : null, chip: null, processor: null, pilot: null, drill: null, implant: null };
+            game.inventory = [];
+            game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null };
             currentLocation = 'home';
 
             // Update location UI
