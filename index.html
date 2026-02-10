@@ -2035,9 +2035,8 @@
                 p.baseCombo = Math.min(p.baseCombo + 2, 50);
                 p.baseMining += 1;
 
-                // Recalculate with equipment and full heal
+                // Recalculate with equipment
                 recalculateStats();
-                p.hp = p.maxHp;
 
                 addMessage(`[LEVEL INCREASED TO ${p.level}]`, 'system');
                 addMessage(`Stats gained: [ATK+2] [SPD+3] [DEF+1] [COMBO+2%] [MAX HP+10] [MINING+1]`, 'system');
