@@ -56,7 +56,7 @@ const ENCOUNTERS_SCRAPYARD = [
         engageText: "He says nothing. His eyes flick to you, then to the map.",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: [],
+        itemSlot1: ["Map: Old Battlefield"],
         itemSlot2: [],
         itemSlot3: []
     }

@@ -57,7 +57,7 @@ const ENCOUNTERS_WASTELAND = [
         engageText: "He says nothing. His eyes flick to you, then to the map.",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: [],
+        itemSlot1: ["Map: Undercity"],
         itemSlot2: [],
         itemSlot3: []
     }

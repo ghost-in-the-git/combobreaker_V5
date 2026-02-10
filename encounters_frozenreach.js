@@ -57,7 +57,7 @@ const ENCOUNTERS_FROZENREACH = [
         engageText: "He says nothing. His eyes flick to you, then to the map.",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: [],
+        itemSlot1: ["Map: Neon Strip"],
         itemSlot2: [],
         itemSlot3: []
     }

@@ -1920,9 +1920,6 @@
             asteroidbelt: 'Map: Asteroid Belt'
         };
 
-        // Zone difficulty order (for Mapmaker: each zone sells the next zone's map)
-        const ZONE_ORDER = ['ratpile', 'scrapyard', 'oldbattlefield', 'downtown', 'orbitalstation', 'wasteland', 'undercity', 'industrialzone', 'frozenreach', 'neonstrip', 'deadzone', 'asteroidbelt'];
-
         function updateLocationDropdown() {
             const select = document.getElementById('location-select');
             const current = select.value;
@@ -2277,6 +2274,11 @@
             return available[0];
         }
 
+        // Find item by name in ITEMS or STORY_ITEMS
+        function findShopItem(name) {
+            return ITEMS.find(i => i.name === name) || STORY_ITEMS.find(i => i.name === name) || null;
+        }
+
         // Generate shop items based on encounter slot configuration
         function generateShopItems(encounter) {
             const items = [];
@@ -2288,14 +2290,19 @@
                 let item = null;
 
                 if (slotConfig.length > 0) {
-                    // Pick randomly from the configured item names
-                    const availableInSlot = slotConfig.filter(name => !usedItems.has(name));
+                    // Pick randomly from the configured item names, skip already-owned story items
+                    const availableInSlot = slotConfig.filter(name => {
+                        if (usedItems.has(name)) return false;
+                        const si = STORY_ITEMS.find(s => s.name === name);
+                        if (si && (game.storyItems || []).includes(name)) return false;
+                        return true;
+                    });
                     if (availableInSlot.length > 0) {
                         const itemName = availableInSlot[Math.floor(Math.random() * availableInSlot.length)];
-                        item = ITEMS.find(i => i.name === itemName);
+                        item = findShopItem(itemName);
                     }
                 } else {
-                    // Empty array = pick random from all items
+                    // Empty array = pick random from all equipment items
                     const availableItems = ITEMS.filter(i => !usedItems.has(i.name));
                     if (availableItems.length > 0) {
                         item = availableItems[Math.floor(Math.random() * availableItems.length)];
@@ -2326,7 +2333,7 @@
 
                 if (item) {
                     const canAfford = playerXP >= item.cost;
-                    const tag = SLOT_LABELS[item.type] || item.type.toUpperCase();
+                    const tag = item.type ? (SLOT_LABELS[item.type] || item.type.toUpperCase()) : (item.category ? item.category.toUpperCase() : 'ITEM');
                     nameEl.textContent = `[${tag}] ${item.name}`;
                     const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                     descEl.innerHTML = item.desc ? `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>` : '';
@@ -2360,7 +2367,13 @@
             if (!item || game.player.xp < item.cost) return;
 
             game.player.xp -= item.cost;
-            addItemToInventory(item);
+            if (item.category) {
+                // Story item — add to story storage
+                addStoryItem(item.name);
+            } else {
+                // Equipment item — add to inventory
+                addItemToInventory(item);
+            }
             addMessage(`Purchased: ${item.name} for ${item.cost} XP`, 'victory');
             updateStats();
 
@@ -2449,55 +2462,6 @@
                 await addMessage(`"Here — take this. It's a map to The Ratpile. Not much down there but rats, but it's a start."`, 'system');
             }
 
-            // The Mapmaker sells the next zone's map
-            if (currentEncounter.name === 'The Mapmaker') {
-                const zoneIndex = ZONE_ORDER.indexOf(currentLocation);
-                const nextZone = zoneIndex >= 0 && zoneIndex < ZONE_ORDER.length - 1 ? ZONE_ORDER[zoneIndex + 1] : null;
-                const mapName = nextZone ? LOCATION_MAP_ITEMS[nextZone] : null;
-
-                if (!mapName || (game.storyItems || []).includes(mapName)) {
-                    await addMessage(`He stares at you blankly. He has nothing to sell.`, 'system');
-                    endMapmakerEncounter();
-                    return;
-                }
-
-                const MAP_COST = 100;
-                await addMessage(`He holds up a rolled chart: ${mapName}`, 'system');
-                await addMessage(`Cost: ${MAP_COST} XP | Your XP: ${game.player.xp}`, 'system');
-
-                const btnContainer = document.createElement('div');
-                btnContainer.className = 'action-btn-container';
-
-                const buyBtn = document.createElement('button');
-                buyBtn.className = 'action-btn engage';
-                buyBtn.textContent = `Buy [${MAP_COST} XP]`;
-                buyBtn.disabled = game.player.xp < MAP_COST;
-                buyBtn.addEventListener('click', () => {
-                    game.player.xp -= MAP_COST;
-                    addStoryItem(mapName);
-                    addMessage(`You hand over ${MAP_COST} XP. He nods once and walks away.`, 'system');
-                    updateStats();
-                    saveGame();
-                    btnContainer.remove();
-                    endMapmakerEncounter();
-                });
-
-                const leaveBtn = document.createElement('button');
-                leaveBtn.className = 'action-btn engage';
-                leaveBtn.textContent = 'Leave';
-                leaveBtn.addEventListener('click', () => {
-                    addMessage(`He watches you leave. Says nothing.`, 'system');
-                    btnContainer.remove();
-                    endMapmakerEncounter();
-                });
-
-                btnContainer.appendChild(buyBtn);
-                btnContainer.appendChild(leaveBtn);
-                chatMessages.appendChild(btnContainer);
-                btnContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                return;
-            }
-
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
 
             // Add inline leave button in chat
@@ -2514,11 +2478,6 @@
             game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
             showShopPanel();
-        }
-
-        function endMapmakerEncounter() {
-            currentEncounter = null;
-            startWaveTimer();
         }
 
         // Decline encounter
