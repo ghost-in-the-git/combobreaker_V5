@@ -583,6 +583,17 @@
             color: #0a0a0f;
         }
 
+        .slot-btn.new-game {
+            background: #1a2e1a;
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .slot-btn.new-game:hover {
+            background: #00ff88;
+            color: #0a0a0f;
+        }
+
         .slot-btn.delete {
             background: #2a1a1a;
             border-color: #ff4444;
@@ -1209,7 +1220,7 @@
         const game = {
             player: {
                 // Base stats (without equipment)
-                baseMaxHp: 0,
+                baseMaxHp: 100,
                 baseAttack: 0,
                 baseSpeed: 0,
                 baseDefence: 0,
@@ -1220,8 +1231,8 @@
                 level: 0,
                 xp: 0,
                 xpToLevel: 10,
-                maxHp: 0,
-                hp: 0,
+                maxHp: 100,
+                hp: 100,
                 attack: 0,
                 speed: 0,
                 defence: 0,
@@ -1330,25 +1341,106 @@
                 if (data && data.player) {
                     const p = data.player;
                     infoEl.innerHTML =
-                        `Level: <span>${p.level || 1}</span> | ` +
-                        `HP: <span>${p.baseMaxHp || 100}</span> | ` +
-                        `ATK: <span>${p.baseAttack || 5}</span> | ` +
-                        `SPD: <span>${p.baseSpeed || 10}</span> | ` +
-                        `DEF: <span>${p.baseDefence || 3}</span><br>` +
-                        `Combo: <span>${p.baseCombo || 5}%</span> | ` +
+                        `Level: <span>${p.level}</span> | ` +
+                        `HP: <span>${p.baseMaxHp}</span> | ` +
+                        `ATK: <span>${p.baseAttack}</span> | ` +
+                        `SPD: <span>${p.baseSpeed}</span> | ` +
+                        `DEF: <span>${p.baseDefence}</span><br>` +
+                        `Combo: <span>${p.baseCombo}%</span> | ` +
                         `Deaths: <span>${data.deaths || 0}</span> | ` +
                         `Items: <span>${(data.inventory || []).length}</span>`;
+                    loadBtn.style.display = '';
                     loadBtn.disabled = false;
                     deleteBtn.disabled = false;
+                    // Hide new game button if it exists
+                    let ngBtn = document.getElementById(`slot-${i}-new`);
+                    if (ngBtn) ngBtn.style.display = 'none';
                 } else {
-                    infoEl.innerHTML = '<span class="save-slot-empty">-- Empty (Fresh Start) --</span>';
-                    loadBtn.disabled = false;
+                    infoEl.innerHTML = '<span class="save-slot-empty">-- Empty --</span>';
+                    loadBtn.style.display = 'none';
                     deleteBtn.disabled = true;
+                    // Show new game button
+                    let ngBtn = document.getElementById(`slot-${i}-new`);
+                    if (!ngBtn) {
+                        ngBtn = document.createElement('button');
+                        ngBtn.id = `slot-${i}-new`;
+                        ngBtn.className = 'slot-btn new-game';
+                        ngBtn.textContent = 'New Game';
+                        ngBtn.onclick = () => newGame(i);
+                        loadBtn.parentNode.insertBefore(ngBtn, loadBtn);
+                    }
+                    ngBtn.style.display = '';
                 }
             }
         }
 
-        // Load game from a slot (empty slot = fresh start)
+        // Start a new game on an empty slot
+        function newGame(slotNum) {
+            game.activeSlot = slotNum;
+
+            // Stop all active timers and battle state
+            game.inBattle = false;
+            game.currentWave = null;
+            game.isAmbush = false;
+            currentEncounter = null;
+            currentMiningEvent = null;
+            shopItems = [];
+            if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
+            if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
+            if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
+            clearCountdown();
+
+            // Fresh start stats
+            game.player.level = 0;
+            game.player.xp = 0;
+            game.player.xpToLevel = 10;
+            game.player.baseMaxHp = 100;
+            game.player.baseAttack = 0;
+            game.player.baseSpeed = 0;
+            game.player.baseDefence = 0;
+            game.player.baseCombo = 0;
+            game.player.baseMining = 0;
+            game.player.baseRegen = 0;
+            game.player.fuel = 100;
+            game.deaths = 0;
+            game.minerals = {};
+            game.storyItems = ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
+            game.inventory = [];
+            game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null };
+            currentLocation = 'scrapyard';
+
+            // Update location UI
+            document.getElementById('location-select').value = currentLocation;
+            document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
+
+            recalculateStats();
+            game.player.hp = game.player.maxHp;
+            updateEquipmentUI();
+            updateMiningUI();
+            updateStorageUI();
+            updateStats();
+            saveGame();
+
+            // Reset UI: clear chat, reset page, disable buttons
+            chatMessages.innerHTML = '';
+            storeAvailable = false;
+            showPage(0);
+            setEquipmentLocked(false);
+            hideInlineButtons();
+
+            // Close modal and notify
+            document.getElementById('save-modal').classList.remove('visible');
+            addMessage(`[NEW GAME - SLOT ${slotNum}]`, 'system');
+
+            // Start wave cycle
+            setTimeout(() => {
+                spawnWave();
+                startWaveTimer();
+            }, 2000);
+        }
+
+        // Load game from a slot
         function loadFromSlot(slotNum) {
             const data = getSlotData(slotNum);
             game.activeSlot = slotNum;
@@ -1366,73 +1458,54 @@
             if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
             clearCountdown();
 
-            if (data && data.player) {
-                // Restore player base stats
-                game.player.level = data.player.level || 1;
-                game.player.xp = data.player.xp || 0;
-                game.player.xpToLevel = data.player.xpToLevel || 10;
-                game.player.baseMaxHp = data.player.baseMaxHp || 100;
-                game.player.baseAttack = data.player.baseAttack || 5;
-                game.player.baseSpeed = data.player.baseSpeed || 10;
-                game.player.baseDefence = data.player.baseDefence || 3;
-                game.player.baseCombo = data.player.baseCombo || 5;
-                game.player.baseMining = data.player.baseMining || 0;
-                game.player.baseRegen = data.player.baseRegen || 0;
+            if (!data || !data.player) return; // Empty slots use newGame() instead
 
-                game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
-                game.deaths = data.deaths || 0;
-                game.minerals = data.minerals || {};
-                game.storyItems = data.storyItems && data.storyItems.length > 0 ? data.storyItems : ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
+            // Restore player base stats
+            game.player.level = data.player.level !== undefined ? data.player.level : 0;
+            game.player.xp = data.player.xp || 0;
+            game.player.xpToLevel = data.player.xpToLevel || 10;
+            game.player.baseMaxHp = data.player.baseMaxHp !== undefined ? data.player.baseMaxHp : 100;
+            game.player.baseAttack = data.player.baseAttack !== undefined ? data.player.baseAttack : 0;
+            game.player.baseSpeed = data.player.baseSpeed !== undefined ? data.player.baseSpeed : 0;
+            game.player.baseDefence = data.player.baseDefence !== undefined ? data.player.baseDefence : 0;
+            game.player.baseCombo = data.player.baseCombo !== undefined ? data.player.baseCombo : 0;
+            game.player.baseMining = data.player.baseMining !== undefined ? data.player.baseMining : 0;
+            game.player.baseRegen = data.player.baseRegen !== undefined ? data.player.baseRegen : 0;
 
-                // Restore location
-                if (data.location && LOCATIONS[data.location]) {
-                    currentLocation = data.location;
-                } else {
-                    currentLocation = 'scrapyard';
-                }
+            game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
+            game.deaths = data.deaths || 0;
+            game.minerals = data.minerals || {};
+            game.storyItems = data.storyItems && data.storyItems.length > 0 ? data.storyItems : ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
 
-                // Restore inventory
-                game.inventory = [];
-                if (data.inventory && Array.isArray(data.inventory)) {
-                    data.inventory.forEach(itemName => {
-                        const item = ITEMS.find(i => i.name === itemName);
-                        if (item) game.inventory.push(item);
-                    });
-                }
-
-                // Restore equipment
-                if (data.equipment) {
-                    game.equipment = {
-                        body: data.equipment.body || null,
-                        legs: data.equipment.legs || null,
-                        arms: data.equipment.arms || null,
-                        weapon: data.equipment.weapon || null,
-                        chip: data.equipment.chip || null,
-                        processor: data.equipment.processor || null,
-                        pilot: data.equipment.pilot || null,
-                        drill: data.equipment.drill || null,
-                        implant: data.equipment.implant || null
-                    };
-                }
+            // Restore location
+            if (data.location && LOCATIONS[data.location]) {
+                currentLocation = data.location;
             } else {
-                // Empty slot = fresh start
-                game.player.level = 1;
-                game.player.xp = 0;
-                game.player.xpToLevel = 10;
-                game.player.baseMaxHp = 100;
-                game.player.baseAttack = 5;
-                game.player.baseSpeed = 10;
-                game.player.baseDefence = 3;
-                game.player.baseCombo = 5;
-                game.player.baseMining = 0;
-                game.player.baseRegen = 0;
-                game.player.fuel = 100;
-                game.deaths = 0;
-                game.minerals = {};
-                game.storyItems = ['Mysterious Note', 'Old Key', 'Unreadable DNA Tag', 'Destroyed Mech Heart'];
-                game.inventory = [];
-                game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null };
                 currentLocation = 'scrapyard';
+            }
+
+            // Restore inventory
+            game.inventory = [];
+            if (data.inventory && Array.isArray(data.inventory)) {
+                data.inventory.forEach(itemName => {
+                    const item = ITEMS.find(i => i.name === itemName);
+                    if (item) game.inventory.push(item);
+                });
+            }
+
+            // Restore equipment
+            if (data.equipment) {
+                game.equipment = {
+                    body: data.equipment.body || null,
+                    legs: data.equipment.legs || null,
+                    arms: data.equipment.arms || null,
+                    weapon: data.equipment.weapon || null,
+                    chip: data.equipment.chip || null,
+                    processor: data.equipment.processor || null,
+                    pilot: data.equipment.pilot || null,
+                    drill: data.equipment.drill || null,
+                    implant: data.equipment.implant || null
+                };
             }
 
             // Update location UI
@@ -1456,11 +1529,7 @@
 
             // Close modal and notify
             document.getElementById('save-modal').classList.remove('visible');
-            if (data && data.player) {
-                addMessage(`[SLOT ${slotNum} LOADED] Level ${game.player.level} restored.`, 'system');
-            } else {
-                addMessage(`[SLOT ${slotNum} NOW ACTIVE]`, 'system');
-            }
+            addMessage(`[SLOT ${slotNum} LOADED] Level ${game.player.level} restored.`, 'system');
 
             // Restart wave cycle
             setTimeout(() => {
@@ -1519,16 +1588,16 @@
                 const data = JSON.parse(savedData);
 
                 // Restore player base stats and progression
-                game.player.level = data.player.level || 1;
+                game.player.level = data.player.level !== undefined ? data.player.level : 0;
                 game.player.xp = data.player.xp || 0;
                 game.player.xpToLevel = data.player.xpToLevel || 10;
-                game.player.baseMaxHp = data.player.baseMaxHp || 100;
-                game.player.baseAttack = data.player.baseAttack || 5;
-                game.player.baseSpeed = data.player.baseSpeed || 10;
-                game.player.baseDefence = data.player.baseDefence || 3;
-                game.player.baseCombo = data.player.baseCombo || 5;
-                game.player.baseMining = data.player.baseMining || 0;
-                game.player.baseRegen = data.player.baseRegen || 0;
+                game.player.baseMaxHp = data.player.baseMaxHp !== undefined ? data.player.baseMaxHp : 100;
+                game.player.baseAttack = data.player.baseAttack !== undefined ? data.player.baseAttack : 0;
+                game.player.baseSpeed = data.player.baseSpeed !== undefined ? data.player.baseSpeed : 0;
+                game.player.baseDefence = data.player.baseDefence !== undefined ? data.player.baseDefence : 0;
+                game.player.baseCombo = data.player.baseCombo !== undefined ? data.player.baseCombo : 0;
+                game.player.baseMining = data.player.baseMining !== undefined ? data.player.baseMining : 0;
+                game.player.baseRegen = data.player.baseRegen !== undefined ? data.player.baseRegen : 0;
 
                 // Restore death counter, active slot, fuel, and minerals
                 game.player.fuel = data.fuel !== undefined ? data.fuel : 100;
