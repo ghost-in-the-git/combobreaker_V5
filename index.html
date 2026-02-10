@@ -90,27 +90,6 @@
             margin-top: 4px;
         }
 
-        .xp-bar-container {
-            margin-top: 10px;
-            background: #1a1a2e;
-            border: 1px solid #4488ff;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .xp-bar {
-            height: 8px;
-            background: linear-gradient(90deg, #4488ff, #2266cc);
-            transition: width 0.3s ease;
-        }
-
-        .xp-label {
-            text-align: center;
-            font-size: 11px;
-            color: #4488ff;
-            margin-top: 4px;
-        }
-
         .fuel-bar-container {
             margin-top: 10px;
             background: #1a1a2e;
@@ -870,11 +849,6 @@
         </div>
         <div class="hp-label" id="hp-label">HP: 100 / 100</div>
 
-        <div class="xp-bar-container">
-            <div class="xp-bar" id="xp-bar" style="width: 0%"></div>
-        </div>
-        <div class="xp-label" id="xp-label">XP: 0 / 10</div>
-
         <div class="fuel-bar-container">
             <div class="fuel-bar" id="fuel-bar" style="width: 100%"></div>
         </div>
@@ -913,6 +887,16 @@
                 <div class="stat-row">
                     <span class="stat-label">Deaths</span>
                     <span class="stat-value" id="stat-deaths">0</span>
+                </div>
+            </div>
+            <div class="stat-grid" style="margin-top: 0;">
+                <div class="stat-row">
+                    <span class="stat-label">XP</span>
+                    <span class="stat-value" id="stat-xp">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">ReqXP</span>
+                    <span class="stat-value" id="stat-reqxp">10</span>
                 </div>
             </div>
 
@@ -1921,10 +1905,9 @@
             document.getElementById('hp-bar').style.width = `${hpPercent}%`;
             document.getElementById('hp-label').textContent = `HP: ${p.hp} / ${p.maxHp}`;
 
-            // XP Bar
-            const xpPercent = (p.xp / p.xpToLevel) * 100;
-            document.getElementById('xp-bar').style.width = `${xpPercent}%`;
-            document.getElementById('xp-label').textContent = `XP: ${p.xp} / ${p.xpToLevel}`;
+            // XP Stats
+            document.getElementById('stat-xp').textContent = p.xp;
+            document.getElementById('stat-reqxp').textContent = p.xpToLevel;
 
             // Fuel Bar
             const fuelPercent = (p.fuel / p.maxFuel) * 100;
