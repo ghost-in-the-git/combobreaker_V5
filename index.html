@@ -1008,19 +1008,6 @@
             <div class="location-panel">
                 <div class="equip-slot">
                     <select id="location-select">
-                        <option value="ratpile">[ZONE] The Ratpile</option>
-                        <option value="scrapyard">[ZONE] Scrap Yard</option>
-                        <option value="oldbattlefield">[ZONE] Old Battlefield</option>
-                        <option value="downtown">[ZONE] Downtown</option>
-                        <option value="orbitalstation">[ZONE] Orbital Station</option>
-                        <option value="wasteland">[ZONE] Wasteland</option>
-                        <option value="undercity">[ZONE] Undercity</option>
-                        <option value="industrialzone">[ZONE] Industrial Zone</option>
-                        <option value="frozenreach">[ZONE] Frozen Reach</option>
-                        <option value="neonstrip">[ZONE] Neon Strip</option>
-                        <option value="deadzone">[ZONE] Dead Zone</option>
-                        <option value="asteroidbelt">[ZONE] Asteroid Belt</option>
-                        <option value="home">[ZONE] Home</option>
                     </select>
                 </div>
                 <div class="location-desc" id="location-desc">
@@ -1459,9 +1446,10 @@
             const starterWeapon = ITEMS.find(i => i.name === "Rusty Pipe [+1 ATK]");
             game.inventory = starterWeapon ? [starterWeapon] : [];
             game.equipment = { body: null, legs: null, arms: null, weapon: starterWeapon ? starterWeapon.name : null, chip: null, processor: null, pilot: null, drill: null, implant: null };
-            currentLocation = 'scrapyard';
+            currentLocation = 'ratpile';
 
             // Update location UI
+            updateLocationDropdown();
             document.getElementById('location-select').value = currentLocation;
             document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
@@ -1560,6 +1548,7 @@
             }
 
             // Update location UI
+            updateLocationDropdown();
             document.getElementById('location-select').value = currentLocation;
             document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
@@ -1660,9 +1649,10 @@
                 // Restore location
                 if (data.location && LOCATIONS[data.location]) {
                     currentLocation = data.location;
-                    document.getElementById('location-select').value = currentLocation;
-                    document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
                 }
+                updateLocationDropdown();
+                document.getElementById('location-select').value = currentLocation;
+                document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
                 // Restore inventory (convert names back to item objects)
                 game.inventory = [];
@@ -1899,6 +1889,7 @@
         }
 
         const LOCATION_NAMES = {
+            ratpile: 'THE RATPILE',
             scrapyard: 'SCRAP YARD',
             oldbattlefield: 'OLD BATTLEFIELD',
             downtown: 'DOWNTOWN',
@@ -1912,6 +1903,39 @@
             asteroidbelt: 'ASTEROID BELT',
             home: 'HOME'
         };
+
+        // Map story item name to location key (ratpile and home are always unlocked)
+        const LOCATION_MAP_ITEMS = {
+            scrapyard: 'Map: Scrap Yard',
+            oldbattlefield: 'Map: Old Battlefield',
+            downtown: 'Map: Downtown',
+            orbitalstation: 'Map: Orbital Station',
+            wasteland: 'Map: Wasteland',
+            undercity: 'Map: Undercity',
+            industrialzone: 'Map: Industrial Zone',
+            frozenreach: 'Map: Frozen Reach',
+            neonstrip: 'Map: Neon Strip',
+            deadzone: 'Map: Dead Zone',
+            asteroidbelt: 'Map: Asteroid Belt'
+        };
+
+        function updateLocationDropdown() {
+            const select = document.getElementById('location-select');
+            const current = select.value;
+            select.innerHTML = '';
+
+            for (const key in LOCATIONS) {
+                // Ratpile and Home always available; others need a map
+                const mapNeeded = LOCATION_MAP_ITEMS[key];
+                if (mapNeeded && !(game.storyItems || []).includes(mapNeeded)) continue;
+
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = `[ZONE] ${LOCATION_NAMES[key] || key}`;
+                if (key === current) opt.selected = true;
+                select.appendChild(opt);
+            }
+        }
 
         function changeLocation(locationKey) {
             currentLocation = locationKey;
@@ -2644,6 +2668,7 @@
                     addMessage(`[ITEM FOUND] ${item.name}`, 'reward');
                 }
                 updateStorageUI();
+                updateLocationDropdown();
                 saveGame();
             }
         }
@@ -3236,6 +3261,7 @@
                 game.player.hp = game.player.maxHp;
             }
 
+            updateLocationDropdown();
             updateEquipmentUI();
             updateMiningUI();
             updateStorageUI();
