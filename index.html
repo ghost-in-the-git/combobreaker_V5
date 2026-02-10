@@ -2559,7 +2559,7 @@
                 if (!select || !desc) return;
                 const tag = STORAGE_LABELS[cat];
                 const collected = items.map(name => STORY_ITEMS.find(i => i.name === name)).filter(i => i && i.category === cat);
-                select.innerHTML = `<option value="">[${tag}] -- Empty --</option>`;
+                select.innerHTML = `<option value="">[${tag}] ${collected.length} items</option>`;
                 collected.forEach(item => {
                     const opt = document.createElement('option');
                     opt.value = item.name;
