@@ -1008,6 +1008,7 @@
             <div class="location-panel">
                 <div class="equip-slot">
                     <select id="location-select">
+                        <option value="ratpile">[ZONE] The Ratpile</option>
                         <option value="scrapyard">[ZONE] Scrap Yard</option>
                         <option value="oldbattlefield">[ZONE] Old Battlefield</option>
                         <option value="downtown">[ZONE] Downtown</option>
@@ -1225,6 +1226,7 @@
     <script src="enemies_frozenreach.js"></script>
     <script src="enemies_neonstrip.js"></script>
     <script src="enemies_deadzone.js"></script>
+    <script src="enemies_ratpile.js"></script>
     <script src="ambush_scrapyard.js"></script>
     <script src="ambush_oldbattlefield.js"></script>
     <script src="ambush_downtown.js"></script>
@@ -1776,6 +1778,14 @@
 
         // Location system
         const LOCATIONS = {
+            ratpile: {
+                enemies: ENEMIES_RATPILE,
+                encounters: null,
+                mining: null,
+                ambush: null,
+                desc: "A festering nest of silicon rats beneath the scrapyard. Weak vermin, but they never stop coming.",
+                image: "images/IMAGE.gif"
+            },
             scrapyard: {
                 enemies: ENEMIES_SCRAPYARD,
                 encounters: ENCOUNTERS_SCRAPYARD,
