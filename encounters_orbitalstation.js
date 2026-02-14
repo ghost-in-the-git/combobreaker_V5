@@ -87,6 +87,7 @@ const ENCOUNTERS_ORBITALSTATION = [
         appearanceRate: 15,
         minLevel: 1,
         itemSlot1: ["Refined Hematite"],
-        itemSlot2: ["Refined Magnetite"]
+        itemSlot2: ["Refined Magnetite"],
+        itemSlot3: ["Refined Alexandrite"]
     }
 ];

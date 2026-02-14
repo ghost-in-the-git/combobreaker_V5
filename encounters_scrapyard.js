@@ -87,6 +87,6 @@ const ENCOUNTERS_SCRAPYARD = [
         minLevel: 1,
         itemSlot1: ["Refined Limestone"],
         itemSlot2: ["Refined Sandstone"],
-        itemSlot3: ["Refined Clay"]
+        itemSlot3: ["Refined Tanzanite"]
     }
 ];
