@@ -1968,7 +1968,7 @@
             }
             if (fuelCost > 0) {
                 game.player.fuel -= fuelCost;
-                updateUI();
+                updateStats();
             }
             currentLocation = locationKey;
             document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[locationKey].image}" alt="Location"><span>${LOCATIONS[locationKey].desc}</span></div>`;
@@ -1998,6 +1998,7 @@
             saveGame();
 
             addMessage(`[NOW IN ${LOCATION_NAMES[locationKey]}]`, 'system');
+            startFuelRegen();
 
             // Restart wave cycle
             setTimeout(() => {
