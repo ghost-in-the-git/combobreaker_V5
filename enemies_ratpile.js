@@ -16,5 +16,16 @@ const ENEMIES_RATPILE = [
         minLevel: 1,
         squadMin: 1,
         squadMax: 3
+    },
+    {
+        name: "Bloated Rat",
+        attack: 2,
+        defence: 0,
+        hp: 5,
+        xp: 3,
+        appearanceRate: 50,
+        minLevel: 1,
+        squadMin: 1,
+        squadMax: 2
     }
 ];
