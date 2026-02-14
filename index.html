@@ -3207,7 +3207,7 @@
             }, 1000);
         }
 
-        // Fuel regeneration (1 fuel per second, always running)
+        // Fuel regeneration (1 fuel per 3 seconds, always running)
         function startFuelRegen() {
             if (game.fuelRegenInterval) clearInterval(game.fuelRegenInterval);
             game.fuelRegenInterval = setInterval(() => {
@@ -3215,7 +3215,7 @@
                     game.player.fuel = Math.min(game.player.maxFuel, game.player.fuel + 1);
                     updateStats();
                 }
-            }, 1000);
+            }, 3000);
         }
 
         // Utility delay
