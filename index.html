@@ -1299,6 +1299,7 @@
             inBattle: false,
             battleInterval: null,
             regenInterval: null,
+            fuelRegenInterval: null,
             waveTimer: null,
             nextWaveTime: 0,
             waveExpireTimer: null,
@@ -1426,6 +1427,7 @@
             shopItems = [];
             if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
             if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.fuelRegenInterval) { clearInterval(game.fuelRegenInterval); game.fuelRegenInterval = null; }
             if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
             if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
             clearCountdown();
@@ -1472,6 +1474,7 @@
             // Close modal and notify
             document.getElementById('save-modal').classList.remove('visible');
             addMessage(`[NEW GAME - SLOT ${slotNum}]`, 'system');
+            startFuelRegen();
 
             // Start wave cycle
             setTimeout(() => {
@@ -1494,6 +1497,7 @@
             shopItems = [];
             if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
             if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.fuelRegenInterval) { clearInterval(game.fuelRegenInterval); game.fuelRegenInterval = null; }
             if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
             if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
             clearCountdown();
@@ -1571,6 +1575,7 @@
             // Close modal and notify
             document.getElementById('save-modal').classList.remove('visible');
             addMessage(`[SLOT ${slotNum} LOADED] Level ${game.player.level} restored.`, 'system');
+            startFuelRegen();
 
             // Restart wave cycle
             setTimeout(() => {
@@ -1778,6 +1783,7 @@
                 encounters: ENCOUNTERS_RATPILE,
                 mining: null,
                 ambush: AMBUSH_RATPILE,
+                fuelCost: 0,
                 desc: "A festering nest of silicon rats beneath the scrapyard. Weak vermin, but they never stop coming.",
                 image: "images/IMAGE.gif"
             },
@@ -1786,6 +1792,7 @@
                 encounters: ENCOUNTERS_SCRAPYARD,
                 mining: MINING_SCRAPYARD,
                 ambush: AMBUSH_SCRAPYARD,
+                fuelCost: 5,
                 desc: "Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.",
                 image: "images/IMAGE.gif"
             },
@@ -1794,6 +1801,7 @@
                 encounters: ENCOUNTERS_OLDBATTLEFIELD,
                 mining: MINING_OLDBATTLEFIELD,
                 ambush: AMBUSH_OLDBATTLEFIELD,
+                fuelCost: 10,
                 desc: "Scarred terrain littered with war machines still running combat protocols from a forgotten conflict.",
                 image: "images/IMAGE.gif"
             },
@@ -1802,6 +1810,7 @@
                 encounters: ENCOUNTERS_DOWNTOWN,
                 mining: MINING_DOWNTOWN,
                 ambush: AMBUSH_DOWNTOWN,
+                fuelCost: 15,
                 desc: "Neon-lit urban sprawl. Corporate security and street-modded combat rigs patrol the blocks.",
                 image: "images/IMAGE.gif"
             },
@@ -1810,6 +1819,7 @@
                 encounters: ENCOUNTERS_ORBITALSTATION,
                 mining: MINING_ORBITALSTATION,
                 ambush: AMBUSH_ORBITALSTATION,
+                fuelCost: 20,
                 desc: "A derelict orbital platform. Rogue drones and hijacked defense systems stalk the corridors.",
                 image: "images/IMAGE.gif"
             },
@@ -1818,6 +1828,7 @@
                 encounters: ENCOUNTERS_WASTELAND,
                 mining: MINING_WASTELAND,
                 ambush: AMBUSH_WASTELAND,
+                fuelCost: 25,
                 desc: "Irradiated badlands where feral war machines and dust-choked scavengers fight over scraps.",
                 image: "images/IMAGE.gif"
             },
@@ -1826,6 +1837,7 @@
                 encounters: ENCOUNTERS_UNDERCITY,
                 mining: MINING_UNDERCITY,
                 ambush: AMBUSH_UNDERCITY,
+                fuelCost: 30,
                 desc: "A labyrinth of tunnels and sewers beneath the streets. Black-ops units and tunnel rats lurk in the dark.",
                 image: "images/IMAGE.gif"
             },
@@ -1834,6 +1846,7 @@
                 encounters: ENCOUNTERS_INDUSTRIALZONE,
                 mining: MINING_INDUSTRIALZONE,
                 ambush: AMBUSH_INDUSTRIALZONE,
+                fuelCost: 35,
                 desc: "Sprawling factories and refineries. Malfunctioning production bots guard the assembly lines.",
                 image: "images/IMAGE.gif"
             },
@@ -1842,6 +1855,7 @@
                 encounters: ENCOUNTERS_FROZENREACH,
                 mining: MINING_FROZENREACH,
                 ambush: AMBUSH_FROZENREACH,
+                fuelCost: 40,
                 desc: "Arctic tundra locked in permanent winter. Cryo-adapted war machines patrol the frozen expanse.",
                 image: "images/IMAGE.gif"
             },
@@ -1850,6 +1864,7 @@
                 encounters: ENCOUNTERS_NEONSTRIP,
                 mining: MINING_NEONSTRIP,
                 ambush: AMBUSH_NEONSTRIP,
+                fuelCost: 45,
                 desc: "The flashy entertainment district. Syndicate enforcers and casino muscle keep the peace their way.",
                 image: "images/IMAGE.gif"
             },
@@ -1858,6 +1873,7 @@
                 encounters: ENCOUNTERS_DEADZONE,
                 mining: MINING_DEADZONE,
                 ambush: AMBUSH_DEADZONE,
+                fuelCost: 50,
                 desc: "Heavily contaminated killing fields. Corrupted AI and mutated war platforms roam unchecked.",
                 image: "images/IMAGE.gif"
             },
@@ -1866,6 +1882,7 @@
                 encounters: null,
                 mining: MINING_ASTEROIDBELT,
                 ambush: null,
+                fuelCost: 30,
                 desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void.",
                 image: "images/IMAGE.gif"
             },
@@ -1874,6 +1891,7 @@
                 encounters: ENCOUNTERS_HOME,
                 mining: null,
                 ambush: null,
+                fuelCost: 0,
                 desc: "Your workshop. The Professor is here, tinkering with salvage and offering what they've found.",
                 image: "images/IMAGE.gif"
             }
@@ -1933,13 +1951,25 @@
 
                 const opt = document.createElement('option');
                 opt.value = key;
-                opt.textContent = `[ZONE] ${LOCATION_NAMES[key] || key}`;
+                const fuelCost = LOCATIONS[key].fuelCost || 0;
+                const fuelTag = fuelCost > 0 ? ` (${fuelCost} fuel)` : '';
+                opt.textContent = `[ZONE] ${LOCATION_NAMES[key] || key}${fuelTag}`;
                 if (key === current) opt.selected = true;
                 select.appendChild(opt);
             }
         }
 
         function changeLocation(locationKey) {
+            const fuelCost = LOCATIONS[locationKey].fuelCost || 0;
+            if (game.player.fuel < fuelCost) {
+                addMessage(`[NOT ENOUGH FUEL — need ${fuelCost}, have ${game.player.fuel}]`, 'system');
+                document.getElementById('location-select').value = currentLocation;
+                return;
+            }
+            if (fuelCost > 0) {
+                game.player.fuel -= fuelCost;
+                updateUI();
+            }
             currentLocation = locationKey;
             document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[locationKey].image}" alt="Location"><span>${LOCATIONS[locationKey].desc}</span></div>`;
 
@@ -1952,6 +1982,7 @@
             shopItems = [];
             if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
             if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.fuelRegenInterval) { clearInterval(game.fuelRegenInterval); game.fuelRegenInterval = null; }
             if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
             if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
             clearCountdown();
@@ -3175,6 +3206,17 @@
             }, 1000);
         }
 
+        // Fuel regeneration (1 fuel per second, always running)
+        function startFuelRegen() {
+            if (game.fuelRegenInterval) clearInterval(game.fuelRegenInterval);
+            game.fuelRegenInterval = setInterval(() => {
+                if (game.player.fuel < game.player.maxFuel) {
+                    game.player.fuel = Math.min(game.player.maxFuel, game.player.fuel + 1);
+                    updateStats();
+                }
+            }, 1000);
+        }
+
         // Utility delay
         function delay(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -3306,6 +3348,7 @@
                 addMessage(`BreakerPilot Command Key Accepted.`, 'system');
                 addMessage(`Engagement commands now available. [Engage] or [Decline]`, 'system');
                 updateStats();
+                startFuelRegen();
 
                 // Resume wave cycle
                 setTimeout(() => {
