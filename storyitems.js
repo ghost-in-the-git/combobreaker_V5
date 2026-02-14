@@ -332,6 +332,266 @@ const STORY_ITEMS = [
         image: "images/IMAGE.gif"
     },
 
+    // Scrap Yard — Common Encounter Locations
+    {
+        name: "Scrap Yard: Mech Junker",
+        desc: "GPS lock on a Junker vessel tethered to a rust-eaten gantry in the Scrap Yard. They never move far.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Scrap Yard: Scrap Dealer",
+        desc: "Coordinates to a Scrap Dealer's permanent berth among the wreckage piles. Their trade signal runs day and night.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Scrap Yard: Field Mechanic",
+        desc: "A marked position next to a decommissioned mech where a field mechanic has set up shop on a greasy tarp.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Scrap Yard: Derelict Vending Array",
+        desc: "Power signature of an ancient vending array still running in the Scrap Yard. The buttons are worn smooth.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Old Battlefield — Common Encounter Locations
+    {
+        name: "Old Battlefield: Salvage Auction Pod",
+        desc: "Orbital coordinates for a drifting auction pod that circles the Old Battlefield. Bidding is automated.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Old Battlefield: Corporate Supply Cache",
+        desc: "Beacon frequency for a corporate resupply buoy anchored above the trenches. Still honoring contracts.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Old Battlefield: Pilgrim Parts Caravan",
+        desc: "Route data for a pilgrim caravan that loops through the Old Battlefield. They trade fair and move slow.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Old Battlefield: Experimental R&D Vendor",
+        desc: "Landing coordinates for a research craft running field tests on the Old Battlefield. Waivers required.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Downtown — Common Encounter Locations
+    {
+        name: "Downtown: Black Market Trader",
+        desc: "Encrypted channel frequency for a black market vessel that haunts Downtown's shadows. No names exchanged.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Downtown: Smuggler's Docking Bay",
+        desc: "Hidden dock ring coordinates in the Downtown district. The smugglers keep irregular hours but always have stock.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Downtown: Scrap Dealer",
+        desc: "Alley coordinates for a Scrap Dealer who operates from a cargo ship wedged between Downtown towers.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Downtown: Neon Bazaar Kiosk",
+        desc: "Street address for a Bazaar kiosk in the Downtown strip. The synthetic shopkeeper never closes.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Orbital Station — Common Encounter Locations
+    {
+        name: "Orbital Station: Station Quartermaster",
+        desc: "Supply bay number for the station quartermaster. Military surplus at standard rates, no haggling.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Orbital Station: Zero-G Peddler",
+        desc: "Hull clamp coordinates for a peddler's craft magnetically attached to the station exterior. Weightless bargains.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Orbital Station: Docking Ring Vendor",
+        desc: "Kiosk terminal ID at the station docking ring. Automated inventory, verified permits only.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Orbital Station: Void Smuggler",
+        desc: "Scrambled transponder frequency for a blacked-out shuttle parked in the station's shadow. Discreet transactions.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Wasteland — Common Encounter Locations
+    {
+        name: "Wasteland: Nomad Trader",
+        desc: "Dune ridge coordinates where a nomad convoy camps between trade runs. They flash beacons for friendlies.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Wasteland: Rad-Shielded Caravan",
+        desc: "Formation point for a lead-lined hauler convoy in the Wasteland. Geiger counters tick, but the parts are clean.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Wasteland: Scavenger Camp",
+        desc: "Position beneath a wrecked dropship where scavengers have set up a permanent camp. New salvage daily.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Wasteland: Buried Supply Cache",
+        desc: "Nav marker for a pre-war supply cache buried in the Wasteland sand. Your access code is saved.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Undercity — Common Encounter Locations
+    {
+        name: "Undercity: Tunnel Fixer",
+        desc: "Tunnel junction number for a fixer's workshop carved into the Undercity wall. Neon signs mark the entrance.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Undercity: Pipe Market Stall",
+        desc: "Junction coordinates for a cluster of makeshift stalls in the pipe network. Echoes carry the haggling.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Undercity: Rogue Maintenance Drone",
+        desc: "Patrol route marker for a reprogrammed maintenance drone in the Undercity. It beeps when it has stock.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Undercity: Shadow Broker",
+        desc: "Hidden door coordinates in the Undercity tunnel wall. The broker deals in silence. Don't linger.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Industrial Zone — Common Encounter Locations
+    {
+        name: "Industrial Zone: Factory Surplus Outlet",
+        desc: "Loading dock number for a factory outlet in the Industrial Zone. The foreman always has overstock.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Industrial Zone: Union Supply Depot",
+        desc: "Depot coordinates between the smokestacks where the workers' union trades parts to allies.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Industrial Zone: Automated Vending Rig",
+        desc: "Route schedule for a mobile vending rig on the factory floor. It plays a jingle when it's nearby.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Industrial Zone: Shift Supervisor's Stash",
+        desc: "Storage unit coordinates near the line. The shift supervisor keeps off-book inventory for trusted buyers.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Frozen Reach — Common Encounter Locations
+    {
+        name: "Frozen Reach: Outpost Trader",
+        desc: "Heated outpost coordinates on the Frozen Reach snowfield. Warm lights visible from a kilometre out.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frozen Reach: Ice Road Hauler",
+        desc: "Ridge coordinates where a massive tracked hauler parks between coast runs. Engine never stops.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frozen Reach: Research Station Surplus",
+        desc: "Coordinates for an abandoned research station on the ice. The supply terminal still has power — barely.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frozen Reach: Glacier Prospector",
+        desc: "Drill rig coordinates atop a glacier shelf in the Frozen Reach. Pre-war hardware frozen in the ice.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Neon Strip — Common Encounter Locations
+    {
+        name: "Neon Strip: Back-Alley Dealer",
+        desc: "Alley coordinates behind a flickering holographic ad on the Neon Strip. The dealer keeps odd hours.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Neon Strip: Casino Prize Counter",
+        desc: "Casino floor address on the Neon Strip. The prize counter has mech parts between the stuffed animals.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Neon Strip: Syndicate Fence",
+        desc: "Secure channel frequency for a syndicate contact on the Neon Strip. Pre-loaded and encrypted.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Neon Strip: High-Roller Lounge",
+        desc: "VIP lounge coordinates on the Neon Strip. Premium parts displayed on velvet. Credits talk.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
+    // Dead Zone — Common Encounter Locations
+    {
+        name: "Dead Zone: Hazmat Trader",
+        desc: "Perimeter coordinates for a sealed hazmat vehicle in the Dead Zone. The trader scrubs everything. Mostly.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Dead Zone: Decontamination Drone",
+        desc: "Patrol route for a decontamination drone in the Dead Zone. Cargo bay restocked after each sweep.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Dead Zone: Desperate Scavenger",
+        desc: "Position behind a crumbling wall in the Dead Zone. A lone scavenger who never seems to leave.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Dead Zone: Sealed Bunker Terminal",
+        desc: "Bunker hatch coordinates in the Dead Zone. Emergency terminal still online. Integrity dropping.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
     // Maps
     {
         name: "Map: The Ratpile",
