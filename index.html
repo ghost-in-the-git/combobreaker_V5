@@ -2122,37 +2122,6 @@
             }
         };
 
-        // Auto-populate ZONE_DESTINATIONS and STORY_ITEMS for all zone encounters
-        // so that every encounter (not just manually tagged ones) is discoverable
-        (function initZoneDestinations() {
-            for (const [zone, loc] of Object.entries(LOCATIONS)) {
-                if (!loc.encounters) continue;
-                if (!ZONE_DESTINATIONS[zone]) {
-                    ZONE_DESTINATIONS[zone] = {
-                        openWorldName: LOCATION_NAMES[zone] || zone,
-                        openWorldDesc: loc.desc || '',
-                        destinations: []
-                    };
-                }
-                for (const enc of loc.encounters) {
-                    const already = ZONE_DESTINATIONS[zone].destinations.find(d => d.encounterName === enc.name);
-                    if (already) continue;
-                    const cleanName = enc.name.replace(/^\[COMMON\] /, '');
-                    const zoneName = (LOCATION_NAMES[zone] || zone).split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-                    const mapItem = `${zoneName}: ${cleanName}`;
-                    ZONE_DESTINATIONS[zone].destinations.push({ encounterName: enc.name, mapItem: mapItem });
-                    if (!STORY_ITEMS.find(i => i.name === mapItem)) {
-                        STORY_ITEMS.push({
-                            name: mapItem,
-                            desc: `Coordinates to ${cleanName} in ${zoneName}.`,
-                            category: 'locationmap',
-                            image: 'images/IMAGE.gif'
-                        });
-                    }
-                }
-            }
-        })();
-
         // Track current destination within a zone ('openworld' or encounter name)
         let currentDestination = 'openworld';
 
