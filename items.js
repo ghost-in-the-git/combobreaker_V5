@@ -18,6 +18,17 @@
 const ITEMS = [
     // ==================== BODY (HP & Defence) ====================
     {
+        name: "Rat-Gnawed Plating [+5 HP]",
+        type: "body",
+        desc: "Chewed-up hull scrap with teeth marks all over it. The rats were nesting in this. Still stops a hit or two.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 5 },
+        dropRate: 12,
+        droppedBy: [],
+        cost: 5,
+        zone: "ratpile"
+    },
+    {
         name: "Low-Grade Chassis [+10 HP][+1 DEF]",
         type: "body",
         desc: "Scrap-welded plating bolted to the frame. Barely holds together, but it's better than nothing.",
@@ -129,6 +140,17 @@ const ITEMS = [
     },
 
      // ==================== LEGS (Speed) ====================
+    {
+        name: "Scavenged Struts [+1 SPD]",
+        type: "legs",
+        desc: "Bent leg struts pulled from a rat-infested wreck. They wobble, but they move.",
+        image: "images/IMAGE.gif",
+        stats: { speed: 1 },
+        dropRate: 65,
+        droppedBy: [],
+        cost: 4,
+        zone: "ratpile"
+    },
     {
         name: "Standard Servos [+2 SPD]",
         type: "legs",
@@ -242,6 +264,17 @@ const ITEMS = [
 
     // ==================== ARMS (Attack or Defence) ====================
     {
+        name: "Rat-Bone Bracers [+1 ATK]",
+        type: "arms",
+        desc: "Arm guards fashioned from fused rat bones. Disgusting, but the extra weight adds punch.",
+        image: "images/IMAGE.gif",
+        stats: { attack: 1 },
+        dropRate: 60,
+        droppedBy: [],
+        cost: 5,
+        zone: "ratpile"
+    },
+    {
         name: "Standard Manipulators [+2 ATK]",
         type: "arms",
         desc: "Basic mechanical arms with reinforced knuckle plates. Gets the job done.",
@@ -353,6 +386,17 @@ const ITEMS = [
     },
 
     // ==================== WEAPON (Attack, Combo, or Defence) ====================
+    {
+        name: "Sharpened Rat Fang [+1 ATK][+1 COMBO]",
+        type: "weapon",
+        desc: "A silicon rat's fang, sharpened to a point and lashed to a handle. Fast and vicious, like the thing it came from.",
+        image: "images/IMAGE.gif",
+        stats: { attack: 1, combo: 1 },
+        dropRate: 60,
+        droppedBy: [],
+        cost: 5,
+        zone: "ratpile"
+    },
     {
         name: "Rusty Pipe [+1 ATK]",
         type: "weapon",
@@ -476,6 +520,17 @@ const ITEMS = [
 
     // ==================== SYSTEMS CHIP (Any stat) ====================
     {
+        name: "Corroded Chip [+1 DEF]",
+        type: "chip",
+        desc: "A water-damaged chip pulled from a rat nest. Half the circuits are fried, but it still hardens the shell a bit.",
+        image: "images/IMAGE.gif",
+        stats: { defence: 1 },
+        dropRate: 55,
+        droppedBy: [],
+        cost: 5,
+        zone: "ratpile"
+    },
+    {
         name: "Targeting Firmware [+1 ATK]",
         type: "chip",
         desc: "Basic combat firmware that highlights structural weak points on scanned targets.",
@@ -587,6 +642,17 @@ const ITEMS = [
     },
 
     // ==================== PROCESSOR (XP Bonus) ====================
+    {
+        name: "Cracked Data Chip [+1 XP]",
+        type: "processor",
+        desc: "A cracked processor the rats were using as a chew toy. Still logs enough combat data to be useful.",
+        image: "images/IMAGE.gif",
+        stats: { xpBonus: 1 },
+        dropRate: 55,
+        droppedBy: [],
+        cost: 8,
+        zone: "ratpile"
+    },
     {
         name: "Basic Data Processor [+1 XP]",
         type: "processor",
@@ -700,6 +766,17 @@ const ITEMS = [
 
     // ==================== PILOT (All Stats) ====================
     {
+        name: "Rat Wrangler [+1 HP][+1 SPD]",
+        type: "pilot",
+        desc: "A feral scavenger who's been living in the rat tunnels for years. Smells terrible. Knows every shortcut.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 1, speed: 1 },
+        dropRate: 55,
+        droppedBy: [],
+        cost: 10,
+        zone: "ratpile"
+    },
+    {
         name: "Rookie Pilot [+1 ALL]",
         type: "pilot",
         desc: "A green recruit fresh from the simulator. Eager, clumsy, but better than an empty cockpit.",
@@ -812,6 +889,17 @@ const ITEMS = [
 
     // ==================== MINING DRILL (Mining) ====================
     {
+        name: "Rat-Tooth Pick [+1 MINING]",
+        type: "drill",
+        desc: "A cluster of silicon rat teeth jammed onto a stick. Crude, but those teeth can gnaw through anything.",
+        image: "images/IMAGE.gif",
+        stats: { mining: 1 },
+        dropRate: 55,
+        droppedBy: [],
+        cost: 8,
+        zone: "ratpile"
+    },
+    {
         name: "Salvage Pick [+1 MINING]",
         type: "drill",
         desc: "A repurposed construction tool. Crude but functional for cracking open mineral deposits.",
@@ -923,6 +1011,17 @@ const ITEMS = [
     },
 
     // ==================== IMPLANT (Regen) ====================
+    {
+        name: "Crude Repair Patch [+1 REGEN]",
+        type: "implant",
+        desc: "Rat-chewed repair tape wrapped around a leaking nano-gel pack. It seals wounds. Slowly. Disgustingly.",
+        image: "images/IMAGE.gif",
+        stats: { regen: 1 },
+        dropRate: 55,
+        droppedBy: [],
+        cost: 8,
+        zone: "ratpile"
+    },
     {
         name: "Salvaged Repair Node [+1 REGEN]",
         type: "implant",
