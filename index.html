@@ -2000,6 +2000,13 @@
 
         // Zone destinations: open world name + discoverable encounter locations per zone
         const ZONE_DESTINATIONS = {
+            home: {
+                openWorldName: null,
+                openWorldDesc: null,
+                destinations: [
+                    { encounterName: "The Professor", mapItem: "Home: The Professor" }
+                ]
+            },
             ratpile: {
                 openWorldName: "Mech Graveyard",
                 openWorldDesc: "A sprawling field of corroded mech husks. Rats skitter between the rusted shells.",
@@ -2119,12 +2126,14 @@
 
             const zoneConfig = ZONE_DESTINATIONS[currentLocation];
 
-            // Open world is always the first option
-            const openWorldName = zoneConfig ? zoneConfig.openWorldName : (LOCATION_NAMES[currentLocation] || currentLocation);
-            const owOpt = document.createElement('option');
-            owOpt.value = 'openworld';
-            owOpt.textContent = `[OPEN WORLD] ${openWorldName}`;
-            select.appendChild(owOpt);
+            // Add open world option (skip if zone has no open world, e.g. Home)
+            if (!zoneConfig || zoneConfig.openWorldName) {
+                const openWorldName = zoneConfig ? zoneConfig.openWorldName : (LOCATION_NAMES[currentLocation] || currentLocation);
+                const owOpt = document.createElement('option');
+                owOpt.value = 'openworld';
+                owOpt.textContent = `[OPEN WORLD] ${openWorldName}`;
+                select.appendChild(owOpt);
+            }
 
             // Add discovered destinations
             if (zoneConfig) {
@@ -2141,13 +2150,13 @@
             // Restore selection if still valid
             if (current && select.querySelector(`option[value="${current}"]`)) {
                 select.value = current;
-            } else {
-                select.value = 'openworld';
-                currentDestination = 'openworld';
+            } else if (select.options.length > 0) {
+                select.value = select.options[0].value;
+                currentDestination = select.options[0].value;
             }
 
-            // Hide dropdown for zones with no destinations (Home, Forge, Asteroid Belt)
-            if (!zoneConfig || zoneConfig.destinations.length === 0) {
+            // Hide dropdown if no options, no config, or no destinations defined
+            if (!zoneConfig || zoneConfig.destinations.length === 0 || select.options.length === 0) {
                 select.style.display = 'none';
             } else {
                 select.style.display = '';

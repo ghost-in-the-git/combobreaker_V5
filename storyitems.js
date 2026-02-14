@@ -200,6 +200,12 @@ const STORY_ITEMS = [
 
     // Location Maps (encounter discoveries — granted on first engage)
     {
+        name: "Home: The Professor",
+        desc: "The Professor's workshop coordinates, hardwired into your nav system. He's always there.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
         name: "The Ratpile: The Mapmaker",
         desc: "Coordinates to a hooded cartographer's position in the Ratpile tunnels. He never moves.",
         category: "locationmap",
