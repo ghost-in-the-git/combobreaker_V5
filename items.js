@@ -604,9 +604,9 @@ const ITEMS = [
         desc: "Upgraded firmware extracts more tactical insight from every engagement.",
         image: "images/IMAGE.gif",
         stats: { xpBonus: 2 },
-        dropRate: 35,
+        dropRate: 45,
         droppedBy: [],
-        cost: 35,
+        cost: 30,
         zone: "oldbattlefield"
     },
     {
@@ -615,10 +615,10 @@ const ITEMS = [
         desc: "Real-time battle analysis that breaks down enemy patterns into actionable data.",
         image: "images/IMAGE.gif",
         stats: { xpBonus: 3 },
-        dropRate: 22,
+        dropRate: 40,
         droppedBy: [],
-        cost: 60,
-        zone: "orbitalstation"
+        cost: 45,
+        zone: "downtown"
     },
     {
         name: "Tactical Neural Net [+4 XP]",
@@ -626,31 +626,75 @@ const ITEMS = [
         desc: "A neural network that simulates thousands of combat scenarios from a single encounter.",
         image: "images/IMAGE.gif",
         stats: { xpBonus: 4 },
-        dropRate: 14,
+        dropRate: 35,
         droppedBy: [],
-        cost: 90,
+        cost: 60,
+        zone: "orbitalstation"
+    },
+    {
+        name: "Battlefield Recorder [+5 XP]",
+        type: "processor",
+        desc: "High-fidelity combat logger that reconstructs entire fights for deep post-action review.",
+        image: "images/IMAGE.gif",
+        stats: { xpBonus: 5 },
+        dropRate: 30,
+        droppedBy: [],
+        cost: 80,
+        zone: "wasteland"
+    },
+    {
+        name: "Adaptive Learning Matrix [+6 XP]",
+        type: "processor",
+        desc: "Self-modifying code that rewrites its own training algorithms after every engagement.",
+        image: "images/IMAGE.gif",
+        stats: { xpBonus: 6 },
+        dropRate: 25,
+        droppedBy: [],
+        cost: 100,
         zone: "undercity"
     },
     {
-        name: "Quantum Learning Core [+5 XP]",
+        name: "Quantum Learning Core [+7 XP]",
         type: "processor",
         desc: "Quantum-state processor that learns across parallel probability branches simultaneously.",
         image: "images/IMAGE.gif",
-        stats: { xpBonus: 5 },
-        dropRate: 8,
+        stats: { xpBonus: 7 },
+        dropRate: 20,
         droppedBy: [],
-        cost: 130,
+        cost: 125,
+        zone: "industrialzone"
+    },
+    {
+        name: "Deep War Simulator [+8 XP]",
+        type: "processor",
+        desc: "Runs thousands of hypothetical combat permutations per second, extracting lessons from battles that never happened.",
+        image: "images/IMAGE.gif",
+        stats: { xpBonus: 8 },
+        dropRate: 15,
+        droppedBy: [],
+        cost: 155,
         zone: "frozenreach"
     },
     {
-        name: "Omega Experience Engine [+7 XP]",
+        name: "Precognition Engine [+9 XP]",
+        type: "processor",
+        desc: "Borderline-illegal predictive hardware that models enemy behaviour before they act. Learns faster than anything alive.",
+        image: "images/IMAGE.gif",
+        stats: { xpBonus: 9 },
+        dropRate: 10,
+        droppedBy: [],
+        cost: 185,
+        zone: "neonstrip"
+    },
+    {
+        name: "Omega Experience Engine [+10 XP]",
         type: "processor",
         desc: "Prototype engine that rewrites the mech's combat doctrine in real time. Every kill teaches volumes.",
         image: "images/IMAGE.gif",
-        stats: { xpBonus: 7 },
-        dropRate: 3,
+        stats: { xpBonus: 10 },
+        dropRate: 5,
         droppedBy: [],
-        cost: 200,
+        cost: 220,
         zone: "deadzone"
     },
 
@@ -672,10 +716,10 @@ const ITEMS = [
         desc: "A field-tested operator with enough scars to know when to push and when to pull back.",
         image: "images/IMAGE.gif",
         stats: { hp: 2, attack: 2, speed: 2, defence: 2, combo: 2 },
-        dropRate: 35,
+        dropRate: 45,
         droppedBy: [],
-        cost: 45,
-        zone: "downtown"
+        cost: 40,
+        zone: "oldbattlefield"
     },
     {
         name: "Veteran Pilot [+3 ALL]",
@@ -683,10 +727,10 @@ const ITEMS = [
         desc: "Hundreds of sorties logged. Reads the battlefield like a book and moves before the enemy thinks.",
         image: "images/IMAGE.gif",
         stats: { hp: 3, attack: 3, speed: 3, defence: 3, combo: 3 },
-        dropRate: 22,
+        dropRate: 40,
         droppedBy: [],
-        cost: 75,
-        zone: "wasteland"
+        cost: 60,
+        zone: "downtown"
     },
     {
         name: "Elite Pilot [+4 ALL]",
@@ -694,10 +738,10 @@ const ITEMS = [
         desc: "Top 1% of mech operators. Neural sync rate is off the charts. The mech feels like a second skin.",
         image: "images/IMAGE.gif",
         stats: { hp: 4, attack: 4, speed: 4, defence: 4, combo: 4 },
-        dropRate: 14,
+        dropRate: 35,
         droppedBy: [],
-        cost: 110,
-        zone: "industrialzone"
+        cost: 85,
+        zone: "orbitalstation"
     },
     {
         name: "Ace Pilot [+5 ALL]",
@@ -705,20 +749,64 @@ const ITEMS = [
         desc: "A living legend on the battlefield. Enemies break formation at the sight of this callsign.",
         image: "images/IMAGE.gif",
         stats: { hp: 5, attack: 5, speed: 5, defence: 5, combo: 5 },
-        dropRate: 8,
+        dropRate: 30,
         droppedBy: [],
-        cost: 160,
+        cost: 110,
+        zone: "wasteland"
+    },
+    {
+        name: "Shadow Operator [+6 ALL]",
+        type: "pilot",
+        desc: "No service record exists. Moves through combat like smoke, striking from angles that shouldn't be possible.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 6, attack: 6, speed: 6, defence: 6, combo: 6 },
+        dropRate: 25,
+        droppedBy: [],
+        cost: 140,
+        zone: "undercity"
+    },
+    {
+        name: "War Mind [+7 ALL]",
+        type: "pilot",
+        desc: "More machine than human. Neural implants have fused pilot and mech into a single combat organism.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 7, attack: 7, speed: 7, defence: 7, combo: 7 },
+        dropRate: 20,
+        droppedBy: [],
+        cost: 175,
+        zone: "industrialzone"
+    },
+    {
+        name: "Revenant Pilot [+8 ALL]",
+        type: "pilot",
+        desc: "Died in the cockpit. Came back. The mech refused to let them go. They fight as one now.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 8, attack: 8, speed: 8, defence: 8, combo: 8 },
+        dropRate: 15,
+        droppedBy: [],
+        cost: 210,
+        zone: "frozenreach"
+    },
+    {
+        name: "Apex Predator [+9 ALL]",
+        type: "pilot",
+        desc: "The last pilot standing in every engagement they've ever entered. Kill count: classified.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 9, attack: 9, speed: 9, defence: 9, combo: 9 },
+        dropRate: 10,
+        droppedBy: [],
+        cost: 250,
         zone: "neonstrip"
     },
     {
-        name: "Ghost Pilot [+7 ALL]",
+        name: "Ghost Pilot [+10 ALL]",
         type: "pilot",
         desc: "Officially listed as KIA. Unofficially, the deadliest operator ever to interface with a Breaker frame.",
         image: "images/IMAGE.gif",
-        stats: { hp: 7, attack: 7, speed: 7, defence: 7, combo: 7 },
-        dropRate: 3,
+        stats: { hp: 10, attack: 10, speed: 10, defence: 10, combo: 10 },
+        dropRate: 5,
         droppedBy: [],
-        cost: 250,
+        cost: 300,
         zone: "deadzone"
     },
 
@@ -740,9 +828,20 @@ const ITEMS = [
         desc: "Compressed-air powered bore head. Punches through soft rock and corroded metal with ease.",
         image: "images/IMAGE.gif",
         stats: { mining: 2 },
-        dropRate: 35,
+        dropRate: 45,
         droppedBy: [],
-        cost: 40,
+        cost: 30,
+        zone: "oldbattlefield"
+    },
+    {
+        name: "Rotary Cutter [+3 MINING]",
+        type: "drill",
+        desc: "A high-torque circular saw designed for cutting through dense mineral veins.",
+        image: "images/IMAGE.gif",
+        stats: { mining: 3 },
+        dropRate: 40,
+        droppedBy: [],
+        cost: 45,
         zone: "downtown"
     },
     {
@@ -751,42 +850,75 @@ const ITEMS = [
         desc: "Industrial-grade diamond cutting teeth mounted on a reinforced shaft. Eats through stone like butter.",
         image: "images/IMAGE.gif",
         stats: { mining: 4 },
-        dropRate: 22,
+        dropRate: 35,
         droppedBy: [],
-        cost: 80,
+        cost: 65,
+        zone: "orbitalstation"
+    },
+    {
+        name: "Sonic Fracture Drill [+5 MINING]",
+        type: "drill",
+        desc: "Uses targeted ultrasonic pulses to shatter rock along natural fault lines. Clean extraction, minimal waste.",
+        image: "images/IMAGE.gif",
+        stats: { mining: 5 },
+        dropRate: 30,
+        droppedBy: [],
+        cost: 85,
         zone: "wasteland"
     },
     {
-        name: "Plasma Bore [+7 MINING]",
+        name: "Plasma Bore [+6 MINING]",
         type: "drill",
         desc: "Superheated plasma stream focused into a cutting beam. Melts through anything short of void-steel.",
         image: "images/IMAGE.gif",
-        stats: { mining: 7 },
-        dropRate: 14,
+        stats: { mining: 6 },
+        dropRate: 25,
         droppedBy: [],
-        cost: 130,
-        zone: "industrialzone"
+        cost: 110,
+        zone: "undercity"
     },
     {
-        name: "Tectonic Shatterer [+11 MINING]",
+        name: "Tectonic Shatterer [+7 MINING]",
         type: "drill",
         desc: "Generates focused seismic pulses that fracture entire mineral veins in a single burst.",
         image: "images/IMAGE.gif",
-        stats: { mining: 11 },
-        dropRate: 8,
+        stats: { mining: 7 },
+        dropRate: 20,
         droppedBy: [],
-        cost: 200,
+        cost: 140,
+        zone: "industrialzone"
+    },
+    {
+        name: "Graviton Extractor [+8 MINING]",
+        type: "drill",
+        desc: "Manipulates localized gravity to pull minerals free from surrounding rock without drilling at all.",
+        image: "images/IMAGE.gif",
+        stats: { mining: 8 },
+        dropRate: 15,
+        droppedBy: [],
+        cost: 175,
+        zone: "frozenreach"
+    },
+    {
+        name: "Void Ripper [+9 MINING]",
+        type: "drill",
+        desc: "Tears micro-fractures in spacetime to extract minerals from between dimensional layers. Don't ask how.",
+        image: "images/IMAGE.gif",
+        stats: { mining: 9 },
+        dropRate: 10,
+        droppedBy: [],
+        cost: 215,
         zone: "neonstrip"
     },
     {
-        name: "Quantum Excavator [+16 MINING]",
+        name: "Quantum Excavator [+10 MINING]",
         type: "drill",
         desc: "Phase-shifts through solid matter to extract minerals at the atomic level. The pinnacle of extraction tech.",
         image: "images/IMAGE.gif",
-        stats: { mining: 16 },
-        dropRate: 3,
+        stats: { mining: 10 },
+        dropRate: 5,
         droppedBy: [],
-        cost: 320,
+        cost: 260,
         zone: "deadzone"
     },
 
