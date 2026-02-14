@@ -2746,7 +2746,8 @@
             shopItems = generateShopItems(encounter);
 
             addMessage(`[ENCOUNTER] ${encounter.name}`, 'system');
-            addMessage(encounter.description, 'system');
+            const useDiscoveredDesc = currentDestination && currentDestination !== 'openworld' && encounter.discoveredDescription;
+            addMessage(useDiscoveredDesc ? encounter.discoveredDescription : encounter.description, 'system');
 
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
@@ -2796,7 +2797,8 @@
             }
             clearCountdown();
 
-            await addMessage(currentEncounter.engageText, 'system');
+            const useDiscoveredEngage = currentDestination && currentDestination !== 'openworld' && currentEncounter.discoveredEngageText;
+            await addMessage(useDiscoveredEngage ? currentEncounter.discoveredEngageText : currentEncounter.engageText, 'system');
 
             // The Professor gives the Ratpile map for free if the player doesn't have it
             if (currentEncounter.name === 'The Professor' && !(game.storyItems || []).includes('Map: The Ratpile')) {
