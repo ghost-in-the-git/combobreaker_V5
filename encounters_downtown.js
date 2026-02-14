@@ -60,5 +60,16 @@ const ENCOUNTERS_DOWNTOWN = [
         itemSlot1: ["Map: Orbital Station"],
         itemSlot2: [],
         itemSlot3: []
+    },
+    {
+        name: "The Mineral Trader",
+        type: "shop",
+        description: "A woman with a portable smelter strapped to her mech offers to refine raw ore.",
+        engageText: "She fires up the smelter. 'Got raw minerals? I'll turn them into something useful.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Refined Fluorite"],
+        itemSlot2: ["Refined Calcite"],
+        itemSlot3: ["Refined Mica"]
     }
 ];

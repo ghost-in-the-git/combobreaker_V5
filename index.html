@@ -1091,6 +1091,11 @@
                         <option value="tanzanite">[ULTRARARE] Tanzanite</option>
                     </select>
                 </div>
+                <div class="mining-category">
+                    <select id="mining-refined" disabled>
+                        <option value="">[REFINED] -- Empty --</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -1254,6 +1259,8 @@
     <script src="mining_neonstrip.js"></script>
     <script src="mining_deadzone.js"></script>
     <script src="mining_asteroidbelt.js"></script>
+    <script src="refined_minerals.js"></script>
+    <script src="forger_items.js"></script>
     <script>
         // Game State
         const game = {
@@ -1532,7 +1539,7 @@
             game.inventory = [];
             if (data.inventory && Array.isArray(data.inventory)) {
                 data.inventory.forEach(itemName => {
-                    const item = ITEMS.find(i => i.name === itemName);
+                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
                     if (item) game.inventory.push(item);
                 });
             }
@@ -2073,7 +2080,7 @@
             for (const slot in game.equipment) {
                 const itemName = game.equipment[slot];
                 if (itemName) {
-                    const item = ITEMS.find(i => i.name === itemName);
+                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
                     if (item && item.stats) {
                         if (item.stats.hp) p.maxHp += item.stats.hp;
                         if (item.stats.attack) p.attack += item.stats.attack;
@@ -2142,7 +2149,7 @@
                 const descEl = document.getElementById(`equip-desc-${slot}`);
                 const itemName = game.equipment[slot];
                 if (itemName) {
-                    const item = ITEMS.find(i => i.name === itemName);
+                    const item = ITEMS.find(i => i.name === itemName) || FORGER_ITEMS.find(i => i.name === itemName);
                     if (item && item.desc) {
                         const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                         descEl.innerHTML = `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>`;
@@ -2311,7 +2318,7 @@
 
         // Find item by name in ITEMS or STORY_ITEMS
         function findShopItem(name) {
-            return ITEMS.find(i => i.name === name) || STORY_ITEMS.find(i => i.name === name) || null;
+            return ITEMS.find(i => i.name === name) || STORY_ITEMS.find(i => i.name === name) || REFINED_MINERALS.find(i => i.name === name) || FORGER_ITEMS.find(i => i.name === name) || null;
         }
 
         // Generate shop items based on encounter slot configuration
@@ -2367,14 +2374,33 @@
                 const item = shopItems[i];
 
                 if (item) {
-                    const canAfford = playerXP >= item.cost;
-                    const tag = item.type ? (SLOT_LABELS[item.type] || item.type.toUpperCase()) : (item.category ? item.category.toUpperCase() : 'ITEM');
+                    let tag;
+                    if (item.refinedMineral) {
+                        tag = 'MINERAL';
+                    } else if (item.type) {
+                        tag = SLOT_LABELS[item.type] || item.type.toUpperCase();
+                    } else if (item.category) {
+                        tag = item.category.toUpperCase();
+                    } else {
+                        tag = 'ITEM';
+                    }
                     nameEl.textContent = `[${tag}] ${item.name}`;
                     const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                     descEl.innerHTML = item.desc ? `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>` : '';
-                    nameEl.classList.toggle('cant-afford', !canAfford);
-                    buyBtn.textContent = `[Buy ${item.cost} XP]`;
-                    buyBtn.disabled = !canAfford;
+
+                    if (item.mineralCost) {
+                        const { mineral, category, count } = item.mineralCost;
+                        const has = getMineralCount(mineral, category);
+                        const canAfford = has >= count;
+                        nameEl.classList.toggle('cant-afford', !canAfford);
+                        buyBtn.textContent = `[Buy ${count} ${mineral}]`;
+                        buyBtn.disabled = !canAfford;
+                    } else {
+                        const canAfford = playerXP >= item.cost;
+                        nameEl.classList.toggle('cant-afford', !canAfford);
+                        buyBtn.textContent = `[Buy ${item.cost} XP]`;
+                        buyBtn.disabled = !canAfford;
+                    }
                     wrapper.classList.add('visible');
                 } else {
                     wrapper.classList.remove('visible');
@@ -2399,18 +2425,35 @@
         // Handle shop purchase
         function purchaseItem(index) {
             const item = shopItems[index];
-            if (!item || game.player.xp < item.cost) return;
+            if (!item) return;
 
-            game.player.xp -= item.cost;
-            if (item.category) {
-                // Story item — add to story storage
-                addStoryItem(item.name);
+            if (item.mineralCost) {
+                // Mineral cost purchase
+                const { mineral, category, count } = item.mineralCost;
+                if (getMineralCount(mineral, category) < count) return;
+                removeMinerals(mineral, category, count);
+
+                if (item.refinedMineral) {
+                    addMineral(item.name, 'refined');
+                } else if (item.category) {
+                    addStoryItem(item.name);
+                } else {
+                    addItemToInventory(item);
+                }
+                addMessage(`Purchased: ${item.name} for ${count} ${mineral}`, 'victory');
             } else {
-                // Equipment item — add to inventory
-                addItemToInventory(item);
+                // XP cost purchase
+                if (game.player.xp < item.cost) return;
+                game.player.xp -= item.cost;
+                if (item.category) {
+                    addStoryItem(item.name);
+                } else {
+                    addItemToInventory(item);
+                }
+                addMessage(`Purchased: ${item.name} for ${item.cost} XP`, 'victory');
             }
-            addMessage(`Purchased: ${item.name} for ${item.cost} XP`, 'victory');
             updateStats();
+            updateMiningUI();
 
             // Remove item from shop
             shopItems[index] = null;
@@ -2717,6 +2760,25 @@
             saveGame();
         }
 
+        // Count how many of a specific mineral the player has
+        function getMineralCount(mineralName, category) {
+            if (!game.minerals || !game.minerals[category]) return 0;
+            return game.minerals[category].filter(m => m === mineralName).length;
+        }
+
+        // Remove a number of a specific mineral from the player's collection
+        function removeMinerals(mineralName, category, count) {
+            if (!game.minerals || !game.minerals[category]) return;
+            let removed = 0;
+            game.minerals[category] = game.minerals[category].filter(m => {
+                if (m === mineralName && removed < count) {
+                    removed++;
+                    return false;
+                }
+                return true;
+            });
+        }
+
         // Add a story item to the player's storage
         function addStoryItem(itemName) {
             if (!game.storyItems) game.storyItems = [];
@@ -2768,6 +2830,26 @@
                     select.disabled = false;
                 }
             });
+
+            // Handle refined minerals dropdown (dynamically populated)
+            const refinedSelect = document.getElementById('mining-refined');
+            if (refinedSelect) {
+                const collected = game.minerals.refined || [];
+                const counts = {};
+                collected.forEach(m => { counts[m] = (counts[m] || 0) + 1; });
+                // Clear all options except header
+                while (refinedSelect.options.length > 1) refinedSelect.remove(1);
+                const uniqueMinerals = [...new Set(collected)].sort();
+                refinedSelect.options[0].textContent = `[REFINED] ${uniqueMinerals.length} items`;
+                uniqueMinerals.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m;
+                    const count = counts[m] || 0;
+                    opt.textContent = count > 1 ? `[REFINED] ${m} x${count}` : `[REFINED] ${m}`;
+                    refinedSelect.appendChild(opt);
+                });
+                refinedSelect.disabled = uniqueMinerals.length === 0;
+            }
         }
 
         // Update storage UI dropdowns with collected story items

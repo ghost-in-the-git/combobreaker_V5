@@ -60,5 +60,16 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         itemSlot1: ["Map: Frozen Reach"],
         itemSlot2: [],
         itemSlot3: []
+    },
+    {
+        name: "The Mineral Trader",
+        type: "shop",
+        description: "A woman with a portable smelter strapped to her mech offers to refine raw ore.",
+        engageText: "She fires up the smelter. 'Got raw minerals? I'll turn them into something useful.'",
+        appearanceRate: 15,
+        minLevel: 1,
+        itemSlot1: ["Refined Chromite"],
+        itemSlot2: ["Refined Ilmenite"],
+        itemSlot3: ["Refined Argentite"]
     }
 ];
