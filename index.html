@@ -2155,10 +2155,12 @@
 
         // Get random item drop from defeated enemy
         function getRandomItemDrop(enemyName) {
-            // Filter items that can drop from this enemy
+            // Filter items that can drop in this zone from this enemy
             const droppableItems = ITEMS.filter(item => {
-                if (item.droppedBy.length === 0) return true; // Drops from any enemy
-                return item.droppedBy.includes(enemyName);
+                if (item.dropRate <= 0) return false;
+                if (item.zone && item.zone !== currentLocation) return false;
+                if (item.droppedBy.length > 0 && !item.droppedBy.includes(enemyName)) return false;
+                return true;
             });
 
             if (droppableItems.length === 0) return null;
@@ -2303,8 +2305,8 @@
                         item = findShopItem(itemName);
                     }
                 } else {
-                    // Empty array = pick random from all equipment items
-                    const availableItems = ITEMS.filter(i => !usedItems.has(i.name));
+                    // Empty array = pick random from zone-appropriate equipment items
+                    const availableItems = ITEMS.filter(i => !usedItems.has(i.name) && (!i.zone || i.zone === currentLocation));
                     if (availableItems.length > 0) {
                         item = availableItems[Math.floor(Math.random() * availableItems.length)];
                     }

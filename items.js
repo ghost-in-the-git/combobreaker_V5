@@ -10,8 +10,9 @@
  * - image: Image path for the item icon
  * - stats: Object with stat bonuses { hp, defence, speed, attack, combo }
  * - dropRate: Relative chance to drop (higher = more common)
- * - droppedBy: Array of enemy names that can drop this item (empty = all enemies)
+ * - droppedBy: Array of enemy names that can drop this item (empty = all enemies in zone)
  * - cost: XP cost to purchase from shops
+ * - zone: Location key where this item drops and is sold (omit for special items)
  */
 
 const ITEMS = [
@@ -24,7 +25,8 @@ const ITEMS = [
         stats: { hp: 10, defence: 1 },
         dropRate: 10,
         droppedBy: [],
-        cost: 10
+        cost: 10,
+        zone: "scrapyard"
     },
     {
         name: "Standard Chassis [+20 HP][+2 DEF]",
@@ -34,7 +36,8 @@ const ITEMS = [
         stats: { hp: 20, defence: 2 },
         dropRate: 10,
         droppedBy: [],
-        cost: 20
+        cost: 20,
+        zone: "oldbattlefield"
     },
     {
         name: "Advanced Chassis [+30 HP][+3 DEF]",
@@ -44,7 +47,8 @@ const ITEMS = [
         stats: { hp: 30, defence: 3 },
         dropRate: 10,
         droppedBy: [],
-        cost: 35
+        cost: 35,
+        zone: "downtown"
     },
     {
         name: "Military Chassis [+40 HP][+4 DEF]",
@@ -54,7 +58,8 @@ const ITEMS = [
         stats: { hp: 40, defence: 4 },
         dropRate: 10,
         droppedBy: [],
-        cost: 50
+        cost: 50,
+        zone: "orbitalstation"
     },
     {
         name: "Old Breaker Chassis [+50 HP][+5 DEF]",
@@ -64,7 +69,8 @@ const ITEMS = [
         stats: { hp: 50, defence: 5 },
         dropRate: 10,
         droppedBy: [],
-        cost: 70
+        cost: 70,
+        zone: "wasteland"
     },
     {
         name: "Breaker Chassis [+60 HP][+6 DEF]",
@@ -74,7 +80,8 @@ const ITEMS = [
         stats: { hp: 60, defence: 6 },
         dropRate: 10,
         droppedBy: [],
-        cost: 90
+        cost: 90,
+        zone: "undercity"
     },
     {
         name: "EVO1 Breaker Chassis [+70 HP][+7 DEF]",
@@ -84,7 +91,8 @@ const ITEMS = [
         stats: { hp: 70, defence: 7 },
         dropRate: 10,
         droppedBy: [],
-        cost: 115
+        cost: 115,
+        zone: "industrialzone"
     },
     {
         name: "EVO2 Breaker Chassis [+80 HP][+8 DEF]",
@@ -94,27 +102,30 @@ const ITEMS = [
         stats: { hp: 80, defence: 8 },
         dropRate: 10,
         droppedBy: [],
-        cost: 140
+        cost: 140,
+        zone: "frozenreach"
     },
     {
         name: "EVO3 Breaker Chassis [+90 HP][+9 DEF]",
         type: "body",
         desc: "Third evolution. Nano-lattice structure distributes impact force across the entire frame.",
         image: "images/IMAGE.gif",
-        stats: { hp: 10, defence: 1 },
+        stats: { hp: 90, defence: 9 },
         dropRate: 10,
         droppedBy: [],
-        cost: 170
+        cost: 170,
+        zone: "neonstrip"
     },
     {
         name: "EVO4 Breaker Chassis [+100 HP][+10 DEF]",
         type: "body",
         desc: "Final evolution. Experimental alloy that absorbs kinetic energy and converts it to heat shielding.",
         image: "images/IMAGE.gif",
-        stats: { hp: 10, defence: 1 },
+        stats: { hp: 100, defence: 10 },
         dropRate: 10,
         droppedBy: [],
-        cost: 200
+        cost: 200,
+        zone: "deadzone"
     },
 
      // ==================== LEGS (Speed) ====================
@@ -126,7 +137,8 @@ const ITEMS = [
         stats: { speed: 2 },
         dropRate: 60,
         droppedBy: [],
-        cost: 8
+        cost: 8,
+        zone: "scrapyard"
     },
     {
         name: "Enhanced Servos [+4 SPD]",
@@ -136,7 +148,8 @@ const ITEMS = [
         stats: { speed: 4 },
         dropRate: 50,
         droppedBy: [],
-        cost: 18
+        cost: 18,
+        zone: "oldbattlefield"
     },
     {
         name: "Quick Striders [+6 SPD]",
@@ -146,7 +159,8 @@ const ITEMS = [
         stats: { speed: 6 },
         dropRate: 40,
         droppedBy: [],
-        cost: 30
+        cost: 30,
+        zone: "downtown"
     },
     {
         name: "Hydraulic Boosters [+8 SPD]",
@@ -155,8 +169,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 8 },
         dropRate: 30,
-        droppedBy: ["Droid Scout", "Droid Enforcer"],
-        cost: 45
+        droppedBy: [],
+        cost: 45,
+        zone: "orbitalstation"
     },
     {
         name: "Reflex Actuators [+10 SPD]",
@@ -165,8 +180,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 10 },
         dropRate: 22,
-        droppedBy: ["Droid Scout", "Droid Enforcer", "Droid Sentinel"],
-        cost: 60
+        droppedBy: [],
+        cost: 60,
+        zone: "wasteland"
     },
     {
         name: "Kinetic Stabilizers [+12 SPD]",
@@ -175,8 +191,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 12 },
         dropRate: 16,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 80
+        droppedBy: [],
+        cost: 80,
+        zone: "undercity"
     },
     {
         name: "Phase Shift Legs [+14 SPD]",
@@ -185,8 +202,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 14 },
         dropRate: 12,
-        droppedBy: ["Droid Sentinel"],
-        cost: 100
+        droppedBy: [],
+        cost: 100,
+        zone: "industrialzone"
     },
     {
         name: "Quantum Thrusters [+16 SPD]",
@@ -195,8 +213,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 16 },
         dropRate: 8,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 125
+        droppedBy: [],
+        cost: 125,
+        zone: "frozenreach"
     },
     {
         name: "Temporal Drives [+18 SPD]",
@@ -205,8 +224,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 18 },
         dropRate: 5,
-        droppedBy: ["Droid Destroyer"],
-        cost: 150
+        droppedBy: [],
+        cost: 150,
+        zone: "neonstrip"
     },
     {
         name: "Singularity Runners [+20 SPD]",
@@ -215,8 +235,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { speed: 20 },
         dropRate: 3,
-        droppedBy: ["Droid Destroyer"],
-        cost: 180
+        droppedBy: [],
+        cost: 180,
+        zone: "deadzone"
     },
 
     // ==================== ARMS (Attack or Defence) ====================
@@ -228,7 +249,8 @@ const ITEMS = [
         stats: { attack: 2 },
         dropRate: 55,
         droppedBy: [],
-        cost: 10
+        cost: 10,
+        zone: "scrapyard"
     },
     {
         name: "Shield Bracers [+2 DEF]",
@@ -238,7 +260,8 @@ const ITEMS = [
         stats: { defence: 2 },
         dropRate: 55,
         droppedBy: [],
-        cost: 10
+        cost: 10,
+        zone: "oldbattlefield"
     },
     {
         name: "Power Gauntlets [+4 ATK]",
@@ -247,8 +270,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 4 },
         dropRate: 40,
-        droppedBy: ["Droid Scout", "Droid Enforcer"],
-        cost: 25
+        droppedBy: [],
+        cost: 25,
+        zone: "downtown"
     },
     {
         name: "Barrier Arms [+4 DEF]",
@@ -257,8 +281,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { defence: 4 },
         dropRate: 40,
-        droppedBy: ["Droid Scout", "Droid Enforcer"],
-        cost: 25
+        droppedBy: [],
+        cost: 25,
+        zone: "orbitalstation"
     },
     {
         name: "Crusher Claws [+6 ATK]",
@@ -267,8 +292,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 6 },
         dropRate: 26,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 45
+        droppedBy: [],
+        cost: 45,
+        zone: "wasteland"
     },
     {
         name: "Fortress Gauntlets [+6 DEF]",
@@ -277,8 +303,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { defence: 6 },
         dropRate: 26,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 45
+        droppedBy: [],
+        cost: 45,
+        zone: "undercity"
     },
     {
         name: "Ravager Arms [+8 ATK]",
@@ -287,8 +314,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 8 },
         dropRate: 14,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 70
+        droppedBy: [],
+        cost: 70,
+        zone: "industrialzone"
     },
     {
         name: "Aegis Bracers [+8 DEF]",
@@ -297,8 +325,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { defence: 8 },
         dropRate: 14,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 70
+        droppedBy: [],
+        cost: 70,
+        zone: "frozenreach"
     },
     {
         name: "Decimator Arms [+10 ATK]",
@@ -307,8 +336,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 10 },
         dropRate: 6,
-        droppedBy: ["Droid Destroyer"],
-        cost: 100
+        droppedBy: [],
+        cost: 100,
+        zone: "neonstrip"
     },
     {
         name: "Citadel Arms [+10 DEF]",
@@ -317,8 +347,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { defence: 10 },
         dropRate: 6,
-        droppedBy: ["Droid Destroyer"],
-        cost: 100
+        droppedBy: [],
+        cost: 100,
+        zone: "deadzone"
     },
 
     // ==================== WEAPON (Attack, Combo, or Defence) ====================
@@ -340,7 +371,8 @@ const ITEMS = [
         stats: { attack: 2 },
         dropRate: 55,
         droppedBy: [],
-        cost: 10
+        cost: 10,
+        zone: "scrapyard"
     },
     {
         name: "Energy Shield [+2 DEF]",
@@ -350,7 +382,8 @@ const ITEMS = [
         stats: { defence: 2 },
         dropRate: 55,
         droppedBy: [],
-        cost: 10
+        cost: 10,
+        zone: "oldbattlefield"
     },
     {
         name: "Chain Blade [+3 ATK][+2 COMBO]",
@@ -359,18 +392,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 3, combo: 2 },
         dropRate: 40,
-        droppedBy: ["Droid Scout"],
-        cost: 25
-    },
-    {
-        name: "Plasma Rifle [+5 ATK]",
-        type: "weapon",
-        desc: "Superheated plasma rounds that melt through plating. Standard issue for serious engagements.",
-        image: "images/IMAGE.gif",
-        stats: { attack: 5 },
-        dropRate: 30,
-        droppedBy: ["Droid Scout", "Droid Enforcer"],
-        cost: 35
+        droppedBy: [],
+        cost: 25,
+        zone: "downtown"
     },
     {
         name: "Combo Striker [+4 COMBO]",
@@ -379,8 +403,20 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { combo: 4 },
         dropRate: 26,
-        droppedBy: ["Droid Scout", "Droid Enforcer"],
-        cost: 30
+        droppedBy: [],
+        cost: 30,
+        zone: "orbitalstation"
+    },
+    {
+        name: "Plasma Rifle [+5 ATK]",
+        type: "weapon",
+        desc: "Superheated plasma rounds that melt through plating. Standard issue for serious engagements.",
+        image: "images/IMAGE.gif",
+        stats: { attack: 5 },
+        dropRate: 30,
+        droppedBy: [],
+        cost: 35,
+        zone: "wasteland"
     },
     {
         name: "Fortress Module [+5 DEF]",
@@ -389,8 +425,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { defence: 5 },
         dropRate: 22,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 40
+        droppedBy: [],
+        cost: 40,
+        zone: "undercity"
     },
     {
         name: "Railgun [+8 ATK]",
@@ -399,8 +436,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 8 },
         dropRate: 14,
-        droppedBy: ["Droid Sentinel"],
-        cost: 65
+        droppedBy: [],
+        cost: 65,
+        zone: "industrialzone"
     },
     {
         name: "Breaker Blade [+10 ATK][+6 COMBO]",
@@ -409,8 +447,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 10, combo: 6 },
         dropRate: 10,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 100
+        droppedBy: [],
+        cost: 100,
+        zone: "frozenreach"
     },
     {
         name: "Annihilator Cannon [+12 ATK]",
@@ -419,8 +458,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 12 },
         dropRate: 6,
-        droppedBy: ["Droid Destroyer"],
-        cost: 120
+        droppedBy: [],
+        cost: 120,
+        zone: "neonstrip"
     },
     {
         name: "Omega Rupture Cannon [+14 ATK][+8 COMBO]",
@@ -429,8 +469,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 14, combo: 8 },
         dropRate: 3,
-        droppedBy: ["Droid Destroyer"],
-        cost: 175
+        droppedBy: [],
+        cost: 175,
+        zone: "deadzone"
     },
 
     // ==================== SYSTEMS CHIP (Any stat) ====================
@@ -442,17 +483,8 @@ const ITEMS = [
         stats: { hp: 10 },
         dropRate: 45,
         droppedBy: [],
-        cost: 8
-    },
-    {
-        name: "Health Booster Chip II [+20 HP]",
-        type: "chip",
-        desc: "Advanced integrity algorithms redistribute stress loads in real time.",
-        image: "images/IMAGE.gif",
-        stats: { hp: 20 },
-        dropRate: 18,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 20
+        cost: 8,
+        zone: "scrapyard"
     },
     {
         name: "Speed Processor I [+2 SPD]",
@@ -462,17 +494,8 @@ const ITEMS = [
         stats: { speed: 2 },
         dropRate: 44,
         droppedBy: [],
-        cost: 8
-    },
-    {
-        name: "Speed Processor II [+4 SPD]",
-        type: "chip",
-        desc: "Predictive motion algorithms that pre-calculate movement paths before the pilot decides.",
-        image: "images/IMAGE.gif",
-        stats: { speed: 4 },
-        dropRate: 17,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 20
+        cost: 8,
+        zone: "oldbattlefield"
     },
     {
         name: "Attack Subroutine I [+2 ATK]",
@@ -482,17 +505,8 @@ const ITEMS = [
         stats: { attack: 2 },
         dropRate: 43,
         droppedBy: [],
-        cost: 10
-    },
-    {
-        name: "Attack Subroutine II [+4 ATK]",
-        type: "chip",
-        desc: "Military-grade targeting AI. Calculates optimal strike vectors in microseconds.",
-        image: "images/IMAGE.gif",
-        stats: { attack: 4 },
-        dropRate: 16,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 25
+        cost: 10,
+        zone: "downtown"
     },
     {
         name: "Combo Algorithm I [+4 COMBO]",
@@ -502,17 +516,8 @@ const ITEMS = [
         stats: { combo: 4 },
         dropRate: 42,
         droppedBy: [],
-        cost: 15
-    },
-    {
-        name: "Combo Algorithm II [+8 COMBO]",
-        type: "chip",
-        desc: "Deep-learning combat AI that adapts combo patterns to each enemy's defensive rhythm.",
-        image: "images/IMAGE.gif",
-        stats: { combo: 8 },
-        dropRate: 15,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 40
+        cost: 15,
+        zone: "orbitalstation"
     },
     {
         name: "Defence Matrix I [+2 DEF]",
@@ -522,7 +527,52 @@ const ITEMS = [
         stats: { defence: 2 },
         dropRate: 41,
         droppedBy: [],
-        cost: 10
+        cost: 10,
+        zone: "wasteland"
+    },
+    {
+        name: "Health Booster Chip II [+20 HP]",
+        type: "chip",
+        desc: "Advanced integrity algorithms redistribute stress loads in real time.",
+        image: "images/IMAGE.gif",
+        stats: { hp: 20 },
+        dropRate: 18,
+        droppedBy: [],
+        cost: 20,
+        zone: "undercity"
+    },
+    {
+        name: "Speed Processor II [+4 SPD]",
+        type: "chip",
+        desc: "Predictive motion algorithms that pre-calculate movement paths before the pilot decides.",
+        image: "images/IMAGE.gif",
+        stats: { speed: 4 },
+        dropRate: 17,
+        droppedBy: [],
+        cost: 20,
+        zone: "industrialzone"
+    },
+    {
+        name: "Attack Subroutine II [+4 ATK]",
+        type: "chip",
+        desc: "Military-grade targeting AI. Calculates optimal strike vectors in microseconds.",
+        image: "images/IMAGE.gif",
+        stats: { attack: 4 },
+        dropRate: 16,
+        droppedBy: [],
+        cost: 25,
+        zone: "frozenreach"
+    },
+    {
+        name: "Combo Algorithm II [+8 COMBO]",
+        type: "chip",
+        desc: "Deep-learning combat AI that adapts combo patterns to each enemy's defensive rhythm.",
+        image: "images/IMAGE.gif",
+        stats: { combo: 8 },
+        dropRate: 15,
+        droppedBy: [],
+        cost: 40,
+        zone: "neonstrip"
     },
     {
         name: "Defence Matrix II [+4 DEF]",
@@ -531,8 +581,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { defence: 4 },
         dropRate: 14,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 25
+        droppedBy: [],
+        cost: 25,
+        zone: "deadzone"
     },
 
     // ==================== PROCESSOR (XP Bonus) ====================
@@ -544,7 +595,8 @@ const ITEMS = [
         stats: { xpBonus: 1 },
         dropRate: 50,
         droppedBy: [],
-        cost: 15
+        cost: 15,
+        zone: "scrapyard"
     },
     {
         name: "Enhanced Data Processor [+2 XP]",
@@ -554,7 +606,8 @@ const ITEMS = [
         stats: { xpBonus: 2 },
         dropRate: 35,
         droppedBy: [],
-        cost: 35
+        cost: 35,
+        zone: "oldbattlefield"
     },
     {
         name: "Combat Analyzer [+3 XP]",
@@ -563,8 +616,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { xpBonus: 3 },
         dropRate: 22,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 60
+        droppedBy: [],
+        cost: 60,
+        zone: "orbitalstation"
     },
     {
         name: "Tactical Neural Net [+4 XP]",
@@ -573,8 +627,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { xpBonus: 4 },
         dropRate: 14,
-        droppedBy: ["Droid Sentinel"],
-        cost: 90
+        droppedBy: [],
+        cost: 90,
+        zone: "undercity"
     },
     {
         name: "Quantum Learning Core [+5 XP]",
@@ -583,8 +638,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { xpBonus: 5 },
         dropRate: 8,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 130
+        droppedBy: [],
+        cost: 130,
+        zone: "frozenreach"
     },
     {
         name: "Omega Experience Engine [+7 XP]",
@@ -593,8 +649,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { xpBonus: 7 },
         dropRate: 3,
-        droppedBy: ["Droid Destroyer"],
-        cost: 200
+        droppedBy: [],
+        cost: 200,
+        zone: "deadzone"
     },
 
     // ==================== PILOT (All Stats) ====================
@@ -606,7 +663,8 @@ const ITEMS = [
         stats: { hp: 1, attack: 1, speed: 1, defence: 1, combo: 1 },
         dropRate: 50,
         droppedBy: [],
-        cost: 20
+        cost: 20,
+        zone: "scrapyard"
     },
     {
         name: "Trained Pilot [+2 ALL]",
@@ -616,7 +674,8 @@ const ITEMS = [
         stats: { hp: 2, attack: 2, speed: 2, defence: 2, combo: 2 },
         dropRate: 35,
         droppedBy: [],
-        cost: 45
+        cost: 45,
+        zone: "downtown"
     },
     {
         name: "Veteran Pilot [+3 ALL]",
@@ -625,8 +684,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { hp: 3, attack: 3, speed: 3, defence: 3, combo: 3 },
         dropRate: 22,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 75
+        droppedBy: [],
+        cost: 75,
+        zone: "wasteland"
     },
     {
         name: "Elite Pilot [+4 ALL]",
@@ -635,8 +695,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { hp: 4, attack: 4, speed: 4, defence: 4, combo: 4 },
         dropRate: 14,
-        droppedBy: ["Droid Sentinel"],
-        cost: 110
+        droppedBy: [],
+        cost: 110,
+        zone: "industrialzone"
     },
     {
         name: "Ace Pilot [+5 ALL]",
@@ -645,8 +706,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { hp: 5, attack: 5, speed: 5, defence: 5, combo: 5 },
         dropRate: 8,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 160
+        droppedBy: [],
+        cost: 160,
+        zone: "neonstrip"
     },
     {
         name: "Ghost Pilot [+7 ALL]",
@@ -655,8 +717,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { hp: 7, attack: 7, speed: 7, defence: 7, combo: 7 },
         dropRate: 3,
-        droppedBy: ["Droid Destroyer"],
-        cost: 250
+        droppedBy: [],
+        cost: 250,
+        zone: "deadzone"
     },
 
     // ==================== MINING DRILL (Mining) ====================
@@ -668,7 +731,8 @@ const ITEMS = [
         stats: { mining: 1 },
         dropRate: 50,
         droppedBy: [],
-        cost: 15
+        cost: 15,
+        zone: "scrapyard"
     },
     {
         name: "Pneumatic Drill [+2 MINING]",
@@ -678,7 +742,8 @@ const ITEMS = [
         stats: { mining: 2 },
         dropRate: 35,
         droppedBy: [],
-        cost: 40
+        cost: 40,
+        zone: "downtown"
     },
     {
         name: "Diamond-Tip Auger [+4 MINING]",
@@ -687,8 +752,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { mining: 4 },
         dropRate: 22,
-        droppedBy: ["Furnace Guardian", "Reactor Sentinel"],
-        cost: 80
+        droppedBy: [],
+        cost: 80,
+        zone: "wasteland"
     },
     {
         name: "Plasma Bore [+7 MINING]",
@@ -697,8 +763,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { mining: 7 },
         dropRate: 14,
-        droppedBy: ["Reactor Sentinel", "Smelter Titan"],
-        cost: 130
+        droppedBy: [],
+        cost: 130,
+        zone: "industrialzone"
     },
     {
         name: "Tectonic Shatterer [+11 MINING]",
@@ -707,8 +774,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { mining: 11 },
         dropRate: 8,
-        droppedBy: ["Cryo Warlord", "Avalanche Colossus"],
-        cost: 200
+        droppedBy: [],
+        cost: 200,
+        zone: "neonstrip"
     },
     {
         name: "Quantum Excavator [+16 MINING]",
@@ -717,8 +785,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { mining: 16 },
         dropRate: 3,
-        droppedBy: ["Abomination Core"],
-        cost: 320
+        droppedBy: [],
+        cost: 320,
+        zone: "deadzone"
     },
 
     // ==================== IMPLANT (Regen) ====================
@@ -730,7 +799,8 @@ const ITEMS = [
         stats: { regen: 1 },
         dropRate: 50,
         droppedBy: [],
-        cost: 15
+        cost: 15,
+        zone: "scrapyard"
     },
     {
         name: "Basic Nano Injector [+2 REGEN]",
@@ -740,7 +810,8 @@ const ITEMS = [
         stats: { regen: 2 },
         dropRate: 40,
         droppedBy: [],
-        cost: 30
+        cost: 30,
+        zone: "oldbattlefield"
     },
     {
         name: "Tissue Welder Implant [+3 REGEN]",
@@ -750,7 +821,8 @@ const ITEMS = [
         stats: { regen: 3 },
         dropRate: 32,
         droppedBy: [],
-        cost: 50
+        cost: 50,
+        zone: "downtown"
     },
     {
         name: "Regenerative Mesh [+4 REGEN]",
@@ -759,8 +831,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 4 },
         dropRate: 25,
-        droppedBy: ["Droid Scout", "Droid Enforcer"],
-        cost: 75
+        droppedBy: [],
+        cost: 75,
+        zone: "orbitalstation"
     },
     {
         name: "Bio-Repair Matrix [+5 REGEN]",
@@ -769,8 +842,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 5 },
         dropRate: 20,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 100
+        droppedBy: [],
+        cost: 100,
+        zone: "wasteland"
     },
     {
         name: "Nano Reconstruction Array [+6 REGEN]",
@@ -779,8 +853,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 6 },
         dropRate: 16,
-        droppedBy: ["Droid Enforcer", "Droid Sentinel"],
-        cost: 130
+        droppedBy: [],
+        cost: 130,
+        zone: "undercity"
     },
     {
         name: "Adaptive Hull Implant [+8 REGEN]",
@@ -789,8 +864,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 8 },
         dropRate: 12,
-        droppedBy: ["Droid Sentinel"],
-        cost: 170
+        droppedBy: [],
+        cost: 170,
+        zone: "industrialzone"
     },
     {
         name: "Phoenix Core Module [+10 REGEN]",
@@ -799,8 +875,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 10 },
         dropRate: 8,
-        droppedBy: ["Droid Sentinel", "Droid Destroyer"],
-        cost: 220
+        droppedBy: [],
+        cost: 220,
+        zone: "frozenreach"
     },
     {
         name: "Lazarus Engine [+13 REGEN]",
@@ -809,8 +886,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 13 },
         dropRate: 5,
-        droppedBy: ["Droid Destroyer"],
-        cost: 280
+        droppedBy: [],
+        cost: 280,
+        zone: "neonstrip"
     },
     {
         name: "Omega Regeneration Core [+16 REGEN]",
@@ -819,8 +897,9 @@ const ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 16 },
         dropRate: 3,
-        droppedBy: ["Droid Destroyer"],
-        cost: 350
+        droppedBy: [],
+        cost: 350,
+        zone: "deadzone"
     }
 
 ];
