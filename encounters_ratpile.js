@@ -8,6 +8,7 @@ const ENCOUNTERS_RATPILE = [
     {
         name: "The Mapmaker",
         type: "shop",
+        discoverable: true,
         description: "A hooded figure stands motionless in the tunnel, a rolled chart clutched in one hand.",
         engageText: "He says nothing. His eyes flick to you, then to the map.",
         appearanceRate: 15,

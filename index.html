@@ -1010,6 +1010,10 @@
                     <select id="location-select">
                     </select>
                 </div>
+                <div class="equip-slot">
+                    <select id="destination-select">
+                    </select>
+                </div>
                 <div class="location-desc" id="location-desc">
                     <div class="storage-desc-content"><img src="images/IMAGE.gif" alt="Location"><span>Piles of rusted mechs and salvageable parts. Low-threat scavenger bots roam the wreckage.</span></div>
                 </div>
@@ -1124,6 +1128,10 @@
                 <div class="equip-slot">
                     <select id="storage-map"><option value="">[MAPS] -- Empty --</option></select>
                     <div class="storage-desc" id="storage-desc-map"></div>
+                </div>
+                <div class="equip-slot">
+                    <select id="storage-locationmap"><option value="">[LOCATIONS] -- Empty --</option></select>
+                    <div class="storage-desc" id="storage-desc-locationmap"></div>
                 </div>
             </div>
         </div>
@@ -1358,6 +1366,7 @@
                 scrap: game.scrap || 0,
                 activeSlot: game.activeSlot,
                 location: currentLocation,
+                destination: currentDestination || 'openworld',
                 minerals: game.minerals || {},
                 storyItems: game.storyItems || []
             };
@@ -1461,9 +1470,11 @@
             game.inventory = [];
             game.equipment = { body: null, legs: null, arms: null, weapon: null, chip: null, processor: null, pilot: null, drill: null, implant: null };
             currentLocation = 'home';
+            currentDestination = 'openworld';
 
             // Update location UI
             updateLocationDropdown();
+            updateDestinationDropdown();
             document.getElementById('location-select').value = currentLocation;
             document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
@@ -1564,8 +1575,11 @@
                 };
             }
 
+            currentDestination = 'openworld';
+
             // Update location UI
             updateLocationDropdown();
+            updateDestinationDropdown();
             document.getElementById('location-select').value = currentLocation;
             document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
@@ -1669,8 +1683,11 @@
                 if (data.location && LOCATIONS[data.location]) {
                     currentLocation = data.location;
                 }
+                currentDestination = data.destination || 'openworld';
                 updateLocationDropdown();
+                updateDestinationDropdown();
                 document.getElementById('location-select').value = currentLocation;
+                document.getElementById('destination-select').value = currentDestination;
                 document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${LOCATIONS[currentLocation].desc}</span></div>`;
 
                 // Restore inventory (convert names back to item objects)
@@ -1926,7 +1943,25 @@
         }
 
         function getEncounters() {
-            return LOCATIONS[currentLocation].encounters;
+            const allEncounters = LOCATIONS[currentLocation].encounters;
+            if (!allEncounters) return null;
+
+            // If at a named destination, return ONLY that encounter
+            if (currentDestination && currentDestination !== 'openworld') {
+                const enc = allEncounters.find(e => e.name === currentDestination);
+                return enc ? [enc] : [];
+            }
+
+            // If at open world, filter OUT all discovered named encounters
+            const zoneConfig = ZONE_DESTINATIONS[currentLocation];
+            if (!zoneConfig) return allEncounters;
+
+            return allEncounters.filter(enc => {
+                const dest = zoneConfig.destinations.find(d => d.encounterName === enc.name);
+                if (!dest) return true; // not discoverable, keep it
+                // If discovered (player has location map), filter it OUT of open world
+                return !(game.storyItems || []).includes(dest.mapItem);
+            });
         }
 
         const LOCATION_NAMES = {
@@ -1963,6 +1998,100 @@
             forge: 'Map: The Forge'
         };
 
+        // Zone destinations: open world name + discoverable encounter locations per zone
+        const ZONE_DESTINATIONS = {
+            ratpile: {
+                openWorldName: "Mech Graveyard",
+                openWorldDesc: "A sprawling field of corroded mech husks. Rats skitter between the rusted shells.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "The Ratpile: The Mapmaker" }
+                ]
+            },
+            scrapyard: {
+                openWorldName: "The Scrap Fields",
+                openWorldDesc: "Endless piles of junked machinery stretching to the horizon. Scavenger bots pick through the wreckage.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Scrap Yard: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Scrap Yard: The Mineral Trader" }
+                ]
+            },
+            oldbattlefield: {
+                openWorldName: "No Man's Land",
+                openWorldDesc: "Scorched earth and shattered fortifications. War machines still patrol their forgotten routes.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Old Battlefield: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Old Battlefield: The Mineral Trader" }
+                ]
+            },
+            downtown: {
+                openWorldName: "The Back Streets",
+                openWorldDesc: "Neon-lit alleyways choked with smoke and static. Gang tags glow on every surface.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Downtown: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Downtown: The Mineral Trader" }
+                ]
+            },
+            orbitalstation: {
+                openWorldName: "Station Corridors",
+                openWorldDesc: "Flickering emergency lights line depressurised hallways. Hull breaches whistle in the silence.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Orbital Station: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Orbital Station: The Mineral Trader" }
+                ]
+            },
+            wasteland: {
+                openWorldName: "The Dust Plains",
+                openWorldDesc: "Irradiated badlands baking under a white sun. Heat mirages mask the predators.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Wasteland: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Wasteland: The Mineral Trader" }
+                ]
+            },
+            undercity: {
+                openWorldName: "The Pipe Network",
+                openWorldDesc: "A labyrinth of corroded pipes and flooded tunnels. Things move in the dark.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Undercity: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Undercity: The Mineral Trader" }
+                ]
+            },
+            industrialzone: {
+                openWorldName: "The Factory Floor",
+                openWorldDesc: "Automated assembly lines still running with nothing to build. Sparks rain from overhead.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Industrial Zone: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Industrial Zone: The Mineral Trader" }
+                ]
+            },
+            frozenreach: {
+                openWorldName: "The Ice Shelf",
+                openWorldDesc: "A frozen expanse of cracked glaciers and buried wreckage. The wind cuts like a blade.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Frozen Reach: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Frozen Reach: The Mineral Trader" }
+                ]
+            },
+            neonstrip: {
+                openWorldName: "The Main Drag",
+                openWorldDesc: "A blinding corridor of holographic billboards and bass-heavy clubs. Violence is the entertainment.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Neon Strip: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Neon Strip: The Mineral Trader" }
+                ]
+            },
+            deadzone: {
+                openWorldName: "The Contamination Zone",
+                openWorldDesc: "Toxic fog blankets everything. Corrupted machines wander in endless loops.",
+                destinations: [
+                    { encounterName: "The Mapmaker", mapItem: "Dead Zone: The Mapmaker" },
+                    { encounterName: "The Mineral Trader", mapItem: "Dead Zone: The Mineral Trader" }
+                ]
+            }
+        };
+
+        // Track current destination within a zone ('openworld' or encounter name)
+        let currentDestination = 'openworld';
+
         function updateLocationDropdown() {
             const select = document.getElementById('location-select');
             const current = select.value;
@@ -1983,6 +2112,101 @@
             }
         }
 
+        function updateDestinationDropdown() {
+            const select = document.getElementById('destination-select');
+            const current = select.value;
+            select.innerHTML = '';
+
+            const zoneConfig = ZONE_DESTINATIONS[currentLocation];
+
+            // Open world is always the first option
+            const openWorldName = zoneConfig ? zoneConfig.openWorldName : (LOCATION_NAMES[currentLocation] || currentLocation);
+            const owOpt = document.createElement('option');
+            owOpt.value = 'openworld';
+            owOpt.textContent = `[OPEN WORLD] ${openWorldName}`;
+            select.appendChild(owOpt);
+
+            // Add discovered destinations
+            if (zoneConfig) {
+                for (const dest of zoneConfig.destinations) {
+                    if ((game.storyItems || []).includes(dest.mapItem)) {
+                        const opt = document.createElement('option');
+                        opt.value = dest.encounterName;
+                        opt.textContent = `[DISCOVERED] ${dest.encounterName}`;
+                        select.appendChild(opt);
+                    }
+                }
+            }
+
+            // Restore selection if still valid
+            if (current && select.querySelector(`option[value="${current}"]`)) {
+                select.value = current;
+            } else {
+                select.value = 'openworld';
+                currentDestination = 'openworld';
+            }
+
+            // Hide dropdown for zones with no destinations (Home, Forge, Asteroid Belt)
+            if (!zoneConfig || zoneConfig.destinations.length === 0) {
+                select.style.display = 'none';
+            } else {
+                select.style.display = '';
+            }
+        }
+
+        function changeDestination(destValue) {
+            currentDestination = destValue;
+
+            // Update description based on destination
+            const zoneConfig = ZONE_DESTINATIONS[currentLocation];
+            if (destValue === 'openworld' && zoneConfig) {
+                document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${zoneConfig.openWorldDesc}</span></div>`;
+            } else if (destValue !== 'openworld') {
+                // At a named destination — show encounter description
+                const encounters = LOCATIONS[currentLocation].encounters || [];
+                const enc = encounters.find(e => e.name === destValue);
+                if (enc) {
+                    document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[currentLocation].image}" alt="Location"><span>${enc.description}</span></div>`;
+                }
+            }
+
+            // Stop all active timers and battle state
+            game.inBattle = false;
+            game.currentWave = null;
+            game.isAmbush = false;
+            currentEncounter = null;
+            currentMiningEvent = null;
+            shopItems = [];
+            if (game.battleInterval) { clearInterval(game.battleInterval); game.battleInterval = null; }
+            if (game.regenInterval) { clearInterval(game.regenInterval); game.regenInterval = null; }
+            if (game.waveTimer) { clearInterval(game.waveTimer); game.waveTimer = null; }
+            if (game.waveExpireTimer) { clearTimeout(game.waveExpireTimer); game.waveExpireTimer = null; }
+            clearCountdown();
+
+            // Reset UI
+            chatMessages.innerHTML = '';
+            storeAvailable = false;
+            if (currentPage === 6) showPage(0);
+            updatePanelNav();
+            setEquipmentLocked(false);
+            hideInlineButtons();
+
+            saveGame();
+
+            if (destValue === 'openworld') {
+                const name = zoneConfig ? zoneConfig.openWorldName : LOCATION_NAMES[currentLocation];
+                addMessage(`[NOW AT ${name}]`, 'system');
+            } else {
+                addMessage(`[NOW AT ${destValue}]`, 'system');
+            }
+
+            // Restart wave cycle
+            setTimeout(() => {
+                spawnWave();
+                startWaveTimer();
+            }, 2000);
+        }
+
         function changeLocation(locationKey) {
             const fuelCost = LOCATIONS[locationKey].fuelCost || 0;
             if (game.player.fuel < fuelCost) {
@@ -1995,7 +2219,16 @@
                 updateStats();
             }
             currentLocation = locationKey;
-            document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[locationKey].image}" alt="Location"><span>${LOCATIONS[locationKey].desc}</span></div>`;
+            currentDestination = 'openworld';
+
+            // Update description — use open world desc if available
+            const zoneConfig = ZONE_DESTINATIONS[locationKey];
+            if (zoneConfig) {
+                document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[locationKey].image}" alt="Location"><span>${zoneConfig.openWorldDesc}</span></div>`;
+            } else {
+                document.getElementById('location-desc').innerHTML = `<div class="storage-desc-content"><img src="${LOCATIONS[locationKey].image}" alt="Location"><span>${LOCATIONS[locationKey].desc}</span></div>`;
+            }
+            updateDestinationDropdown();
 
             // Stop all active timers and battle state
             game.inBattle = false;
@@ -2033,6 +2266,10 @@
 
         document.getElementById('location-select').addEventListener('change', (e) => {
             changeLocation(e.target.value);
+        });
+
+        document.getElementById('destination-select').addEventListener('change', (e) => {
+            changeDestination(e.target.value);
         });
 
         // Add message to chat with delay
@@ -2200,6 +2437,7 @@
                 document.getElementById(`equip-${slot}`).disabled = locked;
             });
             document.getElementById('location-select').disabled = locked;
+            document.getElementById('destination-select').disabled = locked;
         }
 
         // Add item to inventory
@@ -2557,6 +2795,19 @@
                 await addMessage(`"Here — take this. It's a map to The Ratpile. Not much down there but rats, but it's a start."`, 'system');
             }
 
+            // Grant location map on first engage of a discoverable encounter
+            if (currentEncounter.discoverable) {
+                const zoneConfig = ZONE_DESTINATIONS[currentLocation];
+                if (zoneConfig) {
+                    const dest = zoneConfig.destinations.find(d => d.encounterName === currentEncounter.name);
+                    if (dest && !(game.storyItems || []).includes(dest.mapItem)) {
+                        addStoryItem(dest.mapItem);
+                        await addMessage(`You've mapped this location. ${currentEncounter.name} can now be found directly from the ${LOCATION_NAMES[currentLocation]} destination list.`, 'system');
+                        updateDestinationDropdown();
+                    }
+                }
+            }
+
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
 
             // Add inline leave button in chat
@@ -2807,6 +3058,7 @@
                 }
                 updateStorageUI();
                 updateLocationDropdown();
+                updateDestinationDropdown();
                 saveGame();
             }
         }
@@ -2871,9 +3123,9 @@
 
         // Update storage UI dropdowns with collected story items
         function updateStorageUI() {
-            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', dna: 'DNA', debris: 'DEBRIS', scrap: 'SCRAP', map: 'MAPS' };
+            const STORAGE_LABELS = { log: 'LOGS', key: 'KEYS', dna: 'DNA', debris: 'DEBRIS', scrap: 'SCRAP', map: 'MAPS', locationmap: 'LOCATIONS' };
             const items = game.storyItems || [];
-            const cats = ['log', 'key', 'dna', 'debris', 'map'];
+            const cats = ['log', 'key', 'dna', 'debris', 'map', 'locationmap'];
             cats.forEach(cat => {
                 const select = document.getElementById(`storage-${cat}`);
                 const desc = document.getElementById(`storage-desc-${cat}`);
@@ -2901,7 +3153,7 @@
         }
 
         // Storage dropdown change listeners
-        ['log', 'key', 'dna', 'debris', 'scrap', 'map'].forEach(cat => {
+        ['log', 'key', 'dna', 'debris', 'scrap', 'map', 'locationmap'].forEach(cat => {
             document.getElementById(`storage-${cat}`).addEventListener('change', (e) => {
                 const desc = document.getElementById(`storage-desc-${cat}`);
                 const item = STORY_ITEMS.find(i => i.name === e.target.value);
@@ -3049,6 +3301,12 @@
 
         function spawnWave() {
             if (game.inBattle || game.currentWave || currentEncounter || currentMiningEvent) return;
+
+            // At a named destination: always spawn that encounter only
+            if (currentDestination && currentDestination !== 'openworld') {
+                spawnEncounter();
+                return;
+            }
 
             const loc = LOCATIONS[currentLocation];
 
@@ -3448,6 +3706,7 @@
             }
 
             updateLocationDropdown();
+            updateDestinationDropdown();
             updateEquipmentUI();
             updateMiningUI();
             updateStorageUI();

@@ -53,6 +53,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
     {
         name: "The Mapmaker",
         type: "shop",
+        discoverable: true,
         description: "A hooded figure stands motionless nearby, a rolled chart clutched in one hand.",
         engageText: "He says nothing. His eyes flick to you, then to the map.",
         appearanceRate: 15,
@@ -64,6 +65,7 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
     {
         name: "The Mineral Trader",
         type: "shop",
+        discoverable: true,
         description: "A woman with a portable smelter strapped to her mech offers to refine raw ore.",
         engageText: "She fires up the smelter. 'Got raw minerals? I'll turn them into something useful.'",
         appearanceRate: 15,

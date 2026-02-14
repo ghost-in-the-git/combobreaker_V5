@@ -198,6 +198,134 @@ const STORY_ITEMS = [
         image: "images/IMAGE.gif"
     },
 
+    // Location Maps (encounter discoveries — granted on first engage)
+    {
+        name: "The Ratpile: The Mapmaker",
+        desc: "Coordinates to a hooded cartographer's position in the Ratpile tunnels. He never moves.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Scrap Yard: The Mapmaker",
+        desc: "Coordinates to the Mapmaker's outpost in the Scrap Yard. He watches from between the wreckage.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Scrap Yard: The Mineral Trader",
+        desc: "A marked route to the Mineral Trader's smelting rig in the Scrap Yard.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Old Battlefield: The Mapmaker",
+        desc: "Coordinates to the Mapmaker's foxhole on the Old Battlefield. He sells maps from a rusted bunker.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Old Battlefield: The Mineral Trader",
+        desc: "Directions to the Mineral Trader's mobile forge, parked between shell craters.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Downtown: The Mapmaker",
+        desc: "An address scrawled on synth-paper. The Mapmaker operates from a back-alley kiosk Downtown.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Downtown: The Mineral Trader",
+        desc: "GPS lock on the Mineral Trader's workshop hidden beneath a neon sign Downtown.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Orbital Station: The Mapmaker",
+        desc: "Docking bay coordinates for the Mapmaker's berth on the Orbital Station.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Orbital Station: The Mineral Trader",
+        desc: "Deck coordinates for the Mineral Trader's zero-g smelting bay on the station.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Wasteland: The Mapmaker",
+        desc: "A beacon frequency for the Mapmaker's camp in the irradiated Wasteland.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Wasteland: The Mineral Trader",
+        desc: "Coordinates to a rad-shielded smelter the Mineral Trader operates in the Wasteland.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Undercity: The Mapmaker",
+        desc: "A tunnel junction number where the Mapmaker deals charts by lantern light.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Undercity: The Mineral Trader",
+        desc: "Pipe junction coordinates for the Mineral Trader's underground forge in the Undercity.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Industrial Zone: The Mapmaker",
+        desc: "A factory bay number where the Mapmaker has set up shop between idle machines.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Industrial Zone: The Mineral Trader",
+        desc: "Assembly line coordinates for the Mineral Trader's smelter rig in the Industrial Zone.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frozen Reach: The Mapmaker",
+        desc: "Thermal coordinates for the Mapmaker's heated outpost on the Frozen Reach ice shelf.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Frozen Reach: The Mineral Trader",
+        desc: "A geothermal vent location where the Mineral Trader runs a forge in the Frozen Reach.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Neon Strip: The Mapmaker",
+        desc: "A back-room address on the Neon Strip. The Mapmaker deals from behind a beaded curtain.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Neon Strip: The Mineral Trader",
+        desc: "VIP coordinates for the Mineral Trader's private smelting lounge on the Neon Strip.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Dead Zone: The Mapmaker",
+        desc: "Hazmat-sealed coordinates for the Mapmaker's contamination bunker in the Dead Zone.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+    {
+        name: "Dead Zone: The Mineral Trader",
+        desc: "Radiation-shielded coordinates for the Mineral Trader's forge deep in the Dead Zone.",
+        category: "locationmap",
+        image: "images/IMAGE.gif"
+    },
+
     // Maps
     {
         name: "Map: The Ratpile",
