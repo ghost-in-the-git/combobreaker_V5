@@ -9,7 +9,6 @@ const MINING_ASTEROIDBELT = [
     { mineral: 'Quartz', category: 'common', depth: 40, stabilityLoss: 5, stability: 200 },
     // Uncommon
     { mineral: 'Fluorite', category: 'uncommon', depth: 65, stabilityLoss: 8, stability: 185 },
-    { mineral: 'Sulfur', category: 'uncommon', depth: 70, stabilityLoss: 9, stability: 185 },
     // Scarce
     { mineral: 'Hematite', category: 'scarce', depth: 100, stabilityLoss: 10, stability: 170 },
     { mineral: 'Galena', category: 'scarce', depth: 105, stabilityLoss: 12, stability: 170 },

@@ -21,8 +21,7 @@ const REFINED_MINERALS = [
     { name: "Refined Calcite", desc: "Transparent calcite, cleaved along perfect planes.", image: "images/IMAGE.gif", mineralCost: { mineral: "Calcite", category: "uncommon", count: 5 }, refinedMineral: true },
     { name: "Refined Mica", desc: "Paper-thin mica sheets, ideal for insulation layers.", image: "images/IMAGE.gif", mineralCost: { mineral: "Mica", category: "uncommon", count: 5 }, refinedMineral: true },
 
-    // Orbital Station (uncommon/scarce)
-    { name: "Refined Sulfur", desc: "Stabilized sulfur compound, no longer volatile.", image: "images/IMAGE.gif", mineralCost: { mineral: "Sulfur", category: "uncommon", count: 5 }, refinedMineral: true },
+    // Orbital Station (scarce)
     { name: "Refined Hematite", desc: "Iron-rich hematite, smelted to a mirror finish.", image: "images/IMAGE.gif", mineralCost: { mineral: "Hematite", category: "scarce", count: 5 }, refinedMineral: true },
     { name: "Refined Magnetite", desc: "Magnetically aligned magnetite, humming with charge.", image: "images/IMAGE.gif", mineralCost: { mineral: "Magnetite", category: "scarce", count: 5 }, refinedMineral: true },
 
@@ -36,10 +35,8 @@ const REFINED_MINERALS = [
     { name: "Refined Cassiterite", desc: "Pure tin extracted from cassiterite. Bright and malleable.", image: "images/IMAGE.gif", mineralCost: { mineral: "Cassiterite", category: "valuable", count: 5 }, refinedMineral: true },
     { name: "Refined Cinnabar", desc: "Mercury extracted safely. Sealed in a containment vial.", image: "images/IMAGE.gif", mineralCost: { mineral: "Cinnabar", category: "valuable", count: 5 }, refinedMineral: true },
 
-    // Industrial Zone (valuable/precious)
+    // Industrial Zone (valuable)
     { name: "Refined Chromite", desc: "Chromium-plated ingot, corrosion-proof.", image: "images/IMAGE.gif", mineralCost: { mineral: "Chromite", category: "valuable", count: 5 }, refinedMineral: true },
-    { name: "Refined Ilmenite", desc: "Titanium-grade ilmenite, featherlight and unbreakable.", image: "images/IMAGE.gif", mineralCost: { mineral: "Ilmenite", category: "valuable", count: 5 }, refinedMineral: true },
-    { name: "Refined Argentite", desc: "Pure silver extracted from argentite. Conducts like nothing else.", image: "images/IMAGE.gif", mineralCost: { mineral: "Argentite", category: "precious", count: 5 }, refinedMineral: true },
 
     // Frozen Reach (precious)
     { name: "Refined Gold", desc: "Smelted gold bar, 99.9% pure. Worth a fortune.", image: "images/IMAGE.gif", mineralCost: { mineral: "Gold", category: "precious", count: 5 }, refinedMineral: true },
