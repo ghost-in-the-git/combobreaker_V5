@@ -1237,6 +1237,7 @@
     <script src="items.js"></script>
     <script src="storyitems.js"></script>
     <script src="encounters_home.js"></script>
+    <script src="encounters_forge.js"></script>
     <script src="encounters_ratpile.js"></script>
     <script src="encounters_scrapyard.js"></script>
     <script src="encounters_oldbattlefield.js"></script>
@@ -1893,6 +1894,15 @@
                 desc: "A dense field of mineral-rich asteroids. No hostiles, no traders — just rock, ore, and the void.",
                 image: "images/IMAGE.gif"
             },
+            forge: {
+                enemies: null,
+                encounters: ENCOUNTERS_FORGE,
+                mining: null,
+                ambush: null,
+                fuelCost: 10,
+                desc: "A hidden workshop built into an old munitions bunker. The air shimmers with heat from the forge.",
+                image: "images/IMAGE.gif"
+            },
             home: {
                 enemies: null,
                 encounters: ENCOUNTERS_HOME,
@@ -1927,6 +1937,7 @@
             neonstrip: 'NEON STRIP',
             deadzone: 'DEAD ZONE',
             asteroidbelt: 'ASTEROID BELT',
+            forge: 'THE FORGE',
             home: 'HOME'
         };
 
@@ -1943,7 +1954,8 @@
             frozenreach: 'Map: Frozen Reach',
             neonstrip: 'Map: Neon Strip',
             deadzone: 'Map: Dead Zone',
-            asteroidbelt: 'Map: Asteroid Belt'
+            asteroidbelt: 'Map: Asteroid Belt',
+            forge: 'Map: The Forge'
         };
 
         function updateLocationDropdown() {

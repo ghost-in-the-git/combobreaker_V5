@@ -228,6 +228,13 @@ const STORY_ITEMS = [
         cost: 30
     },
     {
+        name: "Map: The Forge",
+        desc: "Directions to a hidden workshop scrawled on heat-resistant foil. The ink smells like molten iron.",
+        category: "map",
+        image: "images/IMAGE.gif",
+        cost: 100
+    },
+    {
         name: "Map: Orbital Station",
         desc: "A schematic of the station's deck layout. Several sections are labelled DEPRESSURISED.",
         category: "map",

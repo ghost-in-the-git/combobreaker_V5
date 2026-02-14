@@ -58,7 +58,7 @@ const ENCOUNTERS_DOWNTOWN = [
         appearanceRate: 15,
         minLevel: 1,
         itemSlot1: ["Map: Orbital Station"],
-        itemSlot2: [],
+        itemSlot2: ["Map: The Forge"],
         itemSlot3: []
     },
     {
