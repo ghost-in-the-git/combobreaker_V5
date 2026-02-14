@@ -2746,8 +2746,14 @@
             shopItems = generateShopItems(encounter);
 
             addMessage(`[ENCOUNTER] ${encounter.name}`, 'system');
-            const useDiscoveredDesc = currentDestination && currentDestination !== 'openworld' && encounter.discoveredDescription;
-            addMessage(useDiscoveredDesc ? encounter.discoveredDescription : encounter.description, 'system');
+            const isVendorDest = currentDestination && currentDestination !== 'openworld';
+            addMessage(isVendorDest && encounter.discoveredDescription ? encounter.discoveredDescription : encounter.description, 'system');
+
+            // At a vendor destination, auto-engage without countdown or buttons
+            if (isVendorDest) {
+                engageEncounter();
+                return true;
+            }
 
             // Create countdown message
             let secondsLeft = Math.floor(game.WAVE_EXPIRE / 1000);
@@ -2821,18 +2827,20 @@
 
             await addMessage(`Your XP: ${game.player.xp}`, 'system');
 
-            // Add inline leave button in chat
-            game.shopLeaveBtn = document.createElement('div');
-            game.shopLeaveBtn.className = 'action-btn-container';
-            const leaveBtn = document.createElement('button');
-            leaveBtn.className = 'action-btn engage';
-            leaveBtn.textContent = 'Leave';
-            leaveBtn.addEventListener('click', () => {
-                endShopEncounter();
-            });
-            game.shopLeaveBtn.appendChild(leaveBtn);
-            chatMessages.appendChild(game.shopLeaveBtn);
-            game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            // Add inline leave button in chat (not needed at vendor destinations)
+            if (!currentDestination || currentDestination === 'openworld') {
+                game.shopLeaveBtn = document.createElement('div');
+                game.shopLeaveBtn.className = 'action-btn-container';
+                const leaveBtn = document.createElement('button');
+                leaveBtn.className = 'action-btn engage';
+                leaveBtn.textContent = 'Leave';
+                leaveBtn.addEventListener('click', () => {
+                    endShopEncounter();
+                });
+                game.shopLeaveBtn.appendChild(leaveBtn);
+                chatMessages.appendChild(game.shopLeaveBtn);
+                game.shopLeaveBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
 
             showShopPanel();
         }
