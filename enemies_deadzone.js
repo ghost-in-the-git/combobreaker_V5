@@ -15,7 +15,10 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Toxic Shambler",
@@ -26,7 +29,10 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Blight Walker",
@@ -37,7 +43,10 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Kill-Swarm Node",
@@ -48,7 +57,10 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Corrupted Warden",
@@ -59,7 +71,10 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Plague Engine",
@@ -70,7 +85,10 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Abomination Core",
@@ -81,6 +99,9 @@ const ENEMIES_DEADZONE = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     }
 ];

@@ -14,7 +14,10 @@ const AMBUSH_FROZENREACH = [
         appearanceRate: 20,
         minLevel: 4,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Ice Borer Pack",
@@ -25,7 +28,10 @@ const AMBUSH_FROZENREACH = [
         appearanceRate: 25,
         minLevel: 3,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Cryo-Ambush Mech",
@@ -36,6 +42,9 @@ const AMBUSH_FROZENREACH = [
         appearanceRate: 10,
         minLevel: 5,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     }
 ];

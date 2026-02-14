@@ -14,7 +14,10 @@ const AMBUSH_DEADZONE = [
         appearanceRate: 15,
         minLevel: 5,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Mutant Swarm Node",
@@ -25,7 +28,10 @@ const AMBUSH_DEADZONE = [
         appearanceRate: 25,
         minLevel: 4,
         squadMin: 3,
-        squadMax: 5
+        squadMax: 5,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     },
     {
         name: "Void Stalker",
@@ -36,6 +42,9 @@ const AMBUSH_DEADZONE = [
         appearanceRate: 8,
         minLevel: 5,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 8,
+        scrapMax: 10
     }
 ];

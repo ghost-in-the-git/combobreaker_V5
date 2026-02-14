@@ -14,7 +14,10 @@ const AMBUSH_WASTELAND = [
         appearanceRate: 25,
         minLevel: 3,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Burrowing Stalker",
@@ -25,7 +28,10 @@ const AMBUSH_WASTELAND = [
         appearanceRate: 15,
         minLevel: 3,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Rad-Feral Pack Runner",
@@ -36,6 +42,9 @@ const AMBUSH_WASTELAND = [
         appearanceRate: 30,
         minLevel: 2,
         squadMin: 3,
-        squadMax: 6
+        squadMax: 6,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     }
 ];

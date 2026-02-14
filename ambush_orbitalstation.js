@@ -14,7 +14,10 @@ const AMBUSH_ORBITALSTATION = [
         appearanceRate: 25,
         minLevel: 2,
         squadMin: 2,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Hijacked Sentry Array",
@@ -25,7 +28,10 @@ const AMBUSH_ORBITALSTATION = [
         appearanceRate: 15,
         minLevel: 3,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Corridor Sweeper",
@@ -36,6 +42,9 @@ const AMBUSH_ORBITALSTATION = [
         appearanceRate: 30,
         minLevel: 2,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     }
 ];

@@ -14,7 +14,10 @@ const AMBUSH_INDUSTRIALZONE = [
         appearanceRate: 15,
         minLevel: 4,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Factory Guard Swarm",
@@ -25,7 +28,10 @@ const AMBUSH_INDUSTRIALZONE = [
         appearanceRate: 30,
         minLevel: 3,
         squadMin: 3,
-        squadMax: 5
+        squadMax: 5,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Sector Lockdown Unit",
@@ -36,6 +42,9 @@ const AMBUSH_INDUSTRIALZONE = [
         appearanceRate: 10,
         minLevel: 4,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     }
 ];

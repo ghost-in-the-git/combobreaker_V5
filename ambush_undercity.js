@@ -14,7 +14,10 @@ const AMBUSH_UNDERCITY = [
         appearanceRate: 25,
         minLevel: 3,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Sewer Lurker",
@@ -25,7 +28,10 @@ const AMBUSH_UNDERCITY = [
         appearanceRate: 15,
         minLevel: 3,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Black-Ops Flanker",
@@ -36,6 +42,9 @@ const AMBUSH_UNDERCITY = [
         appearanceRate: 20,
         minLevel: 3,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     }
 ];

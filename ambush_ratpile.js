@@ -14,6 +14,9 @@ const AMBUSH_RATPILE = [
         appearanceRate: 100,
         minLevel: 1,
         squadMin: 6,
-        squadMax: 6
+        squadMax: 6,
+        scrapChance: 30,
+        scrapMin: 1,
+        scrapMax: 1
     }
 ];

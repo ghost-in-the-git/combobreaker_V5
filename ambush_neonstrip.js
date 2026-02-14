@@ -14,7 +14,10 @@ const AMBUSH_NEONSTRIP = [
         appearanceRate: 20,
         minLevel: 4,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "Neon Assassin",
@@ -25,7 +28,10 @@ const AMBUSH_NEONSTRIP = [
         appearanceRate: 15,
         minLevel: 4,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "Casino Pit Fighter",
@@ -36,6 +42,9 @@ const AMBUSH_NEONSTRIP = [
         appearanceRate: 25,
         minLevel: 3,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     }
 ];

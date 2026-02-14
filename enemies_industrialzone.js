@@ -15,7 +15,10 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Loader Mech",
@@ -26,7 +29,10 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Arc Welder Unit",
@@ -37,7 +43,10 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Furnace Guardian",
@@ -48,7 +57,10 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Overclocked Foreman",
@@ -59,7 +71,10 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Reactor Sentinel",
@@ -70,7 +85,10 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     },
     {
         name: "Smelter Titan",
@@ -81,6 +99,9 @@ const ENEMIES_INDUSTRIALZONE = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 5,
+        scrapMax: 7
     }
 ];

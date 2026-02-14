@@ -14,7 +14,10 @@ const AMBUSH_OLDBATTLEFIELD = [
         appearanceRate: 25,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "Ghost Protocol Mech",
@@ -25,7 +28,10 @@ const AMBUSH_OLDBATTLEFIELD = [
         appearanceRate: 20,
         minLevel: 2,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "Trench Ambusher",
@@ -36,6 +42,9 @@ const AMBUSH_OLDBATTLEFIELD = [
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     }
 ];

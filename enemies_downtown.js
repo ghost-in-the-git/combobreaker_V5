@@ -15,7 +15,10 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 25,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Corp Security Drone",
@@ -26,7 +29,10 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Neon Ronin",
@@ -37,7 +43,10 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "T2 Sentinel",
@@ -48,7 +57,10 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Corporate Mech Squad",
@@ -59,7 +71,10 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Black Market Enforcer",
@@ -70,7 +85,10 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Corporate Warlord",
@@ -81,6 +99,9 @@ const ENEMIES_DOWNTOWN = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     }
 ];

@@ -14,7 +14,10 @@ const AMBUSH_SCRAPYARD = [
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "Junkyard Stalker",
@@ -25,7 +28,10 @@ const AMBUSH_SCRAPYARD = [
         appearanceRate: 20,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "Rogue Salvage Drone",
@@ -36,6 +42,9 @@ const AMBUSH_SCRAPYARD = [
         appearanceRate: 25,
         minLevel: 1,
         squadMin: 3,
-        squadMax: 6
+        squadMax: 6,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     }
 ];

@@ -15,7 +15,10 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "T1 Nano Swarm",
@@ -26,7 +29,10 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 5,
-        squadMax: 10
+        squadMax: 10,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "T1 Heavy Tank",
@@ -37,7 +43,10 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "T1 Enforcer",
@@ -48,7 +57,10 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "Scrap Drone",
@@ -59,7 +71,10 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 25,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 5
+        squadMax: 5,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "Junkyard Golem",
@@ -70,7 +85,10 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 8,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "T1 Destroyer",
@@ -81,6 +99,9 @@ const ENEMIES_SCRAPYARD = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 1
     }
 ];

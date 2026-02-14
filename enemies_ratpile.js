@@ -15,7 +15,10 @@ const ENEMIES_RATPILE = [
         appearanceRate: 100,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 30,
+        scrapMin: 1,
+        scrapMax: 1
     },
     {
         name: "Bloated Rat",
@@ -26,6 +29,9 @@ const ENEMIES_RATPILE = [
         appearanceRate: 50,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 30,
+        scrapMin: 1,
+        scrapMax: 1
     }
 ];

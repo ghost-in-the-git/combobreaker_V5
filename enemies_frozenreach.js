@@ -15,7 +15,10 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Cryo Sentry",
@@ -26,7 +29,10 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Blizzard Drone",
@@ -37,7 +43,10 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Glacial Prowler",
@@ -48,7 +57,10 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Permafrost Mauler",
@@ -59,7 +71,10 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Cryo Warlord",
@@ -70,7 +85,10 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     },
     {
         name: "Avalanche Colossus",
@@ -81,6 +99,9 @@ const ENEMIES_FROZENREACH = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 6,
+        scrapMax: 8
     }
 ];

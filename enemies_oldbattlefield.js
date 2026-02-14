@@ -15,7 +15,10 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 25,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "Rusted Artillery Drone",
@@ -26,7 +29,10 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "Ghosted Warframe",
@@ -37,7 +43,10 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "T2 Enforcer",
@@ -48,7 +57,10 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "T2 Heavy Tank",
@@ -59,7 +71,10 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "T2 Assassin",
@@ -70,7 +85,10 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     },
     {
         name: "Siege Remnant",
@@ -81,6 +99,9 @@ const ENEMIES_OLDBATTLEFIELD = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 40,
+        scrapMin: 1,
+        scrapMax: 2
     }
 ];

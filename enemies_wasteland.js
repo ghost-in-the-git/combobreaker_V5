@@ -15,7 +15,10 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Dust Crawler",
@@ -26,7 +29,10 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 20,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Irradiated Scavenger",
@@ -37,7 +43,10 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Sand Stalker",
@@ -48,7 +57,10 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Wasteland Brute",
@@ -59,7 +71,10 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Irradiated Colossus",
@@ -70,7 +85,10 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     },
     {
         name: "Feral War Engine",
@@ -81,6 +99,9 @@ const ENEMIES_WASTELAND = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 3,
+        scrapMax: 5
     }
 ];

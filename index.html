@@ -3279,9 +3279,10 @@
                     }
                 }
 
-                // Scrap drop (50% chance, 1-3 per battle)
-                if (Math.random() < 0.5) {
-                    const scrapAmount = Math.floor(Math.random() * 3) + 1;
+                // Scrap drop (per-enemy scrapChance and scrapMin/scrapMax)
+                const et = wave ? wave.enemyType : null;
+                if (et && et.scrapChance && Math.random() * 100 < et.scrapChance) {
+                    const scrapAmount = et.scrapMin + Math.floor(Math.random() * (et.scrapMax - et.scrapMin + 1));
                     game.scrap += scrapAmount;
                     addMessage(`Salvaged ${scrapAmount} scrap from the wreckage.`, 'victory');
                     updateStorageUI();

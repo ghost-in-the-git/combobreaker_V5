@@ -14,7 +14,10 @@ const AMBUSH_DOWNTOWN = [
         appearanceRate: 20,
         minLevel: 2,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Street Gang Ripper",
@@ -25,7 +28,10 @@ const AMBUSH_DOWNTOWN = [
         appearanceRate: 30,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     },
     {
         name: "Rooftop Sniper Drone",
@@ -36,6 +42,9 @@ const AMBUSH_DOWNTOWN = [
         appearanceRate: 20,
         minLevel: 2,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 3
     }
 ];

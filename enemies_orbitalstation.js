@@ -15,7 +15,10 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Station Security Bot",
@@ -26,7 +29,10 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 20,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Void Welder",
@@ -37,7 +43,10 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Orbital Sentry",
@@ -48,7 +57,10 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Zero-G Interceptor",
@@ -59,7 +71,10 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Hijacked Defense Turret",
@@ -70,7 +85,10 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     },
     {
         name: "Station Core Guardian",
@@ -81,6 +99,9 @@ const ENEMIES_ORBITALSTATION = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 45,
+        scrapMin: 2,
+        scrapMax: 4
     }
 ];

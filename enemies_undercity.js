@@ -15,7 +15,10 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 4
+        squadMax: 4,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Sewer Drone",
@@ -26,7 +29,10 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Pipe Lurker",
@@ -37,7 +43,10 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Black-Ops Infiltrator",
@@ -48,7 +57,10 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Chem Sprayer",
@@ -59,7 +71,10 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Subterranean Warden",
@@ -70,7 +85,10 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     },
     {
         name: "Hive Overlord",
@@ -81,6 +99,9 @@ const ENEMIES_UNDERCITY = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 4,
+        scrapMax: 6
     }
 ];

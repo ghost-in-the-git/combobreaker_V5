@@ -15,7 +15,10 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 22,
         minLevel: 1,
         squadMin: 2,
-        squadMax: 3
+        squadMax: 3,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "Casino Enforcer",
@@ -26,7 +29,10 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 18,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "Neon Stalker",
@@ -37,7 +43,10 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 16,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 2
+        squadMax: 2,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "Syndicate Heavy",
@@ -48,7 +57,10 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 14,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "VIP Bodyguard",
@@ -59,7 +71,10 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 10,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "Pit Boss Mech",
@@ -70,7 +85,10 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 5,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     },
     {
         name: "The House",
@@ -81,6 +99,9 @@ const ENEMIES_NEONSTRIP = [
         appearanceRate: 3,
         minLevel: 1,
         squadMin: 1,
-        squadMax: 1
+        squadMax: 1,
+        scrapChance: 50,
+        scrapMin: 7,
+        scrapMax: 9
     }
 ];
