@@ -3313,7 +3313,7 @@
                 const tag = MINING_LABELS[cat];
                 // Count unique minerals collected
                 const uniqueCount = new Set(collected.map(m => m.toLowerCase())).size;
-                select.options[0].textContent = `[${tag}] ${uniqueCount} items`;
+                select.options[0].textContent = `[${tag}] ${uniqueCount} minerals`;
                 // Count occurrences of each mineral
                 const counts = {};
                 collected.forEach(m => { counts[m.toLowerCase()] = (counts[m.toLowerCase()] || 0) + 1; });
@@ -3347,7 +3347,7 @@
                 // Clear all options except header
                 while (refinedSelect.options.length > 1) refinedSelect.remove(1);
                 const uniqueMinerals = [...new Set(collected)].sort();
-                refinedSelect.options[0].textContent = `[REFINED] ${uniqueMinerals.length} items`;
+                refinedSelect.options[0].textContent = `[REFINED] ${uniqueMinerals.length} minerals`;
                 uniqueMinerals.forEach(m => {
                     const opt = document.createElement('option');
                     opt.value = m;
