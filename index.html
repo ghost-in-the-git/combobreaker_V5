@@ -3304,8 +3304,8 @@
         // Update mining page dropdowns to show collected minerals
         function updateMiningUI() {
             if (!game.minerals) return;
-            const MINING_LABELS = { common: 'COMMON', uncommon: 'UNCOMMON', scarce: 'SCARCE', valuable: 'VALUABLE', precious: 'PRECIOUS', exotic: 'EXOTIC', ultrarare: 'ULTRARARE' };
-            const categories = ['common', 'uncommon', 'scarce', 'valuable', 'precious', 'exotic', 'ultrarare'];
+            const MINING_LABELS = { tier1: 'TIER 1', tier2: 'TIER 2', tier3: 'TIER 3', tier4: 'TIER 4', tier5: 'TIER 5', tier6: 'TIER 6', tier7: 'TIER 7', tier8: 'TIER 8', tier9: 'TIER 9', tier10: 'TIER 10' };
+            const categories = ['tier1', 'tier2', 'tier3', 'tier4', 'tier5', 'tier6', 'tier7', 'tier8', 'tier9', 'tier10'];
             categories.forEach(cat => {
                 const select = document.getElementById(`mining-${cat}`);
                 if (!select) return;
