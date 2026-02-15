@@ -486,6 +486,33 @@
             opacity: 0.7;
         }
 
+        /* Forge Mineral Selector */
+        .forge-selector {
+            margin-bottom: 8px;
+        }
+
+        .forge-selector select {
+            width: 100%;
+            padding: 8px 24px 8px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #1a1a2e;
+            color: #ff8800;
+            border: 1px solid #ff880055;
+            border-radius: 4px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ff8800'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        .forge-selector select:focus {
+            outline: none;
+            border-color: #ff8800;
+        }
+
         .shop-btn {
             padding: 10px 12px;
             font-family: 'Courier New', monospace;
@@ -1175,6 +1202,11 @@
 
         <div class="panel-page" id="page-store">
             <div class="shop-panel" id="shop-panel">
+                <div class="forge-selector" id="forge-selector" style="display: none;">
+                    <select id="forge-mineral-select">
+                        <option value="">[SELECT MINERAL]</option>
+                    </select>
+                </div>
                 <div class="shop-item-wrapper" id="shop-wrapper-1">
                     <div class="shop-name" id="shop-name-1"></div>
                     <div class="shop-desc" id="shop-desc-1"></div>
@@ -2734,7 +2766,11 @@
                     const img = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
                     descEl.innerHTML = item.desc ? `<div class="storage-desc-content">${img}<span>${item.desc}</span></div>` : '';
 
-                    if (item.mineralCost) {
+                    if (item.forgerPlaceholder) {
+                        nameEl.classList.add('cant-afford');
+                        buyBtn.textContent = `[No Blueprint]`;
+                        buyBtn.disabled = true;
+                    } else if (item.mineralCost) {
                         const { mineral, category, count } = item.mineralCost;
                         const has = getMineralCount(mineral, category);
                         const canAfford = has >= count;
@@ -2754,9 +2790,93 @@
             }
         }
 
+        // Get the installation types for a given mineral name
+        function getForgerSlotsForMineral(mineralName) {
+            for (const tier of FORGER_TIERS) {
+                const pos = tier.minerals.indexOf(mineralName);
+                if (pos !== -1) {
+                    return { tier: tier.tier, zone: tier.zone, types: FORGER_SLOT_GROUPS[pos] };
+                }
+            }
+            return null;
+        }
+
+        // Find a forger item for a specific mineral and installation type
+        function getForgerItem(mineralName, slotType) {
+            const refinedName = "Refined " + mineralName;
+            return FORGER_ITEMS.find(item =>
+                item.mineralCost && item.mineralCost.mineral === refinedName && item.type === slotType
+            ) || null;
+        }
+
+        // Populate the forge mineral dropdown with all minerals grouped by tier
+        function updateForgeDropdown() {
+            const select = document.getElementById('forge-mineral-select');
+            select.innerHTML = '<option value="">[SELECT MINERAL]</option>';
+
+            for (const tier of FORGER_TIERS) {
+                const group = document.createElement('optgroup');
+                group.label = `Tier ${tier.tier} — ${tier.zone}`;
+
+                for (const mineral of tier.minerals) {
+                    const refinedCount = getMineralCount("Refined " + mineral, "refined");
+                    const option = document.createElement('option');
+                    option.value = mineral;
+                    option.textContent = `${mineral} (${refinedCount} refined)`;
+                    group.appendChild(option);
+                }
+
+                select.appendChild(group);
+            }
+        }
+
+        // Handle forge mineral dropdown selection
+        function onForgeMineralChange() {
+            const select = document.getElementById('forge-mineral-select');
+            const mineralName = select.value;
+
+            if (!mineralName) {
+                shopItems = [null, null, null];
+                updateShopUI();
+                return;
+            }
+
+            const info = getForgerSlotsForMineral(mineralName);
+            if (!info) {
+                shopItems = [null, null, null];
+                updateShopUI();
+                return;
+            }
+
+            // Populate shop slots with items for this mineral's 3 installation types
+            shopItems = info.types.map(type => {
+                const item = getForgerItem(mineralName, type);
+                if (item) return item;
+                // Placeholder for slots with no blueprint yet
+                const tag = SLOT_LABELS[type] || type.toUpperCase();
+                return {
+                    name: "-- No Blueprint --",
+                    type: type,
+                    desc: "No blueprint available yet. Check back later.",
+                    forgerPlaceholder: true
+                };
+            });
+            updateShopUI();
+        }
+
         // Show shop panel (switch to store page)
         function showShopPanel() {
             storeAvailable = true;
+
+            // Show forge dropdown if this is the forge encounter
+            const forgeSelector = document.getElementById('forge-selector');
+            if (currentEncounter && currentEncounter.isForge) {
+                updateForgeDropdown();
+                forgeSelector.style.display = 'block';
+            } else {
+                forgeSelector.style.display = 'none';
+            }
+
             updateShopUI();
             showPage(6);
         }
@@ -2764,6 +2884,9 @@
         // Hide shop panel (leave store page)
         function hideShopPanel() {
             storeAvailable = false;
+            const forgeSelect = document.getElementById('forge-mineral-select');
+            forgeSelect.value = '';
+            document.getElementById('forge-selector').style.display = 'none';
             if (currentPage === 6) showPage(0);
             updatePanelNav();
         }
@@ -2771,7 +2894,7 @@
         // Handle shop purchase
         function purchaseItem(index) {
             const item = shopItems[index];
-            if (!item) return;
+            if (!item || item.forgerPlaceholder) return;
 
             if (item.mineralCost) {
                 // Mineral cost purchase
@@ -2801,9 +2924,15 @@
             updateStats();
             updateMiningUI();
 
-            // Remove item from shop
-            shopItems[index] = null;
-            updateShopUI();
+            // Forge: refresh the view (mineral counts changed), keep slots visible
+            if (currentEncounter && currentEncounter.isForge) {
+                updateForgeDropdown();
+                onForgeMineralChange();
+            } else {
+                // Regular shop: remove item from slot
+                shopItems[index] = null;
+                updateShopUI();
+            }
         }
 
         // End shop encounter
@@ -2825,7 +2954,13 @@
             if (!encounter) return false;
 
             currentEncounter = encounter;
-            shopItems = generateShopItems(encounter);
+
+            // Forge uses dropdown-driven slots, not pre-generated items
+            if (encounter.isForge) {
+                shopItems = [null, null, null];
+            } else {
+                shopItems = generateShopItems(encounter);
+            }
 
             addMessage(`[ENCOUNTER] ${encounter.name}`, 'system');
             const isVendorDest = currentDestination && currentDestination !== 'openworld';
@@ -3788,6 +3923,9 @@
         document.getElementById('shop-buy-1').addEventListener('click', () => purchaseItem(0));
         document.getElementById('shop-buy-2').addEventListener('click', () => purchaseItem(1));
         document.getElementById('shop-buy-3').addEventListener('click', () => purchaseItem(2));
+
+        // Forge mineral dropdown listener
+        document.getElementById('forge-mineral-select').addEventListener('change', onForgeMineralChange);
 
         // Initialize game
         function init() {

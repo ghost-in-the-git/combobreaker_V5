@@ -1,10 +1,37 @@
 /**
  * THE FORGER - CRAFTABLE EQUIPMENT
  *
- * Special equipment sold by The Forger at home.
- * Costs refined minerals instead of XP.
+ * The Forger offers equipment crafted from refined minerals.
+ * Each mineral tier has 3 minerals, and each mineral covers 3 installation types:
+ *   - Mineral 1 (pos 0): body, legs, arms
+ *   - Mineral 2 (pos 1): weapon, chip, processor
+ *   - Mineral 3 (pos 2): pilot, implant, drill
+ *
+ * This means each tier covers all 9 installation types across its 3 minerals.
  */
 
+// Mineral groupings by tier (order matters: position determines slot types)
+const FORGER_TIERS = [
+    { tier: 1, zone: "Scrapyard", minerals: ["Limestone", "Sandstone", "Tanzanite"] },
+    { tier: 2, zone: "Old Battlefield", minerals: ["Quartz", "Feldspar", "Gypsum"] },
+    { tier: 3, zone: "Downtown", minerals: ["Fluorite", "Calcite", "Mica"] },
+    { tier: 4, zone: "Orbital Station", minerals: ["Hematite", "Magnetite", "Alexandrite"] },
+    { tier: 5, zone: "Wasteland", minerals: ["Bauxite", "Galena", "Sphalerite"] },
+    { tier: 6, zone: "Undercity", minerals: ["Chalcopyrite", "Cassiterite", "Cinnabar"] },
+    { tier: 7, zone: "Industrial Zone", minerals: ["Chromite", "Vanadinite", "Scheelite"] },
+    { tier: 8, zone: "Frozen Reach", minerals: ["Gold", "Platinum", "Garnet"] },
+    { tier: 9, zone: "Neon Strip", minerals: ["Uraninite", "Cobaltite", "Molybdenite"] },
+    { tier: 10, zone: "Dead Zone", minerals: ["Diamond", "Emerald", "Sapphire"] }
+];
+
+// Installation types assigned to each mineral position within a tier
+const FORGER_SLOT_GROUPS = [
+    ["body", "legs", "arms"],
+    ["weapon", "chip", "processor"],
+    ["pilot", "implant", "drill"]
+];
+
+// Forger items - looked up by mineralCost.mineral + type
 const FORGER_ITEMS = [
     {
         name: "Forged Alloy Plating [+50 HP][+5 DEF]",
