@@ -2773,9 +2773,12 @@
                     } else if (item.mineralCost) {
                         const { mineral, category, count } = item.mineralCost;
                         const has = getMineralCount(mineral, category);
-                        const canAfford = has >= count;
+                        const hasScrap = item.scrapCost ? (game.scrap || 0) >= item.scrapCost : true;
+                        const canAfford = has >= count && hasScrap;
                         nameEl.classList.toggle('cant-afford', !canAfford);
-                        buyBtn.textContent = `[Buy ${count} ${mineral}]`;
+                        buyBtn.textContent = item.scrapCost
+                            ? `[Buy ${count} ${mineral} + ${item.scrapCost} Scrap]`
+                            : `[Buy ${count} ${mineral}]`;
                         buyBtn.disabled = !canAfford;
                     } else {
                         const canAfford = playerXP >= item.cost;
@@ -2900,7 +2903,9 @@
                 // Mineral cost purchase
                 const { mineral, category, count } = item.mineralCost;
                 if (getMineralCount(mineral, category) < count) return;
+                if (item.scrapCost && (game.scrap || 0) < item.scrapCost) return;
                 removeMinerals(mineral, category, count);
+                if (item.scrapCost) game.scrap -= item.scrapCost;
 
                 if (item.refinedMineral) {
                     addMineral(item.name, 'refined');
@@ -2909,7 +2914,8 @@
                 } else {
                     addItemToInventory(item);
                 }
-                addMessage(`Purchased: ${item.name} for ${count} ${mineral}`, 'victory');
+                const scrapMsg = item.scrapCost ? ` + ${item.scrapCost} Scrap` : '';
+                addMessage(`Purchased: ${item.name} for ${count} ${mineral}${scrapMsg}`, 'victory');
             } else {
                 // XP cost purchase
                 if (game.player.xp < item.cost) return;
