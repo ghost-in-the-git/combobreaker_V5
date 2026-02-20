@@ -40,6 +40,7 @@ const FORGER_ITEMS = [
         image: "images/IMAGE.gif",
         stats: { hp: 50, defence: 5 },
         mineralCost: { mineral: "Refined Limestone", category: "refined", count: 3 },
+        scrapCost: 30,
         dropRate: 0,
         droppedBy: []
     },
@@ -50,6 +51,7 @@ const FORGER_ITEMS = [
         image: "images/IMAGE.gif",
         stats: { attack: 6, combo: 4 },
         mineralCost: { mineral: "Refined Hematite", category: "refined", count: 3 },
+        scrapCost: 30,
         dropRate: 0,
         droppedBy: []
     },
@@ -60,6 +62,7 @@ const FORGER_ITEMS = [
         image: "images/IMAGE.gif",
         stats: { regen: 8 },
         mineralCost: { mineral: "Refined Gold", category: "refined", count: 3 },
+        scrapCost: 30,
         dropRate: 0,
         droppedBy: []
     }
