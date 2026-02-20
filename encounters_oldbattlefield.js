@@ -86,8 +86,8 @@ const ENCOUNTERS_OLDBATTLEFIELD = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Quartz"],
-        itemSlot2: ["Refined Feldspar"],
-        itemSlot3: ["Refined Gypsum"]
+        itemSlot1: ["Refined Duskquartz"],
+        itemSlot2: ["Refined Emberlith"],
+        itemSlot3: ["Refined Frostveil"]
     }
 ];

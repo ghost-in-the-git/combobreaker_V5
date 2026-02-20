@@ -85,8 +85,8 @@ const ENCOUNTERS_SCRAPYARD = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Limestone"],
-        itemSlot2: ["Refined Sandstone"],
-        itemSlot3: ["Refined Tanzanite"]
+        itemSlot1: ["Refined Aetherite"],
+        itemSlot2: ["Refined Bronzewisp"],
+        itemSlot3: ["Refined Cindergem"]
     }
 ];

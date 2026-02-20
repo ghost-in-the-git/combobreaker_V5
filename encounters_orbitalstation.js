@@ -86,8 +86,8 @@ const ENCOUNTERS_ORBITALSTATION = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Hematite"],
-        itemSlot2: ["Refined Magnetite"],
-        itemSlot3: ["Refined Alexandrite"]
+        itemSlot1: ["Refined Jetspinel"],
+        itemSlot2: ["Refined Kryptoglass"],
+        itemSlot3: ["Refined Lumenore"]
     }
 ];

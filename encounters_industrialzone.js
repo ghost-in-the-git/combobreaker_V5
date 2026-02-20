@@ -86,8 +86,8 @@ const ENCOUNTERS_INDUSTRIALZONE = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Chromite"],
-        itemSlot2: ["Refined Vanadinite"],
-        itemSlot3: ["Refined Scheelite"]
+        itemSlot1: ["Refined Starvitrine"],
+        itemSlot2: ["Refined Thorncrystal"],
+        itemSlot3: ["Refined Umbracite"]
     }
 ];

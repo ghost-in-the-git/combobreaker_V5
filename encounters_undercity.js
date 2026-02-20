@@ -86,8 +86,8 @@ const ENCOUNTERS_UNDERCITY = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Chalcopyrite"],
-        itemSlot2: ["Refined Cassiterite"],
-        itemSlot3: ["Refined Cinnabar"]
+        itemSlot1: ["Refined Prismalune"],
+        itemSlot2: ["Refined Quellium"],
+        itemSlot3: ["Refined Riftmarble"]
     }
 ];

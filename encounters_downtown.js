@@ -86,8 +86,8 @@ const ENCOUNTERS_DOWNTOWN = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Fluorite"],
-        itemSlot2: ["Refined Calcite"],
-        itemSlot3: ["Refined Mica"]
+        itemSlot1: ["Refined Gloomstone"],
+        itemSlot2: ["Refined Hexsilica"],
+        itemSlot3: ["Refined Iridionite"]
     }
 ];

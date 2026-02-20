@@ -86,8 +86,8 @@ const ENCOUNTERS_FROZENREACH = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Gold"],
-        itemSlot2: ["Refined Platinum"],
-        itemSlot3: ["Refined Garnet"]
+        itemSlot1: ["Refined Vortexium"],
+        itemSlot2: ["Refined Wyrmstone"],
+        itemSlot3: ["Refined Xanthryx"]
     }
 ];

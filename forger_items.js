@@ -12,16 +12,17 @@
 
 // Mineral groupings by tier (order matters: position determines slot types)
 const FORGER_TIERS = [
-    { tier: 1, zone: "Scrapyard", minerals: ["Limestone", "Sandstone", "Tanzanite"] },
-    { tier: 2, zone: "Old Battlefield", minerals: ["Quartz", "Feldspar", "Gypsum"] },
-    { tier: 3, zone: "Downtown", minerals: ["Fluorite", "Calcite", "Mica"] },
-    { tier: 4, zone: "Orbital Station", minerals: ["Hematite", "Magnetite", "Alexandrite"] },
-    { tier: 5, zone: "Wasteland", minerals: ["Bauxite", "Galena", "Sphalerite"] },
-    { tier: 6, zone: "Undercity", minerals: ["Chalcopyrite", "Cassiterite", "Cinnabar"] },
-    { tier: 7, zone: "Industrial Zone", minerals: ["Chromite", "Vanadinite", "Scheelite"] },
-    { tier: 8, zone: "Frozen Reach", minerals: ["Gold", "Platinum", "Garnet"] },
-    { tier: 9, zone: "Neon Strip", minerals: ["Uraninite", "Cobaltite", "Molybdenite"] },
-    { tier: 10, zone: "Dead Zone", minerals: ["Diamond", "Emerald", "Sapphire"] }
+    { tier: 1, zone: "Scrapyard", minerals: ["Aetherite", "Bronzewisp", "Cindergem"] },
+    { tier: 2, zone: "Old Battlefield", minerals: ["Duskquartz", "Emberlith", "Frostveil"] },
+    { tier: 3, zone: "Downtown", minerals: ["Gloomstone", "Hexsilica", "Iridionite"] },
+    { tier: 4, zone: "Orbital Station", minerals: ["Jetspinel", "Kryptoglass", "Lumenore"] },
+    { tier: 5, zone: "Wasteland", minerals: ["Moonshardite", "Nightpyre", "Obsidryl"] },
+    { tier: 6, zone: "Undercity", minerals: ["Prismalune", "Quellium", "Riftmarble"] },
+    { tier: 7, zone: "Industrial Zone", minerals: ["Starvitrine", "Thorncrystal", "Umbracite"] },
+    { tier: 8, zone: "Frozen Reach", minerals: ["Vortexium", "Wyrmstone", "Xanthryx"] },
+    { tier: 9, zone: "Neon Strip", minerals: ["Yonderite", "Zephyrsalt", "Isotope Lace"] },
+    { tier: 10, zone: "Dead Zone", minerals: ["Archive Shard", "Strata-Null", "Compound 33"] },
+    { tier: 11, zone: "???", minerals: ["Reagent Arcadium", "Catalyst MK-II", "Anomaly 0x3A"] }
 ];
 
 // Installation types assigned to each mineral position within a tier
@@ -39,7 +40,7 @@ const FORGER_ITEMS = [
         desc: "Hand-forged chassis plating, hammered from refined stone. Heavier than standard issue, but impossibly tough.",
         image: "images/IMAGE.gif",
         stats: { hp: 50, defence: 5 },
-        mineralCost: { mineral: "Refined Limestone", category: "refined", count: 3 },
+        mineralCost: { mineral: "Refined Aetherite", category: "refined", count: 3 },
         scrapCost: 30,
         dropRate: 0,
         droppedBy: []
@@ -50,7 +51,7 @@ const FORGER_ITEMS = [
         desc: "A blade forged from smelted hematite. The edge never dulls, and each strike flows into the next.",
         image: "images/IMAGE.gif",
         stats: { attack: 6, combo: 4 },
-        mineralCost: { mineral: "Refined Hematite", category: "refined", count: 3 },
+        mineralCost: { mineral: "Refined Jetspinel", category: "refined", count: 3 },
         scrapCost: 30,
         dropRate: 0,
         droppedBy: []
@@ -61,7 +62,7 @@ const FORGER_ITEMS = [
         desc: "A pulsing core of refined gold, wired directly into the mech's repair systems. Heals damage at an alarming rate.",
         image: "images/IMAGE.gif",
         stats: { regen: 8 },
-        mineralCost: { mineral: "Refined Gold", category: "refined", count: 3 },
+        mineralCost: { mineral: "Refined Vortexium", category: "refined", count: 3 },
         scrapCost: 30,
         dropRate: 0,
         droppedBy: []

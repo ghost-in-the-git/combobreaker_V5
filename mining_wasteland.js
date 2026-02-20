@@ -4,7 +4,7 @@
  */
 
 const MINING_WASTELAND = [
-    { mineral: 'Bauxite', category: 'tier5', depth: 90, stabilityLoss: 10, stability: 170 },
-    { mineral: 'Galena', category: 'tier5', depth: 105, stabilityLoss: 12, stability: 170 },
-    { mineral: 'Sphalerite', category: 'tier5', depth: 95, stabilityLoss: 11, stability: 170 }
+    { mineral: 'Moonshardite', category: 'tier5', depth: 90, stabilityLoss: 10, stability: 170 },
+    { mineral: 'Nightpyre', category: 'tier5', depth: 105, stabilityLoss: 12, stability: 170 },
+    { mineral: 'Obsidryl', category: 'tier5', depth: 95, stabilityLoss: 11, stability: 170 }
 ];

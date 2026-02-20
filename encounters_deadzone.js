@@ -86,8 +86,8 @@ const ENCOUNTERS_DEADZONE = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Diamond"],
-        itemSlot2: ["Refined Emerald"],
-        itemSlot3: ["Refined Sapphire"]
+        itemSlot1: ["Refined Archive Shard"],
+        itemSlot2: ["Refined Strata-Null"],
+        itemSlot3: ["Refined Compound 33"]
     }
 ];

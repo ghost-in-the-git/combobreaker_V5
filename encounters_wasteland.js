@@ -86,8 +86,8 @@ const ENCOUNTERS_WASTELAND = [
         discoveredEngageText: "She grins as you pull up. 'Back again? Good. Forge is hot. Show me what you've got.'",
         appearanceRate: 15,
         minLevel: 1,
-        itemSlot1: ["Refined Bauxite"],
-        itemSlot2: ["Refined Galena"],
-        itemSlot3: ["Refined Sphalerite"]
+        itemSlot1: ["Refined Moonshardite"],
+        itemSlot2: ["Refined Nightpyre"],
+        itemSlot3: ["Refined Obsidryl"]
     }
 ];
